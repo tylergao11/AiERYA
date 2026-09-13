@@ -50,11 +50,15 @@ async function start(): Promise<void> {
   if (import.meta.env.DEV) import.meta.hot?.dispose(() => { cancelled = true; opening.dispose(); mixer.dispose(); });
   try {
     const world = new World({ roguelike: true }); view = new SceneView(canvas, world);
+    // Optional sound loading never owns the visual entry gate. The live mixer
+    // retries unavailable tracks after user activation and restores them in place.
+    void mixer.preload(['forest-cues','night-theme']).catch(error => console.warn('Audio will retry after entry', error));
+    void preloadCombatAudio().catch(error => console.warn('Combat audio will retry after entry', error));
     loader.querySelector('.load-status')!.textContent = '正在展开山林…';
     await Promise.all([view.load(), loadUiArt((loaded, total) => {
       loader.querySelector('.load-status')!.textContent = `展开画卷 · ${loaded} / ${total}`;
       opening.status(`载入画卷 ${loaded} / ${total}`);
-    }), mixer.preload(['forest-cues','night-theme']), preloadCombatAudio()]);
+    })]);
     opening.status('开场载入中…'); ready();
     if (experience) opening.dispose();
     await opening.finished;

@@ -18,6 +18,8 @@ export function loadUiArt(progress?: (loaded: number, total: number) => void): P
         retained.push(image); progress?.(++loaded, UI_ART.length);
       }
     }));
-    await document.fonts.load('24px "Jianghu Brush"');
+    // A stalled font request must not hold every decoded image behind the gate.
+    // CSS keeps downloading the face and swaps it in when it is ready.
+    await Promise.race([document.fonts.load('24px "Jianghu Brush"').catch(() => []), new Promise<void>(resolve => setTimeout(resolve, 4000))]);
   })().catch(error => { ready = undefined; retained.length = 0; throw error; });
 }
