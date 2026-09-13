@@ -1,0 +1,12 @@
+{
+  "source": "public/video/opening-ink.mp4",
+  "runtime": "public/video/opening-ink-mobile.mp4",
+  "sourceBytes": 7374547,
+  "runtimeBytes": 4820172,
+  "durationSeconds": 9.4,
+  "frames": 282,
+  "resolution": "1920x1080",
+  "codec": "H.264 / AAC",
+  "audio": "Stream copied without re-encoding",
+  "command": "ffmpeg -i public/video/opening-ink.mp4 -c:v libx264 -preset slow -crf 22 -pix_fmt yuv420p -c:a copy -movflags +faststart public/video/opening-ink-mobile.mp4"
+}

@@ -4,7 +4,9 @@ dist
 *.log
 .vite
 coverage
-
+artifacts/
+.openai/
+.edgeone/
 .wrangler/
 .env
 .env.*

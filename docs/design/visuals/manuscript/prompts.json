@@ -1,0 +1,55 @@
+{
+  "date": "2026-09-13",
+  "tool": "Built-in image_gen.imagegen",
+  "approvedReferences": [
+    "approved-battle-rewards.png",
+    "approved-birth.png"
+  ],
+  "assets": [
+    {
+      "key": "elements",
+      "prompt": "Use case: illustration-story. Production asset for a premium hand-painted Chinese wuxia game. Create ONE image sprite atlas, precisely 3 columns by 2 rows of identical square cells, total aspect ratio 3:2, high resolution. Image is a seamless flat pale warm ivory rice-paper field with very subtle grain (#eadbbb), NOT a screenshot. Six large, beautiful isolated hand-painted illustrations at the EXACT centers of their six grid cells, drawn with vivid but restrained ink and mineral pigments. Each motif fills 78% of its own square, all edges fade naturally into the same paper field with roomy margins. No visible grid lines, frames, typography, letters, numbers, watermarks, UI, shadows or surrounding objects. Follow the art direction of the attached approved UI reference, specifically the elemental paintings on the five parchment talisman cards. Precise order: TOP LEFT twisted jade green roots / old tree and curling leaves, bold graceful silhouette; TOP CENTER dancing vermilion flame, brushy powerful rising flame on charcoal ink core; TOP RIGHT ochre rugged mountain peak and dark stone silhouettes; BOTTOM LEFT three sweeping sharp pale-gold sword slashes surrounded by dark ink brush flourishes; BOTTOM CENTER deep indigo and azure curling water wave spiral; BOTTOM RIGHT five-element circular ink mandala weaving jade leaves, vermilion fire, ochre mountain, gold sword and indigo water into a refined ring. Each is a distinct clean game ability illustration, richly painterly, beautifully composed, no tiny detail noise. Perfect 3x2 grid centers and matching paper tone, all six fully contained. No text whatsoever.",
+      "sourceResult": "exec-98753769-f2df-4e92-8f44-ae7fe96b3ea2.png",
+      "source": "elements.png",
+      "runtime": "public/art/ui/elements.webp"
+    },
+    {
+      "key": "talents",
+      "prompt": "Use case: illustration-story. Production sprite atlas for a premium hand-painted Chinese wuxia game. ONE square image, precisely 3 columns x 3 rows of equal square cells, high resolution. Flat pale warm ivory rice paper (#eadbbb) and subtle fine grain across entire image. Nine separate generously sized ink-and-mineral-pigment paintings, each centered exactly in its own cell and filling 80% of the cell; subject fully contained with soft ink-wash margins fading into the same paper. Do not draw card frames, grid lines, borders, typography, letters, numbers, UI, shadows or labels. Match attached approved game's talent painting style: dynamic confident Chinese brush illustration, hand-painted readable motifs, antique gold, jade, indigo and vermilion accents, strong dark ink silhouettes.\nEXACT ROW-MAJOR 3x3 content:\n1 TOP LEFT: three flying Chinese straight swords crossed by blue ink currents, depicting one stroke splitting into three blades.\n2 TOP CENTER: a diagonal dark ink sword cutting across jade vine strokes and a red intersection mark, depicting a lingering slash.\n3 TOP RIGHT: a robed swordsman's hand grasping a vermilion lightning-like ink sword with a glowing cracked energy core, depicting power on borrowed spiritual energy.\n4 MIDDLE LEFT: two adjoining round ochre talisman formations with five-element brush rings joined by a stream of golden ink, depicting twin formations.\n5 MIDDLE CENTER: a mossy stone guardian emerging from a jade and ochre ground formation, depicting a spirit housed in a formation.\n6 MIDDLE RIGHT: a magnificent ochre mountain peak with floating stepping stones and swirling gold earth formation, depicting moving mountains.\n7 BOTTOM LEFT: two wolf spirits, one pale jade and one dark indigo, circling together with lively protective energy.\n8 BOTTOM CENTER: a compact expressive stone spirit with a floating diamond shaped golden spell sigil held between its hands, depicting a spell mimic.\n9 BOTTOM RIGHT: an imposing ancient wolf beast with ivory mane, dark blue fur and gold wisps, roaring in side three-quarter view, depicting an ancestral spirit.\nSubstantial high-quality illustrative compositions, not miniature sprites. Background uniform warm rice paper, no other scene. Exact 3x3 cell alignment is crucial to using the asset in game. No text whatsoever.",
+      "sourceResult": "exec-51254c02-4f63-450d-80b9-385f5d6ec765.png",
+      "source": "talents.png",
+      "runtime": "public/art/ui/talents.webp"
+    },
+    {
+      "key": "paper",
+      "prompt": "Use case: product-mockup. A single reusable 2D background asset for the parchment cards in this premium hand-painted Chinese wuxia game. PORTRAIT aspect ratio 2:3. Fill the entire rectangular image edge-to-edge with a refined warm ivory rice paper surface (#eadbbb). Extremely subtle organic paper fibers and watercolor tint variations. At the very outer edges only, delicate broken charcoal ink edging and extremely selective antique-gold dry-brush scuffs, small natural corner imperfections. A quiet, generous, completely BLANK clean ivory center occupying 90 percent of the whole image. This asset will sit BEHIND text and paintings in real game UI, so absolutely no writing, symbols, seals, drawings, illustrations, folds, thick frames, icons or UI controls. Flat front view, uniform illumination, no perspective, no external drop shadow, no object mockup context. Paper should be luxurious and tactile rather than dirty, burned or heavily distressed. Match reference parchment materials. The image is the paper itself, not a piece of paper photographed against another background.",
+      "sourceResult": "exec-3a80f866-6537-479b-b80b-7503f7462495.png",
+      "source": "paper.png",
+      "runtime": "public/art/ui/paper.webp"
+    },
+    {
+      "key": "rewards",
+      "prompt": "Use case: illustration-story. ONE square 3 by 3 sprite atlas asset for hand-painted Chinese wuxia reward cards, precisely nine equal square cells with centered fully contained artwork, consistent #eadbbb pale ivory rice paper background and fine subtle grain. No visible cell divisions, frames, labels, letters, numerals, watermark, UI, or mockup. Fill 80% of each cell with beautiful dramatic ink-and-mineral-pigment illustration, fading art into the shared paper at the margins. Style matches the attached approved parchment game reward cards; charcoal ink, jade, cinnabar, indigo, antique gold. Distinct readable motifs in exact row-major order: TOP LEFT a mighty stone guardian responding to a small floating red command seal with curling jade control ribbons; TOP CENTER a single powerful dark blue wolf leaping forward with a long trailing brushstroke, claws extended, dynamic pursuit; TOP RIGHT a white jade bowl holding liquid golden spiritual energy with ascending jade wisps, restorative spiritual reserve; MIDDLE LEFT a small glowing campfire sheltered by a canvas tent among pine branches, restorative camp safety; MIDDLE CENTER layered flowing indigo and golden sword waves tracing a returning arc around a diagonal sword, sword echo; MIDDLE RIGHT a swirling blue vortex encircled by small ochre rocks, trapping opponents in water and earth; BOTTOM LEFT scarlet steam curling from blue waves and red flames colliding, distinct water-fire reaction; BOTTOM CENTER an ornate jade circular formation with three ochre stones floating over it, formation strength; BOTTOM RIGHT a dramatic vermilion spiritual core splitting open amid dark ink, power with a dangerous cost. Nine refined richly crafted Chinese brush paintings with bold silhouettes, each on paper. Not pixel art, not 3D, not flat vector. Exact grid alignment and clear cell isolation. No text.",
+      "sourceResult": "exec-a599b9d3-c1db-4b44-a331-d8e723145bc9.png",
+      "source": "rewards.png",
+      "runtime": "public/art/ui/rewards.webp"
+    },
+    {
+      "key": "cinnabar",
+      "prompt": "Use case: ui-mockup. A single PRODUCTION GAME UI BUTTON BACKGROUND ASSET, not a screenshot. Wide 3:1 aspect ratio. An isolated horizontal stroke of cinnabar red lacquer and thick red ink painted with a large dry Chinese brush, with a rich matte textured vermilion center and finely broken irregular dry-brush silhouette around the edge. Two extremely restrained thin traces of muted antique-gold pigment following PARTS of the red perimeter. Visually match the red “入山” and “迎战” buttons in the attached approved Chinese wuxia UI design. The center must be entirely blank and uniform deep cinnabar (#982f21), generous enough to receive large ivory Chinese button lettering later. DO NOT DRAW ANY TEXT, LETTERS, SYMBOLS, ARROWS, ICONS OR NUMERALS. This is a background only. Genuinely transparent alpha background outside the painted button, including around the delicate rough brush edges. No rectangular black or white backdrop, no checkerboard painted into the image, no shadow, no wooden frame, no 3D bevels. Fine elegant natural bristle details, horizontally energetic silhouette, restrained beautiful handcrafted finish. Keep the entire painted object contained with a transparent margin of 5% on each side. Avoid crude polygon points, symmetrical sharp zigzags or spiky silhouettes.",
+      "sourceResult": "exec-027c14be-0190-4bb1-bcfa-aa21f127d233.png",
+      "source": "cinnabar.png",
+      "runtime": "public/art/ui/cinnabar.webp"
+    }
+  ],
+  "processing": "Sharp PNG-to-WebP format conversion only; the cinnabar result has an RGB neutral matte, removed at render time with public/art/ui/ink-filters.svg. Illustration atlases are indexed by CSS, without image rewriting.",
+  "font": {
+    "family": "Ma Shan Zheng",
+    "source": "https://github.com/google/fonts/tree/main/ofl/mashanzheng",
+    "license": "SIL Open Font License 1.1",
+    "licenseFile": "public/fonts/OFL-MaShanZheng.txt",
+    "sourceFile": "MaShanZheng-Regular.ttf",
+    "runtime": "public/fonts/jianghu-brush.woff2",
+    "subsetScript": "scripts/subset-ui-font.py"
+  }
+}
