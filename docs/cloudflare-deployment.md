@@ -3,6 +3,9 @@
 The Cloudflare Workers project `aierya` watches the GitHub `master` branch.
 Its deploy command is `npx wrangler deploy`; `wrangler.jsonc` serves the
 prebuilt game in `web-release/` directly as static assets.
+Wrangler is pinned in `devDependencies` and `package-lock.json`, so the build
+installs the complete publishing tool with `npm ci` instead of relying on an
+on-demand npx installation.
 
 `web-release/` contains the production build from the current development
 workspace. The existing source build is separate from this release directory.
