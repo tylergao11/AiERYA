@@ -4,10 +4,17 @@ The Cloudflare Workers project `aierya` watches the GitHub `master` branch.
 Its deploy command is `npx wrangler deploy`; `wrangler.jsonc` serves the
 prebuilt game in `web-release/` directly as static assets.
 
-`web-release/` contains the same production files as the GitHub Pages release
-`6492c395611c551d818d215a9b1ea5516411f7dd` on `codex/pages`. It includes the
-latest mobile interface, resource preload, audio, and combat balance changes.
-The existing source build is separate from this reviewed release directory.
+`web-release/` contains the production build from the current development
+workspace. The existing source build is separate from this release directory.
+
+The September 13 balance update uses `assets/game-Cmu35DM-.js`:
+- Slayer damage is 30% of the previous release.
+- Summon damage is 150% of the previous release.
+- Sustained formation damage is 150% of the previous release.
+- Enemy health and attack start at the first-wave baseline and grow by 10%
+  each wave, compounded, including waves after the campaign.
+- Elite reinforcements increase by two per wave; earlier elite counts are
+  retained as a floor when a later wave template has fewer elites.
 
 To publish a new game version, build the current development workspace and
 replace `web-release/` with the contents of its `dist/` output. Commit that
