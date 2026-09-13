@@ -1,0 +1,271 @@
+/* Shared presentation palette. Gameplay and world-effect colors stay in their own layers. */
+:root {
+  --ui-bg: #161b1e;
+  --ui-panel: #1c2124;
+  --ui-raised: #24292b;
+  --ui-text: #ddd9ce;
+  --ui-secondary: #b4b5ad;
+  --ui-muted: #929b99;
+  --ui-gold: #bca77e;
+  --ui-line: #b7baa51c;
+  --ui-line-strong: #b7baa536;
+  --ui-serif: 'STKaiti', 'KaiTi', 'Songti SC', 'SimSun', serif;
+  --line: var(--ui-line);
+  --muted: var(--ui-muted);
+  --panel: #171d20ed;
+  color: var(--ui-text);
+  background: #11171b;
+}
+
+/* Color identifies a category in a small mark, rather than painting an entire card. */
+.lane-slayer { --type: #bc9385; --rarity: var(--type); --wash: #bc938507; --edge: var(--ui-line); }
+.lane-spirit { --type: #96b2a7; --rarity: var(--type); --wash: #96b2a707; --edge: var(--ui-line); }
+.lane-array { --type: #bda77c; --rarity: var(--type); --wash: #bda77c07; --edge: var(--ui-line); }
+.lane-reaction { --type: #ada1bd; --rarity: var(--type); --wash: #ada1bd07; --edge: var(--ui-line); }
+.lane-root { --type: #98abb8; --rarity: var(--type); --wash: #98abb807; --edge: var(--ui-line); }
+.lane-common { --type: #aeb3ab; --rarity: var(--type); --wash: #aeb3ab07; --edge: var(--ui-line); }
+
+#interface button { transition: background-color .18s ease, border-color .18s ease, color .18s ease, box-shadow .18s ease; }
+#interface button:hover:not(:disabled) { filter: none; }
+#interface button:focus-visible, #interface summary:focus-visible { outline: 1px solid var(--ui-gold); outline-offset: 3px; }
+#interface button:disabled { opacity: 1; color: #7b8586; }
+#interface button:active:not(:disabled) { transition-duration: .06s; }
+.ui-icon { width: 18px; height: 18px; display: block; margin: auto; stroke: currentColor; fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+
+/* The panel reads as one ink surface: no colored glass, repeated boxes, or luminous edges. */
+.modal, .modal.birth-modal, .modal:not(.birth-modal) {
+  background: #080e13a6;
+  backdrop-filter: blur(10px) saturate(.65);
+  scrollbar-width: thin;
+  scrollbar-color: #636e6d66 transparent;
+}
+.panel-card.birth-screen, .modal:not(.birth-modal) .panel-card {
+  color: var(--ui-text);
+  background: radial-gradient(ellipse at 10% 0%, #6a6b5310, transparent 65%), linear-gradient(130deg, #202527, #161c20);
+  border: 1px solid var(--ui-line-strong);
+  border-radius: 8px;
+  box-shadow: 0 28px 90px #03090b70, inset 0 1px #dad5bf09;
+}
+.modal:not(.birth-modal) h2 { color: #e4dfd1; font-family: var(--ui-serif); font-weight: 400; letter-spacing: .16em; }
+.panel-sub, .fate-rule, .innate-roots { color: var(--ui-secondary); }
+.build-panel .innate-roots { font-size: 12px; margin: 10px 0; }
+.build-panel .fate-rule { font-size: 12px; padding: 6px 0; }
+.build-panel .build-learned > p { font-size: 12px; line-height: 1.8; }
+.eyebrow, .opening-foot, .roll-rule { color: var(--ui-muted); }
+
+/* Birth selection. The large illustration and the selected name are the two focal points. */
+.birth-heading { border-bottom-color: var(--ui-line); }
+.birth-screen .birth-heading h2 { color: #e3ddcc; font-size: 30px; letter-spacing: .18em; }
+.birth-heading span, .birth-heading > small { color: var(--ui-muted); }
+.birth-heading > div { gap: 26px; }
+.birth-body { gap: 28px; scrollbar-color: #59636266 transparent; }
+.birth-options { padding-left: 8px; }
+.birth-demo { border-color: #b9b49d26; border-radius: 3px; background: #13191c; }
+.birth-demo::after { background: linear-gradient(#11191e3d, transparent 25%, transparent 66%, #10181bdd); }
+.birth-demo-label { color: #dfddd1b0; letter-spacing: .15em; }
+.birth-replay { color: #d0d5c8b0; }
+.birth-demo-caption { color: #e1d5b8; letter-spacing: .04em; }
+.birth-explanation { padding-top: 20px; }
+.birth-detail-title h3 { color: #e2d9c3; font-size: 26px; letter-spacing: .1em; }
+.birth-detail-title > b { color: var(--type); background: none; border-color: var(--ui-line); border-radius: 2px; }
+.birth-detail-title > small { color: var(--ui-muted); }
+.birth-description p { color: #bfc2b8; font-size: 13px; line-height: 1.85; }
+.birth-options-heading { color: var(--ui-secondary); }
+.birth-options-heading .lane-legend { gap: 9px; opacity: .78; }
+.birth-list { gap: 2px; }
+.birth-talent {
+  position: relative; min-height: 62px; padding: 10px 13px; gap: 14px;
+  border: 1px solid transparent; border-bottom-color: var(--ui-line);
+  border-radius: 3px; background: transparent;
+}
+.birth-talent:last-child { border-bottom-color: transparent; }
+.birth-talent::before {
+  content: ''; position: absolute; top: 16px; bottom: 16px; left: -1px;
+  width: 2px; background: var(--ui-gold); opacity: 0; transform: scaleY(.35);
+  transition: opacity .2s, transform .2s;
+}
+.birth-glyph { color: var(--type); opacity: .65; font-size: 25px; }
+.birth-talent-copy b { color: #d5d3c7; font-size: 18px; letter-spacing: .075em; }
+.birth-talent-copy small { color: var(--ui-muted); font-size: 11px; line-height: 1.3; }
+.birth-tier-label { color: #a2aaa7; background: none; border: 0; padding: 2px 0; font-size: 10px; }
+.birth-tier-label[data-rarity='unusual'] { color: #b6a6bc; }
+.birth-tier-label[data-rarity='heaven'] { color: #c4ac7e; }
+.birth-check { width: 24px; height: 24px; color: #8e9792; background: none; border-color: #b5b9a526; border-radius: 50%; font-size: 15px; }
+.birth-talent[data-inspected=true] { background: #bdb19008; box-shadow: none; border-color: #bdb19018; }
+.birth-talent[data-inspected=true]::before { opacity: .65; transform: scaleY(1); }
+.birth-talent[aria-pressed=true] { background: linear-gradient(90deg, #bca77e15, #bca77e05); border-color: #bca77e45; }
+.birth-talent[aria-pressed=true]::before { opacity: 1; transform: scaleY(1); }
+.birth-talent[aria-pressed=true] .birth-talent-copy b { color: #e1d4b6; }
+.birth-talent[aria-pressed=true] .birth-check { background: var(--ui-gold); color: #232727; border-color: var(--ui-gold); }
+.birth-talent[aria-pressed=true] .birth-glyph { opacity: 1; }
+#interface .birth-talent:focus-visible { outline-offset: -2px; outline-color: #c6b28599; }
+.birth-hint { color: var(--ui-muted); }
+.birth-footer { background: #11181c73; border-top-color: var(--ui-line); }
+.birth-slot { background: #c0b49506; border-color: #bca77e32; color: #d1c5aa; border-radius: 3px; }
+.birth-slot > small { color: var(--type); opacity: .9; }
+.birth-slot.empty { border: 1px solid var(--ui-line); background: none; color: #909996; }
+.birth-slot.empty > small { color: #b2a68d; }
+.birth-slot > span { color: var(--ui-muted); }
+.birth-note { color: #8d9792; }
+
+/* One warm primary action, quiet secondary actions. */
+.primary, .fate-buttons .primary, .birth-enter {
+  background: linear-gradient(115deg, #c3b18b, #ab9873); color: #242725;
+  border: 1px solid #c7b38c; border-radius: 3px;
+  box-shadow: inset 0 1px #e7dcc633; text-shadow: none;
+}
+.birth-enter:disabled { background: #b1a58a0d; border-color: #b9b39a1c; color: #838e8b; box-shadow: none; }
+.birth-reroll, .reward-footer button, .reward-footer button:first-child, .fate-buttons > button:not(.primary) {
+  color: #c2c3b7; background: #b8b79c05; border: 1px solid var(--ui-line-strong); border-radius: 3px; box-shadow: none;
+}
+.reward-footer button span { color: var(--ui-muted); }
+.reward-footer small { color: var(--ui-muted); }
+.fate-buttons [data-action='reset'] { color: #aa9990; border-color: #b1a59922; }
+
+/* Reward illustrations retain the element accent; frames and typography share one palette. */
+.reward-heading h2 { color: #e4ddca; }
+.reward-heading .eyebrow, .reward-heading p:last-child { color: var(--ui-muted); }
+.progress-seal { border-left-color: var(--ui-line); }
+.progress-seal b { color: var(--ui-gold); font-weight: 400; }
+.progress-seal small { color: var(--ui-muted); }
+.cultivation-track { color: var(--ui-secondary); }
+.cultivation-track small { color: var(--ui-muted); }
+.cultivation-track > i { background: #b8bca517; height: 2px; }
+.cultivation-track > i > b { background: var(--ui-gold); }
+.reward-choice {
+  background: linear-gradient(155deg, #c5bea407, #080f131c);
+  border: 1px solid var(--ui-line-strong); border-top: 1px solid var(--ui-line-strong);
+  border-radius: 4px; box-shadow: none;
+  transition: background-color .22s, border-color .22s, box-shadow .22s;
+}
+.reward-choice.core-reward { border-color: #bcab755e; box-shadow: inset 0 1px #c5b68d22; }
+.reward-choice.dormant-reward { border-style: dashed; }
+.reward-choice:focus-within { border-color: #bcaa8266; background: #bcaa8209; }
+.reward-card-heading { color: var(--ui-muted); }
+.reward-card-heading .lane-badge { font-size: 10px; }
+.reward-card-heading .lane-badge::before { content: ''; display: inline-block; width: 4px; height: 4px; border-radius: 50%; background: currentColor; margin: 0 6px 2px 0; opacity: .8; }
+.reward-pick h3 { color: #e0d9c6; letter-spacing: .11em; }
+.reward-result { color: #c8c4b1; font-weight: 400; }
+.reward-choose-label { color: var(--ui-gold); }
+.reward-choose-label b { opacity: .72; }
+.reward-condition { color: #c3a893!important; }
+.reward-example { border-color: var(--ui-line); background: radial-gradient(ellipse at 50% 70%, #c9bb9208, transparent 73%); }
+.example-caption { color: #a7b1a8; }
+.example-caption i { color: #8f9b94; }
+.reward-details { border-top-color: var(--ui-line); color: #98a4a0; }
+.reward-details[open] { background: #0a131626; }
+.reward-details p { color: #b6bdb4; }
+.reward-details summary { color: #99a39d; }
+
+/* Battle controls remain anchored by mobile.css; only the material and emphasis change here. */
+.shade { background: linear-gradient(#0b1418ad, transparent 23%, transparent 70%, #0b1418d9); box-shadow: inset 0 0 90px 12px #08111625; }
+.identity h1 { color: #e1dccc; letter-spacing: .14em; }
+.identity h1 span, .identity .eyebrow { color: #acb1a3; }
+.seal { border-color: #baaa7959; color: #c8b488; background: #b4a17808; }
+.seal::before { border-color: #baaa7922; }
+.tools { gap: 6px; }
+.tools button { background: #151d21b8; border: 1px solid #bac1ab1e; border-radius: 4px; color: #bdc4b8; box-shadow: none; }
+.tools button.muted { opacity: 1; color: #768785; text-decoration: none; }
+.topbar .spirit-status, .topbar .camp-status { color: #b9c1b4; font-variant-numeric: tabular-nums; }
+.topbar .spirit-status strong, .topbar .camp-status strong { color: #ded7c2; }
+.topbar .health-track { height: 2px; background: #bac3ae21; }
+#spirit-bar { background: #9badaf; }
+#health-bar { background: #a6b18b; }
+.low-health .camp-status strong { color: #cf9c88; }
+.low-health #health-bar { background: #be8c76; }
+.wave { color: #c2c7b8; }
+.command-deck { background: linear-gradient(115deg, #232a2beF, #151f23f5); border: 1px solid #bdc1a529; border-radius: 5px; box-shadow: 0 12px 36px #06101355; }
+.modes { border-right-color: var(--ui-line); }
+.phase-mode b { color: #d0c5aa; font-family: var(--ui-serif); }
+.phase-mode small { color: #97a79c; }
+.element { --element-ink: #c0bca0; background: transparent; border: 1px solid transparent; border-radius: 3px; }
+.element[data-element='wood'] { --element-ink: #a4b899; }
+.element[data-element='fire'] { --element-ink: #c5a08a; }
+.element[data-element='earth'] { --element-ink: #baa986; }
+.element[data-element='metal'] { --element-ink: #c9c2a0; }
+.element[data-element='water'] { --element-ink: #9bb7be; }
+.element .element-glyph, .element .element-copy small { color: var(--element-ink); }
+.element .element-glyph { opacity: .74; }
+.element .element-copy b { color: #c1c6b9; font-weight: 400; }
+.element.selected { background: #bcc2a70a; border-color: color-mix(in srgb, var(--element-ink) 42%, transparent); box-shadow: inset 0 -1px var(--element-ink); }
+.element.selected .element-glyph { opacity: 1; }
+.element > kbd { color: #90a298; border-color: #91a2981a; background: none; }
+.actions .dismiss-button { border-color: var(--ui-line-strong); background: #a9b29404; color: #b6bead; }
+.actions .dismiss-button small { color: #8fa08f; }
+.actions .dismiss-button:disabled { color: #758680; border-color: #b5baa514; background: none; }
+.actions .dismiss-button:disabled small { color: #70807a; }
+.actions .dismiss-button[aria-pressed=true] { color: #d1bfa0; border-color: #c0ab7655; background: #c0ab7612; }
+.actions .ultimate-button { background: #222d30; color: #cec1a0; border-color: #b4a47c66; box-shadow: inset 0 1px #b4a47c17; border-radius: 3px; }
+.actions .ultimate-button small { color: #adb6a6; }
+.actions .ultimate-button.charging { background: #3a3e35; border-color: #d1bc8a; color: #e6d5ad; }
+.actions .ultimate-button:disabled { opacity: 1; color: #85938b; border-color: #b5baa520; background: #182226; }
+.build-toggle, .array-status { background: #182126cf; border: 1px solid #b9b99f24; border-radius: 3px; color: #bdc1b0; box-shadow: none; }
+.array-status { color: #c1b397; }
+.message { color: #bfc8b6; text-shadow: 0 1px 4px #09171b; letter-spacing: .025em; }
+.message-mark { color: #ad9b76; }
+.footer { color: #99a797; }
+.battle-banner { background: linear-gradient(90deg, transparent, #152025e8 25%, #152025e8 75%, transparent); color: #c0b18e; }
+.battle-banner strong, .battle-banner[data-mood='incoming'] strong { color: #dfd0aa; letter-spacing: .17em; }
+.battle-banner small, .battle-banner > span:not(.banner-rule) { color: #acb7a7; }
+.banner-rule { background: linear-gradient(90deg, transparent, #b6a37560, transparent); height: 1px; }
+
+/* Inventory, help and results use the same quiet hierarchy. */
+.boon, .boon[class*='lane-'], .help-tiles > article { background: #bdc0aa05; border: 1px solid var(--ui-line); border-radius: 4px; }
+.boon[class*='lane-'] { border-left: 1px solid var(--ui-line); }
+.boon[class*='lane-'] > b, .boon b, .help-tiles b { color: #d5c9ad; font-weight: 400; }
+.boon p, .help-tiles p, .help-more p { color: var(--ui-secondary); }
+.boon-disclosure { padding: 0; }
+.boon-disclosure summary { position: relative; list-style: none; cursor: pointer; padding: 16px 36px 16px 16px; }
+.boon-disclosure summary::-webkit-details-marker { display: none; }
+.boon-disclosure summary b { display: block; font: 21px/1.3 var(--ui-serif); letter-spacing: .06em; }
+.boon-disclosure summary > span { display: block; color: var(--ui-secondary); font-size: 12px; line-height: 1.6; margin-top: 7px; }
+.boon-disclosure summary > i { position: absolute; right: 16px; top: 43px; font-style: normal; color: var(--ui-muted); }
+.boon-disclosure[open] summary > i { transform: rotate(180deg); }
+.boon-more { padding: 0 16px 16px; border-top: 1px solid var(--ui-line); }
+.boon-more .reward-example { max-width: 280px; margin: auto; }
+.boon small, .help-tiles small, .help-more summary { color: var(--ui-muted); }
+.root-chip { border-color: #a5b7a026; padding: 5px 9px; border-radius: 3px; background: #bfc7af05; font-size: 11px; }
+.root-metal { color: #c3bb9a; }.root-wood { color: #a0b494; }.root-water { color: #99b1bd; }.root-fire { color: #be9b88; }.root-earth { color: #b8a780; }
+.learned-item, .build-learned, .help-more { border-color: var(--ui-line); }
+.learned-item summary b { color: #d0c7af; font-weight: 400; }
+.learned-item summary, .learned-item summary > span { color: var(--ui-secondary); }
+.spirit-skill-list { color: var(--ui-secondary); }.spirit-skill-list b { color: #b2bca7; }
+.loader { background: radial-gradient(ellipse at 50% 40%, #27302e, #111b20 75%); color: var(--ui-text); }
+.loader .load-line { background: #b0ba9820; }.loader .load-line::after { background: #b6a27a; }
+
+@media(hover:hover) {
+  .birth-talent:hover { background: #bdb89b0b; border-color: #bdb89b26; }
+  .birth-talent:hover .birth-talent-copy b { color: #e0d7c2; }
+  .birth-reroll:hover, .reward-footer button:hover, .fate-buttons > button:not(.primary):hover { background: #b9b39310; border-color: #b9b39350; }
+  .birth-enter:hover:not(:disabled), .primary:hover:not(:disabled) { background: #c4b18b; box-shadow: inset 0 1px #e8dcc633, 0 2px 14px #ba9e6315; }
+  .reward-choice:hover { background: #bca77e0b; border-color: #bca77e52; box-shadow: inset 0 1px #c9b38215; }
+  .tools button:hover { color: #e0dac8; background: #293236; border-color: #b7b89e40; }
+}
+@media(min-width:1001px) and (min-height:650px) {
+  .birth-heading { padding: 24px 28px; }.birth-body { padding: 26px 28px; }.birth-footer { padding: 18px 28px 14px; }
+  .birth-demo { min-height: 250px; }.birth-talent { min-height: 66px; }
+  .birth-description p { font-size: 14px; }
+}
+@media(max-width:650px) {
+  .modal.birth-modal { padding: 0; backdrop-filter: none; background: var(--ui-bg); }
+  .panel-card.birth-screen { border: 0; border-radius: 0; }
+  .birth-screen .birth-heading h2 { font-size: 24px; letter-spacing: .1em; }
+  .birth-heading > div { gap: 13px; }.birth-body { gap: 13px; }.birth-options { padding-left: 0; }
+  .birth-explanation { padding-top: 12px; }.birth-detail-title h3 { font-size: 22px; }
+  .birth-description p { font-size: 12px; line-height: 1.65; }
+  .birth-talent { min-height: 52px; padding: 7px 10px; gap: 11px; }
+  .birth-talent-copy b { font-size: 17px; }.birth-talent-copy small { font-size: 10px; margin-top: 4px; }
+  .birth-talent::before { top: 12px; bottom: 12px; }.birth-glyph { font-size: 24px; }
+  .birth-footer { gap: 8px; }.birth-slot { min-height: 36px; }.birth-note { display: none; }
+}
+@media(max-height:560px) and (orientation:landscape) {
+  .birth-screen .birth-heading h2 { font-size: 22px; }.birth-body { gap: 18px; }.birth-options { padding-left: 0; }
+  .birth-talent { min-height: 42px; padding: 5px 9px; gap: 10px; }.birth-talent-copy b { font-size: 15px; }.birth-talent-copy small { font-size: 9px; margin-top: 3px; }
+  .birth-talent::before { top: 10px; bottom: 10px; }.birth-explanation { padding-top: 8px; }.birth-detail-title h3 { font-size: 19px; }
+  .birth-description p { font-size: 11px; line-height: 1.45; }
+  .element { background: #182328ed; border-color: #b4bda125; }.element.selected { background: #2b3333f2; }
+  .tools { gap: 0; }.tools button { border-color: transparent; background: #152025a6; }
+}
+@media(prefers-reduced-motion:reduce) {
+  #interface button, .birth-talent::before, .reward-choice { transition: none; }
+}

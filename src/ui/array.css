@@ -1,0 +1,38 @@
+.array-hud { position:absolute;left:26px;top:156px;max-width:270px;pointer-events:none;color:#d8cfb6;text-shadow:0 2px 5px #071015;font-family:'KaiTi','STKaiti',serif; }
+.array-hud[hidden] { display:none; }
+.array-hud-title { font:14px 'KaiTi','STKaiti',serif;letter-spacing:.15em;margin-bottom:9px;color:#d4bd8d;background:none;border:0;padding:0;pointer-events:auto;cursor:pointer;text-shadow:inherit; }
+.array-hud-title::after { content:' ⓘ';font:10px serif;opacity:.65; }
+.array-hud-title:focus-visible { outline:1px solid #cbbd8e;outline-offset:5px; }
+.array-hud[data-summon="true"] { top:257px; }
+.array-eyes { display:flex;gap:7px;flex-wrap:wrap; }
+.array-eye { width:31px;display:grid;justify-items:center;gap:3px;color:var(--array-tint);opacity:.7; }
+.array-eye b { font-size:17px;font-weight:400; }
+.array-eye small { font:10px Georgia,serif;color:#c2c6b6; }
+.array-eye i { display:block;height:2px;width:27px;background:#dfcf9c22; }
+.array-eye em { display:block;height:100%;width:100%;background:var(--array-tint);transform-origin:left; }
+.array-eye.ready { opacity:1; }
+.array-eye.ready b { text-shadow:0 0 9px var(--array-tint); }
+.array-eye.silenced { opacity:.35; }
+.array-assist-status { font:9px/1.3 'KaiTi',serif;max-width:42px;overflow-wrap:anywhere;text-align:center;color:#e1d59f; }
+.array-assist-status[hidden] { display:none; }
+.array-hud-message { font-size:11px;line-height:1.5;margin-top:9px;max-width:250px;color:#c9c7b7; }
+.array-guide { border:1px solid #b5aa793d;padding:12px 15px;margin:12px 0;color:#c8d1b8;background:#19292088;line-height:1.8; }
+.array-guide summary { cursor:pointer;color:#d0c28d; }
+.array-guide p,.array-guide li { font-size:13px; }
+@media (max-height:520px) { .array-hud { left:20px;top:110px;max-width:230px; }.array-hud-title { font-size:12px;margin-bottom:5px; }.array-hud-message { max-width:190px;font-size:10px; } }
+@media (max-width:600px) and (min-height:521px) { .array-hud { top:166px;left:14px;max-width:175px; }.array-eye { width:25px; }.array-eye i { width:21px; }.array-hud-title { font-size:12px; }.array-hud-message { max-width:175px;font-size:10px; } }
+@media (max-height:520px) { .array-hud[data-summon="true"] { top:192px; } }
+@media (orientation:portrait) { .array-hud { top:205px; }.array-hud[data-summon="true"] { top:240px; } }
+.array-hud.harmony-ready .array-hud-title,.array-hud.harmony-ready .array-hud-message{color:#f0d394;text-shadow:0 0 10px #d4a75f70}
+.array-eye.full b { color:#fff1bd;text-shadow:0 0 9px var(--array-tint),0 0 18px var(--array-tint); }
+.array-eye.full i { box-shadow:0 0 8px var(--array-tint); }
+.array-flourish { position:fixed;top:128px;right:28px;transform:translateY(8px);width:270px;text-align:center;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;color:#f6e1b4;padding:10px 22px 15px;background:linear-gradient(90deg,transparent,#10251bd9 22%,#10251be6 78%,transparent); }
+.array-flourish small { display:block;font:10px 'KaiTi','STKaiti',serif;letter-spacing:.35em;color:#d0c59d;margin-bottom:5px; }
+.array-flourish strong { display:block;font:30px 'KaiTi','STKaiti',serif;letter-spacing:.2em;text-shadow:0 2px 3px #071015,0 0 16px #e1c77866; }
+.array-flourish i { display:block;height:1px;margin:9px auto 0;width:80%;background:linear-gradient(90deg,transparent,#ead6a1,transparent); }
+.array-flourish[data-harmony="true"] strong { color:#fff0ba;font-size:36px; }
+.array-hud.array-flaring .array-flourish { opacity:1;transform:translateY(0); }
+@media (max-height:520px) { .array-flourish { top:72px;right:12px;width:225px;padding:5px 16px; }.array-flourish strong,.array-flourish[data-harmony="true"] strong { font-size:25px; } }
+@media (orientation:portrait) { .array-flourish { top:150px;right:calc(50% - 120px);width:240px; }.array-flourish strong,.array-flourish[data-harmony="true"] strong { font-size:27px; } }
+@media (prefers-reduced-motion:reduce) { .array-flourish { transition:none;transform:translateY(0); } }
+@media(max-height:560px) and (orientation:landscape){.array-hud,.array-hud[data-summon="true"]{left:96px;top:56px;max-width:min(188px,calc(100vw - 400px));padding:8px 10px;background:#142321ce;border-left:1px solid #ac987466;border-radius:2px}.array-hud-message{max-width:100%;line-height:1.5}}

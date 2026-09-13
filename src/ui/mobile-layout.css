@@ -1,0 +1,76 @@
+#interface .slayer-hud,#interface .array-hud,#interface .summon-hud {
+  position:absolute;top:auto;right:auto;left:max(12px,env(safe-area-inset-left));bottom:calc(var(--deck-height,80px) + 20px);
+  width:min(250px,35vw);max-height:42vh;box-sizing:border-box;overflow-y:auto;touch-action:pan-y;pointer-events:auto;
+  padding:7px 10px;background:#eddbb3 url('/art/ui/scroll-surface.webp') center/cover;color:#423020;border:1px solid #987541;border-radius:3px;box-shadow:0 3px 12px #0006;
+}
+#interface .slayer-hud[hidden],#interface .array-hud[hidden],#interface .summon-hud[hidden]{display:none}
+#interface .hud-fold-toggle{display:block;width:100%;min-height:36px;padding:0 4px;text-align:left;font-size:16px;color:#442a18;border:0;background:none}
+#interface .hud-collapsed .hud-fold-content{display:none}
+#interface .hud-collapsed,#interface .summon-hud.is-collapsed{width:auto;min-width:100px;max-width:250px}
+#interface .slayer-callout{pointer-events:none}
+#interface .slayer-rank,#interface .slayer-bank,#interface .slayer-recovery,#interface .array-hud-message{color:#614329;font-size:12px;line-height:1.5}
+#interface .slayer-set,#interface .slayer-pure-trigger,#interface .array-flourish{display:none}
+#interface .summon-fold{min-width:36px;min-height:36px}
+#interface .bottom{max-width:calc(100% - 24px);bottom:max(8px,env(safe-area-inset-bottom));box-sizing:border-box}
+#interface .combat-styles[hidden]{display:none}
+#interface[data-phase="prepare"]:not([data-has-array="true"]) .elements{display:none}
+#interface[data-phase="prepare"]:not([data-has-array="true"]) .phase-state{display:none}
+#interface .element:hover,#interface .element.active{transform:none}
+#interface .modal:not([data-surface="birth"]){overflow:hidden;max-height:100%;box-sizing:border-box}
+#interface .modal .folio-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;overflow:hidden;height:100%;min-height:0;box-sizing:border-box}
+#interface .modal .folio-body,#interface .modal .build-scroll{min-height:0;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y}
+#interface .modal .folio-footer{position:static;flex-shrink:0;margin:0;box-sizing:border-box}
+@media(max-height:500px){
+ #interface .topbar{top:8px;left:12px;right:12px;gap:8px}
+ #interface .brand h1{font-size:20px} #interface .brand .eyebrow{display:none}
+ #interface .build-strip{top:50px;left:12px;max-width:180px;padding:3px 6px}
+ #interface .build-strip .build-note,#interface .slayer-callout{display:none}
+ #interface .bottom{padding:0;width:max-content;min-width:0;margin:0;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:4px}
+ #interface .command-deck{display:flex;align-items:flex-end;gap:6px;padding:0}
+ #interface .phase-state{display:none}
+ #interface .elements{display:flex;gap:4px;min-width:0}
+ #interface .element{width:clamp(50px,9vw,76px);height:68px;padding:4px;min-height:0;flex:none}
+ #interface .element-art{height:43px}
+ #interface .element-copy b{font-size:15px} #interface .element-copy small,#interface .element kbd{display:none}
+ #interface #actions{display:flex;align-items:flex-end;gap:4px;min-width:0}
+ #interface #actions button{min-height:44px;padding:7px 10px;font-size:19px;min-width:44px}
+ #interface #actions button small{font-size:10px} #interface #actions kbd{display:none}
+ #interface .slayer-hud,#interface .array-hud,#interface .summon-hud{padding:2px 7px;max-height:36vh;font-size:12px;bottom:calc(var(--deck-height,70px) + 16px)}
+ #interface .modal:not([data-surface="birth"]){padding:6px}
+ #interface .modal .folio-panel{padding:30px 42px 24px}
+ #interface .folio-heading{padding:0 0 8px;min-height:38px} #interface .folio-heading h2{font-size:27px}
+ #interface .folio-close{width:38px;height:38px;min-height:38px}
+ #interface .folio-footer{padding-top:6px} #interface .folio-footer button{min-height:38px;padding:5px 13px}
+ #interface .handbook-painting{width:110px} #interface .guide-grid{gap:12px}
+ #interface .pause-panel{height:100%;max-height:100%;overflow:auto;padding:22px 38px;touch-action:pan-y}
+ #interface .pause-panel .rest-emblem{display:none}
+ #interface .result-panel{height:100%;max-height:100%;overflow-y:auto;touch-action:pan-y}
+}
+
+#interface .modal .help-panel{grid-template-rows:auto auto minmax(0,1fr) auto}
+#interface .modal .folio-scroll{min-height:0;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y}
+#interface .modal[data-surface="reward"] .reward-panel{display:grid;grid-template-rows:auto minmax(0,1fr) auto;height:100%;min-height:0;overflow:hidden;box-sizing:border-box}
+#interface .reward-panel .reward-choices{min-height:0;overflow-y:auto;touch-action:pan-y;overscroll-behavior:contain;align-items:start}
+#interface .reward-panel .reward-footer{position:static;min-height:44px}
+@media(max-height:500px){
+ #interface .modal[data-surface] .panel-card.folio-panel,#interface .modal[data-surface] .panel-card.reward-panel{padding:30px 42px 24px}
+ #interface .reward-panel .reward-choices{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+ #interface .reward-panel .reward-pick{display:flex;flex-direction:column;padding:7px;gap:5px}
+ #interface .reward-panel .reward-pick h3{font-size:25px;margin:0}
+ #interface .reward-panel .reward-painting{width:94px;height:94px;flex:none;align-self:center;margin:0}
+ #interface .reward-panel .reward-result{font-size:12px;line-height:1.5;min-height:0}
+ #interface .reward-panel .reward-heading h2{font-size:29px;margin:0 0 8px}
+ #interface .handbook-tabs{position:static;display:flex;margin:0 0 6px;gap:4px;justify-content:flex-end}
+ #interface .handbook-tabs button{min-height:36px;padding:5px 12px}
+}
+
+@media(max-height:500px){
+ #interface .build-strip .build-toggle{min-width:48px;padding:3px;border-radius:3px}
+ #interface .build-toggle .faction-emblem{width:42px;height:55px}
+ #interface .build-toggle .faction-emblem>b{font-size:32px}
+ #interface .build-toggle .faction-emblem>strong{font-size:13px}
+}
+
+#interface .reward-panel .reward-footer{background:transparent;border-top:1px solid #97704155;min-height:44px;padding:6px 0 0;gap:12px;align-items:center}
+#interface .reward-panel .reward-footer button{background:#b3904930;color:#603a21;border:1px solid #99744088;min-height:44px;padding:6px 18px;font:20px var(--ui-serif)}
+#interface .reward-panel .reward-footer button:disabled{opacity:.45}

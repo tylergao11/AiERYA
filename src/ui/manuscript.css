@@ -1,0 +1,497 @@
+@font-face {
+  font-family: 'Jianghu Brush';
+  src: url('/fonts/jianghu-brush.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  --ui-serif: 'Jianghu Brush', 'KaiTi', 'STKaiti', serif;
+  --paper: #eaddbd;
+  --paper-ink: #292b25;
+  --cinnabar: #9b3225;
+  --ui-gold: #d5b876;
+  --ui-text: #eee1c3;
+  --ui-secondary: #d4c6a9;
+  --ui-muted: #b0af9b;
+  --paper-image: url('/art/ui/paper.webp');
+  --paper-shape: polygon(1% 1%,23% 0,51% 1%,79% 0,98% 1%,100% 4%,99.4% 25%,100% 63%,99% 98%,77% 100%,41% 99.5%,1% 99%,0 73%,.6% 33%,0 5%);
+  --brush-shape: polygon(0 17%,6% 11%,3% 3%,36% 5%,57% 0,79% 5%,95% 2%,92% 13%,100% 22%,96% 43%,100% 60%,93% 73%,97% 92%,66% 95%,39% 100%,15% 95%,1% 98%,5% 83%,0 74%,3% 53%);
+}
+#interface .painted-art {
+  display: block;
+  height: auto;
+  aspect-ratio: 1;
+  overflow: hidden;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+}
+#interface .destiny-art { display: block; flex: none; width: 105px; height: 100%; position: relative; overflow: hidden; }
+#interface .destiny-art .painted-art { width: 100%; position: absolute; top: 50%; transform: translateY(-50%); }
+#interface button { touch-action: manipulation; }
+#interface button:focus-visible, #interface summary:focus-visible { outline: 2px solid #e3c789; outline-offset: 4px; }
+#interface .modal {
+  background: linear-gradient(#07131cc7,#0a171ee6), url('/art/forest-valley.webp') center/cover;
+  backdrop-filter: blur(8px);
+  padding: 24px;
+}
+#interface .modal .panel-card {
+  background: linear-gradient(120deg,#142122f7,#0b171ef5);
+  border: 1px solid #d0b37b4d;
+  color: var(--ui-text);
+  border-radius: 2px;
+}
+#interface h2, #interface h3 { font-family: var(--ui-serif); font-weight: 400; }
+#interface .primary, #interface .birth-enter, #interface .fate-buttons .primary {
+  position: relative;
+  color: #f7e7bc;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  isolation: isolate;
+  clip-path: none;
+  box-shadow: none;
+  font: 400 30px/1 var(--ui-serif);
+  padding: 20px 30px;
+  letter-spacing: .1em;
+  text-shadow: 0 2px 1px #35181180;
+  transition: transform .18s, filter .18s;
+}
+#interface .primary::before, #interface .birth-enter::before {
+  content: ''; position: absolute; inset: -6px -8px; z-index: -1;
+  background: url('/art/ui/cinnabar.webp') center/100% 100% no-repeat;
+  filter: url('#cinnabar'); pointer-events: none;
+}
+#interface .primary:hover:not(:disabled), #interface .birth-enter:hover:not(:disabled) { filter: brightness(1.15); transform: translateY(-2px); }
+#interface .birth-enter:disabled { color: #bba992; background: transparent; box-shadow: none; }
+#interface .birth-enter:disabled::before { opacity: .4; }
+#interface .primary:focus-visible, #interface .birth-enter:focus-visible { outline-offset: -9px; outline-width: 2px; }
+
+/* Starting fate: a living picture opposite five manuscript slips. */
+#interface .modal.birth-modal { padding: clamp(16px,3vh,38px) clamp(20px,3vw,56px); overflow: hidden; }
+#interface .modal .panel-card.birth-screen {
+  width: min(1480px,100%); max-width: 1480px; height: min(870px,100%); max-height: 100%;
+  margin: auto; padding: 0; display: grid; grid-template-rows: auto minmax(0,1fr) auto;
+  background: transparent; border: 0; box-shadow: none; overflow: hidden; border-radius: 0;
+}
+#interface .birth-heading { justify-content: center; padding: 0 0 clamp(20px,3vh,38px); border: 0; }
+#interface .birth-heading h2 { margin: 0; font: 400 clamp(38px,4vw,64px)/1.2 var(--ui-serif); letter-spacing: .16em; color: #f0d5a0; display: flex; align-items: center; gap: 30px; }
+#interface .birth-heading h2::before, #interface .birth-heading h2::after { content: ''; width: clamp(36px,6vw,100px); height: 1px; background: linear-gradient(90deg,transparent,#c3a567); }
+#interface .birth-heading h2::after { transform: rotate(180deg); }
+#interface .birth-body { padding: 0 3px 5px; gap: clamp(24px,4vw,64px); grid-template-columns: minmax(0,1.18fr) minmax(0,1fr); align-items: stretch; overflow: auto; }
+#interface .birth-detail { min-height: 0; height: 100%; }
+/* Reserve the picture independently of the selected talent's text and open rules. */
+#interface .birth-demo { flex: none; height: 66%; min-height: 0; max-height: none; border: 0; border-radius: 0; background: #122029; clip-path: var(--paper-shape); box-shadow: inset 0 0 20px #080f13; }
+#interface .birth-demo::after { background: linear-gradient(#08131818,transparent 30%,transparent 80%,#09141d50); box-shadow: inset 0 0 26px 6px #09151aaa; }
+#interface .birth-replay { top: 10px; right: 12px; display: grid; place-items: center; width: 42px; height: 42px; min-height: 42px; font: 26px/1 Georgia,serif; color: #efdab0; border: 1px solid #c0a06380; border-radius: 50%; background: #0c1a21d6; padding: 0; }
+#interface .birth-demo-caption:empty { display: none; }
+#interface .birth-demo-caption { color: #f1d6a4; font-size: 12px; }
+#interface .birth-explanation { position: relative; padding: clamp(16px,2vh,28px) 8px 0; flex: 1; min-height: 0; display: grid; grid-template-rows: minmax(0,1fr) 64px; }
+#interface .birth-copy, #interface .birth-rule-copy { min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #bca26866 transparent; scrollbar-gutter: stable; }
+#interface .birth-copy { padding-bottom: 4px; }
+#interface .birth-rule-copy { position: absolute; inset: 8px 8px 64px; z-index: 2; padding: 8px 12px; background: #112028; border: 1px solid #bca26840; }
+#interface .birth-detail-title { gap: 12px; }
+#interface .birth-detail-title h3 { font: 400 clamp(30px,3vw,46px)/1.2 var(--ui-serif); color: #eeddb8; letter-spacing: .08em; }
+#interface .birth-detail-title > small { margin-left: auto; color: #d8bd85; font-size: 13px; white-space: nowrap; }
+#interface .birth-detail-meta { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
+#interface .birth-detail-meta b, #interface .birth-detail-meta .birth-tier-label { padding: 3px 9px; font-weight: 400; font-size: 12px; border: 1px solid #d0bd8340; color: #cdb78d; border-radius: 1px; }
+#interface .birth-detail-meta .birth-tier-label[data-rarity=unusual] { color: #bea6c9; border-color: #bea6c940; }
+#interface .birth-description { margin-top: 12px; }
+#interface .birth-description p { font-size: clamp(13px,1.15vw,17px); color: #e2d7bf; line-height: 1.7; }
+#interface .birth-description p small { display: block; font-size: 13px; color: #b7b6a7; margin-top: 4px; }
+#interface .birth-rules { margin-top: 8px; color: #b6b4a5; font-size: 12px; line-height: 1.7; }
+#interface .birth-rules summary { width: fit-content; cursor: pointer; padding: 3px 0; }
+#interface .birth-rules p { padding-top: 6px; max-width: 55ch; }
+#interface .birth-options { padding: 0; display: flex; flex-direction: column; min-height: 0; }
+#interface .birth-list { display: grid; grid-template-rows: repeat(5,minmax(66px,1fr)); flex: 1; gap: clamp(9px,1.4vh,16px); }
+#interface .birth-talent {
+  position: relative; min-height: 66px; height: 100%; padding: 5px 19px 5px 3px; gap: 12px;
+  background: var(--paper-image) center/cover; color: var(--paper-ink);
+  border: 1px solid #302c2150; border-radius: 3px 7px 4px 5px; overflow: visible;
+  box-shadow: 0 5px 14px #0005; transition: transform .16s,box-shadow .16s;
+}
+#interface .birth-talent:last-child { border-bottom-color: #302c2150; }
+#interface .birth-talent, #interface .birth-talent[data-inspected=true], #interface .birth-talent[data-selected=true] { background-size: cover; }
+#interface .birth-talent::before { display: none; }
+#interface .birth-talent::after { content: ''; position: absolute; inset: 3px; border: 1px solid transparent; border-radius: 2px 6px 3px 4px; pointer-events: none; }
+#interface .birth-talent:hover, #interface .birth-talent[data-inspected=true] { background: var(--paper-image) center/cover; border-color: #dcc086; box-shadow: 0 0 0 1px #d4b476,0 5px 14px #0008; }
+#interface .birth-talent[data-inspected=true]::after { border-color: #ae823a90; }
+#interface .birth-talent[data-selected=true] { background: var(--paper-image) center/cover; border-color: #92543a; }
+#interface .birth-talent[data-selected=true]::after { border-bottom: 3px solid #a43b2a; }
+#interface .birth-talent-copy { min-width: 0; }
+#interface .birth-talent-copy b, #interface .birth-talent:hover .birth-talent-copy b, #interface .birth-talent[data-selected=true] .birth-talent-copy b { color: #242b27; font: 400 clamp(23px,2.1vw,34px)/1.18 var(--ui-serif); letter-spacing: .025em; }
+#interface .birth-talent-copy small { color: #676a59; font-size: clamp(10px,.94vw,14px); margin-top: 7px; line-height: 1.4; }
+#interface .birth-talent .birth-tier-label { color: #736449; font-size: 12px; padding: 0; white-space: nowrap; }
+#interface .birth-talent .birth-tier-label[data-rarity=unusual] { color: #756279; }
+#interface .birth-talent .birth-tier-label[data-rarity=heaven] { color: #9a4e24; }
+#interface .birth-check { visibility: hidden; border: 3px double #a13626; border-radius: 3px; color: #a13626; width: 38px; height: 41px; font: 400 29px/1 var(--ui-serif); background: none; transform: rotate(-5deg); flex: none; }
+#interface .birth-talent[data-selected=true] .birth-check { visibility: visible; color: #a13626; border-color: #a13626; background: none; animation: fate-stamp .2s ease-out; }
+#interface .birth-hint { color: #d3ab85; text-align: right; min-height: 0; margin: 0!important; font-size: 12px; }
+#interface .birth-hint:not(:empty) { padding-top: 7px; }
+#interface .birth-footer { grid-template-columns: auto minmax(0,1fr) auto; align-items: center; padding: clamp(17px,3vh,34px) 0 0; gap: 20px; border: 0; background: transparent; }
+#interface .birth-count { font: 30px Georgia,serif; color: #dfbd7c; white-space: nowrap; }
+#interface .birth-count small { margin-left: 9px; font-size: 22px; opacity: .8; }
+#interface .birth-slots { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); max-width: 570px; gap: 15px; }
+#interface .birth-slot { background: var(--paper-image) center/cover; height: 62px; padding: 0 15px 0 3px; border: 0; border-radius: 3px; gap: 8px; color: #2b3029; }
+#interface .birth-slot .destiny-art { width: 66px; }
+#interface .birth-slot b { font: 400 21px var(--ui-serif); letter-spacing: 0; }
+#interface .birth-slot > span { color: #423b31; font-size: 24px; }
+#interface .birth-slot.empty { border: 1px solid #b99e5e50; background: #0d202560; justify-content: center; }
+#interface .birth-slot.empty > span { font-size: 20px; color: #9a8559; }
+#interface .birth-actions { gap: 22px; align-items: center; }
+#interface .birth-reroll { border: 1px solid #bca26880; border-radius: 2px; background: #101b22bd; color: #e8d5ae; font-size: 22px; padding: 13px 22px; }
+#interface .birth-reroll span { font: 23px var(--ui-serif); margin-left: 7px; }
+#interface .birth-enter { min-width: 195px; min-height: 72px; font-size: 39px; }
+#interface .birth-enter > span { margin-left: 25px; }
+
+/* Rewards: generous paintings, one decision line, details on demand. */
+#interface .modal .panel-card.reward-panel { width: min(1120px,100%); max-width: 1120px; padding: 6px 12px; background: transparent; border: 0; box-shadow: none; overflow: visible; }
+#interface .modal:has(> .reward-panel) { padding: 16px 24px; }
+#interface .reward-heading { display: block; text-align: center; }
+#interface .reward-heading .eyebrow { font: 15px var(--ui-serif); letter-spacing: .15em; color: #c5b796; }
+#interface .reward-heading h2 { font: 400 clamp(40px,4vw,62px)/1.15 var(--ui-serif); color: #f0d6a5; letter-spacing: .12em; margin: 10px 0 12px!important; }
+#interface .cultivation-track { justify-content: center; gap: 12px; margin: 0 0 26px; font-size: 13px; color: #d2bc91; }
+#interface .cultivation-track > i { flex: none; width: 80px; height: 2px; background: #c0a46b3b; }
+#interface .cultivation-track > i > b { background: #d0af64; }
+#interface .reward-choices { gap: clamp(18px,2.6vw,36px); align-items: stretch; }
+#interface .reward-choice { position: relative; background: var(--paper-image) center/100% 100%; border: 1px solid #5a4e38; border-radius: 5px 8px 3px 7px; box-shadow: 0 12px 28px #0007; overflow: visible; transition: transform .2s,box-shadow .2s; }
+#interface .reward-choice.dormant-reward { border-style: solid; }
+#interface .reward-choice.core-reward, #interface .reward-choice.opportunity-reward { border-color: #d1ac62; box-shadow: 0 0 0 1px #b89750,0 8px 26px #0008; }
+#interface .reward-choice:hover, #interface .reward-choice:focus-within { background: var(--paper-image) center/100% 100%; border-color: #d6b76e; box-shadow: 0 0 0 2px #c4a05e,0 14px 38px #0009; transform: translateY(-7px); }
+#interface .reward-pick { width: 100%; padding: 24px 22px 8px; display: flex; flex: 1; flex-direction: column; align-items: stretch; min-height: 0; text-align: left; color: #2d3027; }
+#interface .reward-card-heading { display: flex; justify-content: space-between; margin: 0 0 10px; color: #77694e; font-size: 12px; }
+#interface .reward-card-heading .lane-badge { margin: 0; color: #786346!important; font-size: 12px; }
+#interface .reward-card-heading .lane-badge::before { display: none; }
+#interface .reward-pick h3 { font: 400 clamp(29px,2.7vw,42px)/1.2 var(--ui-serif); letter-spacing: .04em; margin: 0; color: #242921; white-space: nowrap; }
+#interface .reward-painting { display: flex; justify-content: center; width: calc(100% + 26px); margin: 0 -13px; height: clamp(190px,22vw,290px); }
+#interface .reward-painting .painted-art { width: auto; height: 100%; aspect-ratio: 1; max-width: 100%; flex: none; }
+#interface .reward-result { border-top: 1px solid #8f805263; padding-top: 13px; font-size: 15px; line-height: 1.65; color: #30362c; font-weight: 500; min-height: 64px; }
+#interface .reward-condition { margin: 5px 0 0; font-size: 12px; color: #885339!important; line-height: 1.5; min-height: 18px; }
+#interface .reward-choose-label { position: relative; isolation: isolate; margin-top: auto; min-height: 42px; padding: 13px 16px 8px; color: #f3dfb6; background: none; display: flex; align-items: center; justify-content: center; gap: 15px; font: 24px var(--ui-serif); }
+#interface .reward-choose-label::before { content: ''; position: absolute; z-index: -1; inset: 0 -4px -5px; background: url('/art/ui/cinnabar.webp') center/100% 100% no-repeat; filter: url('#cinnabar'); }
+#interface .dormant-reward .reward-choose-label { color: #765936; box-shadow: none; }
+#interface .dormant-reward .reward-choose-label::before { display: none; }
+#interface .reward-choose-label b { font: 23px Georgia,serif; margin: 0; }
+#interface .reward-details { margin: 0 22px 15px; border: 0; font-size: 12px; color: #716a55; }
+#interface .reward-details summary { width: fit-content; cursor: pointer; min-height: 30px; padding: 4px 10px; display: flex; align-items: center; gap: 6px; margin: auto; color: #776d58; }
+#interface .reward-details summary::before { content: '+'; }
+#interface .reward-details[open] summary::before { content: '−'; }
+#interface .reward-details[open] { background: none; }
+#interface .reward-details p { color: #535747; line-height: 1.7; margin: 10px 0; }
+#interface .reward-details .reward-example { background: #1d2b2be8; color: #e2d8bd; border-radius: 2px; margin-top: 6px; }
+#interface .reward-footer { margin-top: 28px; gap: 16px; justify-content: center; }
+#interface .reward-footer button, #interface .reward-footer button:first-child { border: 1px solid #bd9c5c88; color: #dccaa6; font: 21px var(--ui-serif); border-radius: 2px; background: #0c1a21bc; min-height: 48px; padding: 10px 22px; }
+#interface .reward-footer button span { color: #d3b879; margin-left: 9px; font: 18px Georgia,serif; }
+#interface .reward-footer button:disabled { color: #8e8e7d; opacity: .55; }
+
+/* Field HUD: five physical talismans, open battlefield, compact resources. */
+#interface .topbar { top: 23px; left: 30px; right: 30px; gap: 25px; }
+#interface .identity .seal { width: 54px; height: 54px; border: 2px solid #d0b270; border-radius: 50%; color: #ecd2a0; background: #0a192280; font: 37px var(--ui-serif); }
+#interface .identity .seal::before { inset: 4px; border-radius: 50%; border-color: #ac925885; }
+#interface .identity h1 { font: 30px/1.2 var(--ui-serif); letter-spacing: .07em; color: #ecd7b0; }
+#interface .identity h1 span { margin: 0 7px; }
+#interface .eyebrow { color: #c8bda1; }
+#interface .identity .eyebrow { display: none; }
+#interface .status { gap: 25px; color: #eadbbe; text-shadow: 0 2px 6px #041117; }
+#interface .spirit-status, #interface .camp-status { min-width: 95px; gap: 5px; font-size: 12px; color: #eadbbe; }
+#interface .camp-status { grid-template-columns: auto 28px; }
+#interface .spirit-status strong, #interface .camp-status strong { font-size: 17px; color: #eed6a2; }
+#interface .health-track { height: 2px; background: #d8c59035; }
+#interface .health-track i { background: #c6b887; }
+#interface .tools button { border: 1px solid #c5a66680; color: #ddc495; background: #0d1e26b3; width: 36px; height: 36px; border-radius: 50%; }
+#interface .build-strip { top: 92px; left: 36px; right: auto; }
+#interface .build-toggle { display: flex; align-items: center; gap: 9px; padding: 5px 12px 5px 4px; min-height: 35px; border: 0; border-radius: 0; background: linear-gradient(90deg,#0a1923cc,#0a192380,transparent); color: #e2c898; font-size: 13px; }
+#interface .build-toggle::before { content: '命'; display: grid; place-items: center; color: #f3d5b3; background: #983f2b; border: 2px double #ca8260; width: 27px; height: 30px; font: 21px var(--ui-serif); transform: rotate(-4deg); }
+#interface .array-status { font-size: 11px; padding: 5px 9px; background: #101f2580; border: 0; }
+#interface .bottom { max-width: 1000px; left: 22px; right: 22px; bottom: 20px; }
+#interface .command-deck { padding: 0; gap: 22px; background: none; border: 0; box-shadow: none; border-radius: 0; align-items: flex-end; }
+#interface .command-deck .modes { display: none; }
+#interface .elements { flex: 1; gap: 12px; align-items: flex-end; }
+#interface .element {
+  display: flex; flex-direction: column; position: relative; flex: 1; gap: 0; min-width: 0; height: 136px; padding: 2px 5px 9px;
+  border: 1px solid #58452e; border-radius: 3px 4px 2px 4px; background: var(--paper-image) center/100% 100%;
+  color: #292e26; overflow: visible; box-shadow: 0 5px 14px #0009; transition: transform .15s,box-shadow .15s;
+}
+#interface .element > .element-art { width: 100%; max-width: 99px; flex: 1; }
+#interface .element .element-copy { display: block; flex: none; width: 100%; padding-left: 3px; }
+#interface .element .element-copy b { display: block; color: #2d3128; font: 23px/1.1 var(--ui-serif); letter-spacing: .035em; }
+#interface .element .element-copy small { display: none; }
+#interface .element .element-glyph { position: absolute; right: 7px; bottom: 8px; width: 21px; height: 21px; display: grid; place-items: center; border-radius: 50%; background: #5b745d; color: #f2e4c0; font: 16px var(--ui-serif); opacity: 1; }
+#interface .element[data-element=fire] .element-glyph { background: #9f4930; }
+#interface .element[data-element=earth] .element-glyph { background: #8a724c; }
+#interface .element[data-element=metal] .element-glyph { background: #9d874c; }
+#interface .element[data-element=water] .element-glyph { background: #48758b; }
+#interface .element > kbd { display: block; position: absolute; left: 4px; top: 3px; right: auto; font: 13px Georgia,serif; padding: 2px 4px; background: #242b25; color: #eedcba; border: 1px solid #96815b; border-radius: 2px; opacity: 1; }
+#interface .element.selected { background: var(--paper-image) center/100% 100%; border-color: #d4ac63; box-shadow: 0 0 0 1px #d3b97d,0 8px 18px #0009; transform: translateY(-6px); }
+#interface .element.selected > kbd { background: #9e3a28; border-color: #c07249; }
+#interface .element:hover:not(:disabled) { transform: translateY(-8px); }
+#interface .command-deck.preparation-locked .elements { filter: none; }
+#interface .command-deck.preparation-locked .element { background: var(--paper-image) center/100% 100%; border-color: #86714b; opacity: .65; filter: saturate(.5); }
+#interface .command-deck.preparation-locked .element > kbd { display: none; }
+#interface .element:disabled { opacity: .65; }
+#interface .actions { align-items: flex-end; gap: 8px; flex: none; }
+#interface .actions .primary { min-width: 150px; min-height: 65px; font-size: 33px; padding: 16px 24px; }
+#interface .actions .primary span { margin-left: 12px; }
+#interface .actions .dismiss-button { width: auto; min-width: 64px; min-height: 48px; padding: 8px 12px; border: 1px solid #b3935980; border-radius: 2px; background: #102029dd; color: #dcca9e; }
+#interface .actions .dismiss-button b { font: 20px/1.15 var(--ui-serif); }
+#interface .actions .dismiss-button small { display: none; }
+#interface .actions [data-action=repair-camp] small { display: block; font-size: 10px; color: #bca77a; margin-top: 6px; }
+#interface .actions [data-action=dismiss]:disabled { opacity: .45; }
+#interface .actions .ultimate-button { min-width: 73px; min-height: 62px; border-color: #c3a15f; border-radius: 2px; background: #14242ce8; color: #e1c389; padding: 8px 12px; }
+#interface .actions .ultimate-button b { font: 27px var(--ui-serif); }
+#interface .actions .ultimate-button small { font-size: 9px; }
+#interface .message { margin: 0 0 13px; min-height: 0; text-align: center; font-size: 12px; color: #e6d1a8; }
+#interface .message:has(#notice:empty) { display: none; }
+#interface .footer { display: none; }
+#interface .footer #combat-totals { display: none; }
+#interface .footer #mode-tip { color: #d6bf91; font-size: 12px; text-shadow: 0 1px 5px #06131e; }
+#interface .footer #mode-tip:empty { display: none; }
+#interface .battle-banner[data-mood=learned] { display: none; }
+
+/* Secondary screens use the same physical vocabulary. */
+#interface .build-panel .boon { background: var(--paper-image) center/100% 100%; color: #30382e; border: 0; border-radius: 3px; }
+#interface .build-panel .boon summary { position: relative; padding-left: 72px; }
+#interface .build-panel .boon summary > .painted-art { position: absolute; width: 70px; height: 70px; top: 0; left: -5px; }
+#interface .build-panel .boon summary b { font: 26px var(--ui-serif); color: #2b332a; }
+#interface .build-panel .boon summary > span, #interface .build-panel .boon-more p { color: #525943; }
+#interface .build-panel .boon .lane-badge, #interface .build-panel .boon small { color: #776346!important; }
+#interface .build-panel .boon .reward-example { background: #132726e8; }
+#interface .build-panel .innate-roots, #interface .build-panel .opening-foot { display: none; }
+@keyframes fate-stamp { from { opacity: 0; transform: scale(1.35) rotate(6deg); } to { opacity: 1; transform: scale(1) rotate(-5deg); } }
+
+@media (min-width: 1500px) and (min-height: 850px) {
+  #interface .bottom { max-width: 1120px; bottom: 28px; }
+  #interface .element { height: 158px; }
+  #interface .element > .element-art { max-width: 118px; }
+  #interface .element .element-copy b { font-size: 27px; }
+}
+@media (max-width: 1100px) and (min-height: 561px) {
+  #interface .birth-body { gap: 24px; }
+  #interface .birth-talent { gap: 6px; padding-right: 12px; }
+  #interface .birth-talent .destiny-art { width: 77px; }
+  #interface .birth-talent-copy b { font-size: 25px; }
+  #interface .birth-check { width: 28px; height: 32px; font-size: 23px; }
+  #interface .birth-talent .birth-tier-label { font-size: 10px; }
+  #interface .birth-actions { gap: 12px; }
+  #interface .birth-enter { min-width: 150px; }
+  #interface .birth-slot { height: 52px; padding-right: 10px; }
+  #interface .birth-slot .destiny-art { width: 45px; }
+  #interface .birth-slot b { font-size: 19px; }
+  #interface .birth-detail-title > small { margin-left: 0; }
+  #interface .topbar { gap: 14px; left: 20px; right: 20px; }
+  #interface .identity h1 { font-size: 24px; }
+  #interface .status { gap: 15px; }
+  #interface .command-deck { gap: 14px; }
+  #interface .elements { gap: 7px; }
+  #interface .element { height: 117px; }
+  #interface .element > .element-art { max-width: 83px; }
+  #interface .element .element-copy b { font-size: 20px; }
+  #interface .actions .primary { min-width: 120px; font-size: 28px; }
+}
+@media (max-height: 780px) and (min-width: 701px) and (min-height: 561px) {
+  #interface .modal.birth-modal { padding: 20px 32px; }
+  #interface .birth-heading { padding-bottom: 20px; }
+  #interface .birth-heading h2 { font-size: 42px; }
+  #interface .birth-list { gap: 8px; grid-template-rows: repeat(5,minmax(62px,1fr)); }
+  #interface .birth-talent { min-height: 62px; }
+  #interface .birth-talent .destiny-art { width: 79px; }
+  #interface .birth-talent-copy b { font-size: 27px; }
+  #interface .birth-description p { font-size: 14px; }
+  #interface .birth-explanation { padding-top: 14px; }
+  #interface .birth-footer { padding-top: 18px; }
+  #interface .birth-enter { min-height: 58px; }
+  #interface .reward-heading h2 { font-size: 44px; }
+  #interface .modal .panel-card.reward-panel { max-width: 900px; }
+  #interface .reward-pick { padding: 18px 18px 6px; }
+  #interface .reward-painting { max-height: 210px; }
+  #interface .reward-pick h3 { font-size: 32px; }
+  #interface .reward-result { font-size: 13px; min-height: 48px; padding-top: 8px; }
+  #interface .cultivation-track { margin-bottom: 18px; }
+  #interface .reward-footer { margin-top: 18px; }
+}
+@media (max-width: 700px) {
+  #interface .modal.birth-modal { padding: 0; overflow: hidden; }
+  #interface .modal .panel-card.birth-screen { height: 100dvh; max-height: 100dvh; width: 100%; padding: max(12px,env(safe-area-inset-top)) 0 0; }
+  #interface .birth-heading { padding: 5px 0 16px; }
+  #interface .birth-heading h2 { font-size: 36px; gap: 15px; }
+  #interface .birth-body { display: flex; flex-direction: column; overflow-y: auto; padding: 0 18px 12px; gap: 18px; }
+  #interface .birth-detail { flex: none; height: auto; }
+  #interface .birth-demo { height: 190px; min-height: 190px; flex: none; }
+  #interface .birth-explanation { padding: 12px 3px 0; flex: none; grid-template-rows: auto 64px; }
+  #interface .birth-copy { overflow: visible; scrollbar-gutter: auto; }
+  #interface .birth-detail-title h3 { font-size: 31px; }
+  #interface .birth-detail-title > small { font-size: 11px; margin-left: auto; }
+  #interface .birth-detail-meta { margin-top: 7px; }
+  #interface .birth-description { margin-top: 8px; }
+  #interface .birth-description p { font-size: 13px; }
+  #interface .birth-options { flex: none; }
+  #interface .birth-list { gap: 9px; grid-template-rows: repeat(5,75px); }
+  #interface .birth-talent { padding: 3px 12px 3px 1px; gap: 5px; min-height: 75px; }
+  #interface .birth-talent .destiny-art { width: 73px; }
+  #interface .birth-talent-copy b { font-size: 26px; }
+  #interface .birth-talent-copy small { font-size: 10px; margin-top: 4px; }
+  #interface .birth-talent .birth-tier-label { font-size: 10px; }
+  #interface .birth-check { width: 28px; height: 32px; font-size: 23px; }
+  #interface .birth-footer { padding: 11px 16px max(12px,env(safe-area-inset-bottom)); grid-template-columns: auto minmax(0,1fr); gap: 10px; background: #0b1822f5; box-shadow: 0 -10px 25px #05121b85; }
+  #interface .birth-count { font-size: 23px; }
+  #interface .birth-count small { font-size: 17px; margin-left: 5px; }
+  #interface .birth-slots { gap: 8px; }
+  #interface .birth-slot { height: 42px; gap: 2px; padding: 0 8px 0 2px; }
+  #interface .birth-slot .destiny-art { width: 34px; }
+  #interface .birth-slot b { font-size: 17px; }
+  #interface .birth-slot > span { font-size: 18px; }
+  #interface .birth-actions { grid-column: 1/-1; display: grid; grid-template-columns: 1fr 1.5fr; gap: 14px; }
+  #interface .birth-enter { font-size: 31px; min-height: 53px; min-width: 0; padding: 11px 23px; }
+  #interface .birth-reroll { padding: 10px; font-size: 20px; }
+  #interface .birth-reroll span { font-size: 23px; }
+  #interface .modal { padding: 18px 12px; }
+  #interface .modal .panel-card.reward-panel { padding: 5px 0; }
+  #interface .reward-heading h2 { font-size: 40px; }
+  #interface .reward-choices { grid-template-columns: 1fr; gap: 17px; }
+  #interface .reward-pick { display: grid; grid-template-columns: 100px minmax(0,1fr); column-gap: 12px; padding: 16px 17px 7px; }
+  #interface .reward-card-heading { grid-column: 2; margin-bottom: 5px; font-size: 10px; }
+  #interface .reward-card-heading .lane-badge { font-size: 10px; }
+  #interface .reward-pick h3 { grid-column: 2; font-size: 29px; white-space: normal; }
+  #interface .reward-painting { grid-column: 1; grid-row: 1/5; width: 120px; height: 120px; margin: 0 -10px; align-self: center; }
+  #interface .reward-result { grid-column: 2; min-height: 0; font-size: 12px; line-height: 1.5; margin-top: 7px; padding-top: 7px; }
+  #interface .reward-condition { grid-column: 2; font-size: 10px; }
+  #interface .reward-choose-label { grid-column: 2; min-height: 36px; font-size: 22px; margin-top: 8px; }
+  #interface .reward-details { margin: 0 18px 8px; }
+  #interface .reward-details summary { margin-left: 0; min-height: 25px; }
+  #interface .reward-footer { position: sticky; bottom: -18px; background: #0b1822f5; margin-top: 18px; padding: 12px 0; }
+  #interface .reward-footer button, #interface .reward-footer button:first-child { font-size: 19px; min-height: 45px; }
+  #interface .topbar { top: 12px; left: 12px; right: 12px; gap: 7px; }
+  #interface .identity .seal { display: grid; width: 36px; height: 36px; font-size: 26px; }
+  #interface .identity { gap: 8px; }
+  #interface .identity h1 { font-size: 24px; line-height: 1.1; }
+  #interface .tools { gap: 4px; }
+  #interface .tools button { width: 34px; height: 36px; min-width: 34px; }
+  #interface .status { top: 54px; gap: 12px; }
+  #interface .spirit-status, #interface .camp-status { min-width: 85px; font-size: 10px; }
+  #interface .wave { font-size: 10px; }
+  #interface .build-strip { top: 111px; left: 12px; right: auto; max-width: calc(100% - 24px); }
+  #interface .bottom { left: 12px; right: 12px; bottom: max(10px,env(safe-area-inset-bottom)); }
+  #interface .command-deck { flex-wrap: wrap; gap: 13px; }
+  #interface .elements { flex: 1 0 100%; width: 100%; gap: 7px; }
+  #interface .element { min-height: 93px; height: 100px; padding-bottom: 8px; }
+  #interface .element > .element-art { max-width: 72px; }
+  #interface .element .element-copy b { font-size: 19px; text-align: left; padding: 0; }
+  #interface .element .element-glyph { display: none; }
+  #interface .element > kbd { font-size: 10px; }
+  #interface .actions { margin-left: auto; gap: 10px; }
+  #interface .actions .primary { font-size: 29px; min-height: 51px; min-width: 145px; }
+  #interface .actions .ultimate-button { min-height: 49px; }
+  #interface .message { font-size: 11px; }
+  #interface .footer { display: none; }
+}
+@media (max-height: 560px) and (min-width: 701px) {
+  #interface .modal.birth-modal { padding: max(8px,env(safe-area-inset-top)) 20px max(8px,env(safe-area-inset-bottom)); }
+  #interface .birth-heading { padding-bottom: 9px; }
+  #interface .birth-heading h2 { font-size: 31px; }
+  #interface .birth-body { gap: 22px; overflow-y: auto; }
+  #interface .birth-demo { min-height: 0; max-height: none; height: 55%; }
+  #interface .birth-explanation { padding: 7px 3px 0; grid-template-rows: minmax(0,1fr) 52px; }
+  #interface .birth-rule-copy { inset: 4px 3px 52px; }
+  #interface .birth-detail-title h3 { font-size: 26px; }
+  #interface .birth-detail-title > small { font-size: 10px; }
+  #interface .birth-detail-meta { gap: 6px; margin-top: 4px; }
+  #interface .birth-detail-meta b, #interface .birth-detail-meta .birth-tier-label { font-size: 9px; padding: 2px 5px; }
+  #interface .birth-description { margin-top: 5px; }
+  #interface .birth-description p { font-size: 11px; line-height: 1.5; }
+  #interface .birth-description p small { font-size: 10px; margin-top: 2px; }
+  #interface .birth-rules { margin-top: 2px; font-size: 10px; }
+  #interface .birth-list { gap: 6px; grid-template-rows: repeat(5,minmax(44px,1fr)); }
+  #interface .birth-talent { min-height: 44px; gap: 7px; padding: 2px 9px 2px 2px; }
+  #interface .birth-talent .destiny-art { width: 48px; }
+  #interface .birth-talent-copy b { font-size: 22px; }
+  #interface .birth-talent-copy small { font-size: 9px; margin-top: 2px; }
+  #interface .birth-talent .birth-tier-label { font-size: 9px; }
+  #interface .birth-check { width: 24px; height: 27px; font-size: 20px; }
+  #interface .birth-footer { padding-top: 9px; gap: 12px; }
+  #interface .birth-count { font-size: 24px; }
+  #interface .birth-count small { font-size: 17px; }
+  #interface .birth-slot { height: 40px; gap: 5px; padding: 0 8px 0 2px; }
+  #interface .birth-slot .destiny-art { width: 39px; }
+  #interface .birth-slot b { font-size: 19px; }
+  #interface .birth-actions { gap: 12px; }
+  #interface .birth-enter { min-height: 44px; min-width: 135px; font-size: 29px; padding: 10px 20px; }
+  #interface .birth-reroll { padding: 9px 15px; min-height: 40px; font-size: 19px; }
+  #interface .birth-reroll span { font-size: 21px; }
+  #interface .modal .panel-card.reward-panel { max-width: 810px; }
+  #interface .reward-heading h2 { font-size: 33px; margin: 3px 0 6px!important; }
+  #interface .reward-heading .eyebrow { font-size: 12px; }
+  #interface .cultivation-track { margin-bottom: 12px; font-size: 11px; }
+  #interface .reward-choices { gap: 18px; }
+  #interface .reward-pick { padding: 13px 16px 5px; }
+  #interface .reward-pick h3 { font-size: 27px; }
+  #interface .reward-card-heading { font-size: 10px; margin-bottom: 5px; }
+  #interface .reward-painting { width: 122px; height: 122px; margin: 0 auto; }
+  #interface .reward-result { padding-top: 6px; font-size: 11px; min-height: 41px; }
+  #interface .reward-condition { font-size: 10px; margin-top: 2px; }
+  #interface .reward-choose-label { min-height: 32px; font-size: 20px; margin-top: 5px; padding: 5px 10px; }
+  #interface .reward-details { margin: 0 16px 5px; }
+  #interface .reward-details summary { min-height: 22px; font-size: 10px; }
+  #interface .reward-footer { margin-top: 12px; }
+  #interface .reward-footer button, #interface .reward-footer button:first-child { min-height: 40px; padding: 8px 18px; font-size: 18px; }
+  #interface .topbar { top: 8px; left: 14px; right: 14px; gap: 14px; }
+  #interface .identity { display: flex; }
+  #interface .identity .seal { width: 32px; height: 32px; font-size: 24px; }
+  #interface .identity h1 { font-size: 22px; }
+  #interface .status { margin-left: auto; gap: 14px; }
+  #interface .spirit-status, #interface .camp-status { font-size: 10px; min-width: 70px; }
+  #interface .tools { margin-left: 0; }
+  #interface .tools button { min-width: 31px; width: 31px; height: 32px; }
+  #interface .build-strip { top: 55px; left: 18px; right: auto; width: auto; }
+  #interface .build-toggle { width: auto; min-height: 29px; font-size: 11px; }
+  #interface .array-status { display: none; }
+  #interface .bottom { top: auto; bottom: 10px; left: 15px; right: 15px; max-width: 690px; }
+  #interface .command-deck { display: flex; gap: 14px; }
+  #interface .elements { position: static; display: flex; width: auto; flex: 1; gap: 6px; }
+  #interface .element { width: auto; height: 82px; min-height: 82px; padding: 0 4px 7px; }
+  #interface .element > .element-art { max-width: 60px; }
+  #interface .element .element-copy b { display: block; font-size: 19px; }
+  #interface .element .element-glyph { display: none; }
+  #interface .element > kbd { font-size: 10px; }
+  #interface .actions { position: static; width: auto; flex-direction: row; align-items: flex-end; gap: 6px; }
+  #interface .actions button { width: auto; }
+  #interface .actions .primary { font-size: 28px; min-width: 125px; min-height: 51px; padding: 12px 19px; }
+  #interface .actions .dismiss-button { min-width: 54px; padding: 7px 9px; min-height: 40px; }
+  #interface .actions .dismiss-button b { font-size: 17px; }
+  #interface .actions .ultimate-button { min-width: 62px; min-height: 46px; padding: 7px; }
+  #interface .message { position: static; font-size: 10px; margin: 0 0 7px; }
+  #interface .footer { display: none; }
+}
+/* Compact landscape keeps all five cards reachable beside the battlefield. */
+@media (max-width: 700px) and (max-height: 560px) and (orientation: landscape) {
+  #interface .elements { width: 72px; gap: 3px; }
+  #interface .element { height: 44px; min-height: 44px; flex-direction: row; padding: 3px; overflow: hidden; }
+  #interface .element > .element-art { flex: none; width: 32px; max-width: 32px; height: 36px; }
+  #interface .element .element-copy { width: auto; padding-left: 0; }
+  #interface .element .element-copy b { font-size: 16px; }
+  #interface .element > kbd { display: none; }
+  #interface .element.selected, #interface .element:hover:not(:disabled) { transform: translateX(3px); }
+  #interface .build-strip { top: calc(max(4px,env(safe-area-inset-top)) + 50px); left: auto; right: max(10px,env(safe-area-inset-right)); max-width: 92px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #interface *, #interface *::before, #interface *::after { transition: none!important; animation: none!important; }
+  #interface .reward-choice:hover, #interface .element:hover:not(:disabled) { transform: none; }
+}
+
+@media (max-height: 440px) and (min-width: 701px) {
+  #interface .modal:has(> .reward-panel) { padding: 8px 16px; }
+  #interface .modal .panel-card.reward-panel { padding: 0 8px; }
+  #interface .reward-heading h2 { font-size: 28px!important; margin: 3px 0 5px!important; }
+  #interface .reward-heading .eyebrow { font-size: 11px; }
+  #interface .cultivation-track { margin: 0 0 9px; font-size: 10px; }
+  #interface .reward-pick { padding: 9px 12px 4px; }
+  #interface .reward-card-heading { font-size: 10px; line-height: 1.2; margin-bottom: 4px; }
+  #interface .reward-card-heading .lane-badge { font-size: 10px; }
+  #interface .reward-pick h3 { font-size: 24px; line-height: 1.15; }
+  #interface .reward-painting { width: 84px; height: 84px; }
+  #interface .reward-result { min-height: 32px; font-size: 11px; line-height: 1.4; margin: 0; padding-top: 5px; }
+  #interface .reward-condition { min-height: 16px; font-size: 9px; margin: 0; }
+  #interface .reward-choose-label { min-height: 32px; margin-top: auto; padding: 5px; font-size: 20px; }
+  #interface .reward-details { margin: 0 12px 4px; }
+  #interface .reward-details summary { min-height: 20px; padding: 2px 8px; }
+  #interface .reward-footer { margin-top: 9px; }
+  #interface .reward-footer button, #interface .reward-footer button:first-child { min-height: 40px; padding: 6px 16px; }
+}

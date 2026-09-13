@@ -1,0 +1,285 @@
+/* Shared game menus. Paper carries decisions; the live forest remains behind them. */
+#interface [data-lane="slayer"], #interface .lane-slayer { --lane-pigment: #9c3428; --lane-light: #e4a18a; }
+#interface [data-lane="spirit"], #interface .lane-spirit { --lane-pigment: #276c59; --lane-light: #94d1b6; }
+#interface [data-lane="array"], #interface .lane-array { --lane-pigment: #8d6824; --lane-light: #ecd295; }
+#interface [data-lane="reaction"], #interface .lane-reaction { --lane-pigment: #665386; --lane-light: #ccbee5; }
+#interface [data-lane="root"], #interface .lane-root { --lane-pigment: #326981; --lane-light: #a6c6de; }
+#interface [data-lane="common"], #interface .lane-common { --lane-pigment: #63614e; --lane-light: #c9c5ae; }
+#interface .lane-mark { display: inline-flex; align-items: center; gap: 7px; color: var(--lane-pigment); white-space: nowrap; line-height: 1; }
+#interface .lane-mark > b { display: grid; place-items: center; flex: none; width: 29px; height: 32px; color: #fbefd6!important; background: var(--lane-pigment); outline: 1px solid #f8e7bf65; outline-offset: -3px; font: 24px/1 var(--ui-serif)!important; letter-spacing: 0; border-radius: 1px; }
+#interface .lane-mark > span { color: var(--lane-pigment); font-weight: 700; font-size: 14px; letter-spacing: .08em; }
+#interface .birth-talent { border-left: 5px solid var(--lane-pigment)!important; }
+#interface .birth-talent-copy small { display: flex; align-items: center; gap: 12px; margin-top: 7px; }
+#interface .birth-talent .lane-mark { background: var(--lane-pigment); padding-right: 7px; gap: 5px; border-radius: 1px; }
+#interface .birth-talent .lane-mark > span { color: #fff0cf; }
+#interface .birth-detail-meta > .lane-mark > span { color: var(--lane-light); }
+#interface .birth-detail-meta > .lane-mark > b { padding: 0; border: 0; width: 33px; height: 36px; }
+#interface .birth-detail-meta { gap: 16px; }
+#interface .birth-slot { padding-left: 10px; }
+#interface .birth-slot > .lane-mark { flex: none; }
+#interface .birth-slot > .lane-mark > span { display: none; }
+#interface .reward-card-heading .lane-mark > b { width: 38px; height: 42px; font-size: 30px!important; }
+#interface .reward-card-heading .lane-mark > span { font-size: 16px; }
+#interface .reward-choices .reward-choice { border-top: 5px solid var(--lane-pigment); }
+#interface .build-toggle::before { display: none; }
+#interface .build-toggle { gap: 12px; max-width: none; }
+#interface .build-toggle .lane-mark > span { color: var(--lane-light); font-size: 14px; }
+#interface .build-toggle .lane-mark > b { width: 29px; height: 32px; }
+#interface .build-progress { margin-left: 3px; font-size: 11px; }
+#interface .build-lanes { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: 18px; }
+#interface .build-overview { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; }
+#interface .build-overview .build-lanes { margin: 0; }
+#interface .build-overview .root-row { margin: 0; }
+#interface .build-overview .fate-rule { grid-column: 1/-1; margin: 0 0 18px; padding-bottom: 12px; }
+#interface .build-overview .lane-mark { background: #07121a99; padding: 6px 12px 6px 6px; border: 1px solid var(--lane-pigment); }
+#interface .build-overview .lane-mark > span { color: var(--lane-light); font-size: 18px; }
+#interface .folio-panel .boon summary > .lane-mark { grid-column: 1; }
+#interface .folio-panel .boon summary > .lane-mark b { width: 24px; height: 27px; font-size: 20px!important; }
+#interface .folio-panel .boon summary > .lane-mark span { font-size: 13px; color: var(--lane-pigment); }
+#interface .result-story .build-lanes { margin: 0 0 10px; }
+#interface .birth-decision { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-top: 0; }
+#interface .birth-decision .birth-rules { flex: 1; margin: 0; }
+#interface .birth-decision summary { min-height: 44px; display: flex; align-items: center; }
+#interface .birth-confirm { flex: none; min-height: 46px; min-width: 126px; padding: 13px 24px; font-size: 25px; }
+#interface .birth-confirm:disabled { color: #9f9f89; background: #12202a; border: 1px solid #9f9f8933; }
+#interface .birth-confirm:disabled::before { display: none; }
+@media (min-width:701px) and (min-height:561px) {
+  #interface .birth-screen .birth-detail .birth-demo { height: calc(100% - 230px); min-height: 100px; flex: none; }
+  #interface .birth-screen .birth-detail .birth-explanation { height: 230px; flex: none; }
+}
+#interface .birth-talent:hover:not([data-inspected=true]) { background: var(--paper-image) center/cover; border-color: #302c2150; box-shadow: 0 5px 14px #0005; }
+#interface .birth-talent[data-selected=true]:hover { border-color: #92543a; }
+#interface .modal[data-surface]:not([data-surface="birth"]):not([data-surface="reward"]) {
+  background: radial-gradient(ellipse at 50% 40%, #07131bab, #040c14eb);
+  backdrop-filter: blur(7px) saturate(.7);
+  display: flex; align-items: center!important; justify-content: center;
+  overflow: hidden; padding: max(22px,env(safe-area-inset-top)) max(24px,env(safe-area-inset-right)) max(22px,env(safe-area-inset-bottom)) max(24px,env(safe-area-inset-left));
+}
+#interface .modal[data-surface] .panel-card { animation: none; }
+#interface .modal[data-surface] { pointer-events: auto; }
+#interface .modal[data-leaving] { pointer-events: auto; }
+#interface.has-panel > .topbar, #interface.has-panel > .bottom, #interface.has-panel > .build-strip { opacity: 0; transition: opacity .16s; }
+#interface > .topbar, #interface > .bottom, #interface > .build-strip { transition: opacity .22s; }
+#interface .modal h2:focus { outline: none; }
+#interface .folio-close { position: absolute; top: 13px; right: 16px; width: 44px; height: 44px; padding: 0; display: grid; place-items: center; font: 32px/1 Georgia,serif; color: #bfa87f; border: 1px solid #bfa87f45; border-radius: 50%; z-index: 2; }
+#interface .folio-close:hover { background: #d2bc8720; }
+#interface .quiet-button { min-height: 44px; padding: 10px 24px; color: #e6d1a7; background: #0b1821b0; border: 1px solid #bda77366; border-radius: 2px; font: 22px/1.2 var(--ui-serif); }
+#interface .text-button { padding: 10px 12px; min-height: 44px; color: #b8b19b; font-size: 12px; }
+#interface .text-button:hover { color: #efd8a8; }
+#interface .folio-actions { display: flex; align-items: center; justify-content: center; gap: 22px; }
+#interface .modal .pause-panel, #interface .modal .confirm-panel {
+  position: relative; flex: none; width: min(440px,100%); max-height: calc(100dvh - 44px); margin: auto; padding: 38px 46px 28px;
+  color: #30342b; background: var(--paper-image) center/100% 100%; border: 0; border-radius: 1px; box-shadow: 0 18px 70px #0006; text-align: center; overflow: auto;
+}
+#interface .pause-panel .folio-close, #interface .confirm-panel .folio-close { color: #766243; border-color: #7c664a45; }
+#interface .rest-emblem { position: relative; display: grid; place-items: center; margin: 0 auto 20px; width: 66px; height: 72px; border: 1px solid #9b322590; color: #973c2a; font: 48px var(--ui-serif); transform: rotate(-5deg); }
+#interface .rest-emblem::after { content: ''; position: absolute; inset: 4px; border: 1px solid #9b32255a; }
+#interface .pause-panel h2, #interface .confirm-panel h2 { color: #34362c; font-size: 40px; letter-spacing: .12em; margin: 0; }
+#interface .menu-state { color: #786951; font-size: 12px; margin: 16px 0 32px; }
+#interface .pause-panel > .primary { width: 100%; font-size: 32px; margin: 0 0 20px; }
+#interface .pause-links { display: flex; justify-content: center; border-top: 1px solid #80705140; border-bottom: 1px solid #80705140; padding: 5px 0; }
+#interface .pause-links button { flex: 1; min-height: 46px; font: 23px var(--ui-serif); color: #4a4938; }
+#interface .pause-links button:hover { background: #7e5e2e13; }
+#interface .pause-panel .restart-link { margin-top: 12px; color: #857052; }
+#interface .confirm-panel { width: min(550px,100%)!important; }
+#interface .confirm-copy { color: #77654b; margin: 22px 0 32px; font-size: 14px; }
+#interface .confirm-panel .quiet-button { color: #605038; background: #9d794817; border-color: #93764d66; }
+#interface .confirm-panel .primary { font-size: 24px; white-space: nowrap; padding: 18px 25px; }
+
+#interface .modal .folio-panel {
+  display: flex; flex-direction: column; width: min(1040px,100%); max-width: 1040px; height: min(800px,calc(100dvh - 60px)); max-height: calc(100dvh - 44px);
+  padding: 0; margin: auto; background: linear-gradient(110deg,#142028ed,#0a1720e8); border: 1px solid #b29c6740; border-radius: 2px; box-shadow: 0 25px 70px #0006; overflow: hidden; text-align: left;
+}
+#interface .folio-heading { flex: none; position: relative; display: flex; align-items: center; justify-content: space-between; min-height: 100px; padding: 20px 80px 20px 32px; background: var(--paper-image) center/cover; color: #30382e; }
+#interface .folio-heading h2 { margin: 0; font-size: 36px; color: #30382e; letter-spacing: .12em; }
+#interface .folio-heading .eyebrow { color: #807056; font-size: 11px; margin: 0 0 8px; }
+#interface .folio-heading .folio-close { top: 26px; right: 24px; color: #776446; border-color: #7764464a; }
+#interface .folio-scroll { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #b59c5c55 transparent; padding: 24px 32px; }
+#interface .folio-footer { flex: none; min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 18px; padding: 14px 32px; border-top: 1px solid #b29c6733; background: #0a171eef; }
+#interface .folio-footer .text-button { margin-left: auto; }
+#interface .keyboard-note { font-size: 11px; color: #9fa494; }
+#interface .folio-section-title { font-size: 23px; color: #d5c297; margin: 24px 0 12px; }
+#interface .folio-panel .root-row { justify-content: flex-start; margin-top: 0; }
+#interface .folio-panel .fate-rule { padding: 0 0 15px; margin: 14px 0; font-size: 12px; border-bottom: 1px solid #b29c6733; }
+#interface .folio-panel .boon-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 16px; margin-bottom: 24px; }
+#interface .folio-panel .boon { margin: 0; padding: 14px 18px; border-radius: 1px; border-left: 5px solid var(--lane-pigment); }
+#interface .folio-panel .boon summary { min-height: 88px; display: grid; grid-template-columns: 1fr auto; padding: 3px 0 3px 91px; gap: 6px; }
+#interface .folio-panel .boon summary > .painted-art { width: 90px; height: 90px; top: 0; left: -7px; grid-column: auto; grid-row: auto; margin: 0; }
+#interface .folio-panel .boon summary > small, #interface .folio-panel .boon summary > b, #interface .folio-panel .boon summary > span:not(.painted-art) { grid-column: 1; }
+#interface .folio-panel .boon summary > small { margin: 0; font-size: 10px; }
+#interface .folio-panel .boon summary > span { font-size: 12px; line-height: 1.6; margin-top: 0; }
+#interface .folio-panel .boon summary > i { position: static; grid-column: 2; grid-row: 1/4; align-self: center; color: #756348; }
+#interface .folio-panel .boon-more { border-top: 1px solid #77634838; margin-top: 12px; padding-top: 12px; }
+#interface .empty-inscription { text-align: center; color: #969a89; padding: 12px; font: 22px var(--ui-serif); }
+#interface .folio-panel .learned-item summary { min-height: 44px; align-items: center; }
+#interface .folio-panel .help-more, #interface .folio-panel .array-guide { border: 0; border-top: 1px solid #b29c6733; border-radius: 0; background: transparent; padding: 10px 0; margin: 0; }
+#interface .folio-panel .help-more > summary, #interface .folio-panel .array-guide > summary { min-height: 44px; display: flex; align-items: center; gap: 12px; font-size: 14px; color: #ddd0af; cursor: pointer; list-style: none; }
+#interface .folio-panel .help-more > summary::before, #interface .folio-panel .array-guide > summary::before { content: '+'; color: #bea572; font-size: 20px; }
+#interface .folio-panel details[open] > summary::before { content: '−'; }
+#interface .folio-panel .help-more p, #interface .folio-panel .array-guide p, #interface .folio-panel .array-guide li { font-size: 13px; line-height: 1.85; color: #c9c6ad; }
+#interface .folio-panel .help-tiles { margin: 0 0 22px; gap: 18px; }
+#interface .folio-panel .help-tiles > article { background: var(--paper-image) center/cover; border: 0; border-radius: 1px; padding: 20px; }
+#interface .folio-panel .help-tiles b { color: #3f4638; font: 24px var(--ui-serif); }
+#interface .folio-panel .help-tiles p { color: #5b5c46; font-size: 13px; line-height: 1.8; }
+#interface .folio-panel .help-tiles small { color: #857053; font-size: 11px; }
+#interface .folio-panel .help-tiles .reward-example { background: #172b2b; margin: 14px 0; border-radius: 2px; }
+#interface .folio-panel .help-tiles > article > svg { stroke: #737e50; }
+#interface .folio-panel .help-ultimate, #interface .folio-panel .help-ultimate strong { color: #84683c; }
+#interface .folio-panel .upgrades { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 18px; }
+#interface .folio-panel .upgrades > button { background: var(--paper-image) center/cover; color: #464836; padding: 20px; }
+#interface .folio-panel .upgrades h3 { color: #414737; font-size: 30px; }
+
+#interface .modal .result-panel { display: grid; grid-template-columns: 42% minmax(0,1fr); width: min(970px,100%); max-width: 970px; padding: 0; border: 0; border-radius: 2px; background: var(--paper-image) center/100% 100%; color: #3e4233; overflow: auto; max-height: calc(100dvh - 44px); }
+#interface .result-illustration { position: relative; display: grid; place-items: center; min-width: 0; padding: 20px; border-right: 1px solid #89744838; }
+#interface .result-illustration .painted-art { width: 118%; max-width: 430px; }
+#interface .result-stamp { position: absolute; bottom: 40px; left: 46px; border: 2px solid #99442b; outline: 1px solid #99442b99; outline-offset: -6px; color: #99442b; font: 48px var(--ui-serif); padding: 4px 12px; transform: rotate(-9deg); }
+#interface .result-story { padding: 44px 44px 36px; text-align: left; }
+#interface .result-story > .eyebrow { color: #8b7050; font-size: 12px; letter-spacing: .16em; }
+#interface .result-story h2 { font-size: clamp(38px,4vw,55px); color: #363c2e; margin: 14px 0; letter-spacing: .12em; }
+#interface .result-build { margin: 0; font: 21px var(--ui-serif); color: #8a7955; }
+#interface .result-stats { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); margin: 32px 0; border-top: 1px solid #89744840; border-bottom: 1px solid #89744840; padding: 20px 0; }
+#interface .result-stats div + div { border-left: 1px solid #89744830; padding-left: 24px; }
+#interface .result-stats dt { color: #8a7955; font-size: 11px; }
+#interface .result-stats dd { font: 35px Georgia,serif; margin: 8px 0 0; color: #57543b; }
+#interface .result-actions { display: flex; flex-wrap: wrap; gap: 18px; align-items: center; }
+#interface .result-actions .primary { width: 100%; font-size: 30px; }
+#interface .result-actions .quiet-button { color: #6a593e; background: #9d794810; border-color: #93764d66; font-size: 20px; }
+#interface .result-actions .text-button { color: #8b6f4e; }
+#interface .result-lost .result-illustration { filter: saturate(.6); }
+
+#game .sound-settings { color: #454a37; background: var(--paper-image) center/100% 100%; border: 0; border-radius: 2px; padding: 30px 34px; width: min(440px,calc(100vw - 32px)); box-shadow: 0 24px 80px #0008; }
+#game .sound-settings::backdrop { background: #040d16c7; backdrop-filter: blur(6px); }
+#game .sound-settings h2 { font: 36px var(--ui-serif); color: #3b4333; }
+#game .sound-settings-heading { margin-bottom: 22px; }
+#game .sound-settings-heading p { color: #8c7855; }
+#game .sound-settings button { color: #766140; border-color: #8b72493a; border-radius: 2px; min-height: 44px; }
+#game .sound-settings .sound-close { border-radius: 50%; width: 44px; }
+#game .sound-volume { min-height: 58px; gap: 18px; font-size: 13px; grid-template-columns: 52px minmax(0,1fr) 42px; }
+#game .sound-volume input { accent-color: #9b422b; }
+#game .sound-volume output { color: #85734c; font-size: 12px; }
+#game .sound-settings-footer { border-color: #8b72493a; margin-top: 18px; }
+#game .sound-settings-footer input { accent-color: #9b422b; }
+#game .sound-settings :focus-visible { outline-color: #9b422b; outline-offset: 3px; }
+#interface .reward-choices:has([data-chosen]) .reward-choice:not([data-chosen]) { opacity: .25; transition: opacity .15s; }
+#interface .reward-choice[data-chosen] { box-shadow: 0 0 0 2px #d4b576; }
+#interface .reward-details summary { min-height: 44px; }
+#interface .message { position: absolute; bottom: 100%; left: 0; right: 0; margin-bottom: 16px; pointer-events: none; }
+#game .loader { background: radial-gradient(ellipse at 50% 44%,#14262fde,#07131cf5),url('/art/forest-valley.webp') center/cover; }
+#game .loader > .seal { border-radius: 50%; width: 76px; height: 76px; font: 48px var(--ui-serif); margin-bottom: 22px; }
+#game .loader h2 { font: 40px var(--ui-serif); color: #e0c68b; }
+#game .loader .load-status { font-size: 12px; color: #b1b5a3; }
+#game .loader .primary { position: relative; isolation: isolate; background: transparent; border: 0; padding: 18px 28px; min-height: 52px; color: #f0dfb4; font: 27px var(--ui-serif); }
+#game .loader .primary::before { content: ''; position: absolute; z-index: -1; inset: -4px; background: url('/art/ui/cinnabar.webp') center/100% 100% no-repeat; filter: url('#cinnabar'); }
+#game .loader.leaving { transition: opacity .3s ease-out; }
+
+@media (max-width:700px) {
+  #interface .build-overview { grid-template-columns: 1fr; gap: 10px; }
+  #interface .modal[data-surface]:not([data-surface="birth"]):not([data-surface="reward"]) { padding: max(12px,env(safe-area-inset-top)) max(12px,env(safe-area-inset-right)) max(12px,env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left)); }
+  #interface .modal .folio-panel { height: calc(100dvh - 24px); max-height: calc(100dvh - 24px); padding: 0; }
+  #interface .folio-heading { padding: 17px 65px 17px 20px; min-height: 84px; }
+  #interface .folio-heading h2 { font-size: 30px; }
+  #interface .folio-heading .folio-close { top: 18px; right: 15px; }
+  #interface .folio-scroll { padding: 18px; }
+  #interface .folio-footer { padding: 10px 18px; min-height: 66px; gap: 8px; flex-wrap: wrap; }
+  #interface .folio-panel .boon-grid { grid-template-columns: 1fr; gap: 12px; }
+  #interface .folio-panel .boon { padding: 12px; }
+  #interface .folio-panel .help-tiles { grid-template-columns: 1fr; gap: 12px; }
+  #interface .folio-panel .help-tiles > article { padding: 16px 16px 16px 124px; min-height: 150px; }
+  #interface .folio-panel .help-tiles > article > svg, #interface .folio-panel .help-tiles .reward-example, #interface .folio-panel .help-ultimate { width: 104px; margin: 0; left: 8px; top: 25px; }
+  #interface .keyboard-note { display: none; }
+  #interface .modal .result-panel { grid-template-columns: 1fr; max-height: calc(100dvh - 24px); }
+  #interface .result-illustration { height: 210px; padding: 0; border-right: 0; border-bottom: 1px solid #89744838; }
+  #interface .result-illustration .painted-art { width: 230px; }
+  #interface .result-stamp { bottom: 22px; left: 24px; font-size: 34px; padding: 4px 10px; }
+  #interface .result-story { padding: 22px 26px; }
+  #interface .result-story h2 { font-size: 39px; }
+  #interface .result-stats { padding: 14px 0; margin: 22px 0; }
+  #interface .result-stats dd { font-size: 29px; }
+  #interface .result-actions { gap: 14px; }
+  #interface .modal .pause-panel, #interface .modal .confirm-panel { padding: 35px 26px 22px; }
+  #interface .confirm-panel .folio-actions { flex-direction: column-reverse; gap: 12px; }
+  #interface .confirm-panel .folio-actions button { width: 100%; }
+  #interface .folio-panel .upgrades { grid-template-columns: 1fr; }
+  #game .sound-settings { padding: 25px; }
+}
+@media (max-height:560px) and (orientation:landscape) {
+  #interface .birth-screen .birth-detail .birth-demo { height: calc(100% - 168px); min-height: 65px; flex: none; }
+  #interface .birth-screen .birth-detail .birth-explanation { height: 168px; flex: none; }
+  #interface .folio-panel .boon { padding: 10px 14px; }
+  #interface .build-overview { grid-template-columns: 1fr auto; gap: 8px; }
+  #interface .build-overview .lane-mark { padding: 4px 10px 4px 4px; }
+  #interface .build-overview .lane-mark > b { width: 24px; height: 27px; font-size: 21px!important; }
+  #interface .build-overview .lane-mark > span { font-size: 16px; }
+  #interface .build-overview .fate-rule { margin-bottom: 12px; padding-bottom: 8px; font-size: 11px; }
+  #interface .birth-list { gap: 4px; }
+  #interface .birth-screen .birth-list .birth-talent .birth-talent-copy > b { font-size: 20px; line-height: 1; }
+  #interface .birth-talent-copy small { gap: 8px; margin-top: 1px; }
+  #interface .birth-talent-copy .lane-mark { gap: 5px; }
+  #interface .birth-talent-copy .lane-mark > b { width: 18px; height: 19px; font-size: 17px!important; }
+  #interface .birth-talent-copy .lane-mark > span { font-size: 13px; }
+  #interface .birth-detail-meta > .lane-mark > b { width: 25px; height: 28px; font-size: 22px!important; }
+  #interface .reward-card-heading .lane-mark > b { width: 25px; height: 28px; font-size: 23px!important; }
+  #interface .reward-card-heading .lane-mark > span { font-size: 13px; }
+  #interface .build-progress { display: none; }
+  #interface .build-toggle .lane-mark { gap: 5px; }
+  #interface .build-toggle .lane-mark > b { width: 25px; height: 28px; font-size: 22px!important; }
+  #interface .birth-decision { gap: 12px; }
+  #interface .birth-confirm { min-width: 95px; min-height: 44px; font-size: 21px; padding: 11px 18px; }
+  #interface .modal[data-surface]:not([data-surface="birth"]):not([data-surface="reward"]) { padding: 10px 20px; }
+  #interface .modal .folio-panel { height: calc(100dvh - 20px); max-height: calc(100dvh - 20px); }
+  #interface .folio-heading { min-height: 65px; padding: 10px 65px 10px 22px; }
+  #interface .folio-heading h2 { font-size: 28px; }
+  #interface .folio-heading .eyebrow { margin-bottom: 4px; font-size: 9px; }
+  #interface .folio-heading .folio-close { top: 10px; right: 17px; }
+  #interface .folio-scroll { padding: 16px 22px; }
+  #interface .folio-footer { min-height: 60px; padding: 8px 22px; }
+  #interface .modal .pause-panel, #interface .modal .confirm-panel { padding: 18px 36px 10px; max-height: calc(100dvh - 20px); width: 410px; }
+  #interface .rest-emblem { display: none; }
+  #interface .pause-panel h2, #interface .confirm-panel h2 { font-size: 34px; }
+  #interface .menu-state { margin: 10px 0 21px; }
+  #interface .pause-panel > .primary { margin-bottom: 14px; font-size: 29px; padding: 16px; }
+  #interface .pause-panel .restart-link { margin-top: 2px; }
+  #interface .modal .result-panel { max-height: calc(100dvh - 20px); grid-template-columns: 36% minmax(0,1fr); }
+  #interface .result-illustration { height: auto; border-bottom: 0; }
+  #interface .result-story { padding: 18px 30px; }
+  #interface .result-story h2 { font-size: 37px; margin: 10px 0; }
+  #interface .result-stats { margin: 14px 0 20px; padding: 12px 0; }
+  #interface .result-stats dd { font-size: 27px; margin-top: 5px; }
+  #interface .result-actions { gap: 8px 18px; }
+  #interface .result-actions .primary { padding: 12px 18px; font-size: 25px; width: auto; flex: 1; }
+  #interface .result-actions .text-button { padding: 8px; }
+  #interface .confirm-panel .folio-actions { flex-direction: row; }
+  #game .sound-settings { padding: 18px 26px; max-height: calc(100dvh - 20px); }
+  #game .sound-settings-heading { margin-bottom: 8px; }
+  #game .sound-settings-heading h2 { font-size: 30px; }
+  #game .sound-volume { min-height: 44px; }
+  #game .sound-settings-footer { padding-top: 10px; margin-top: 10px; }
+}
+@media (max-height:440px) and (min-width:701px) {
+  #interface .modal[data-surface="reward"] .reward-panel { height: calc(100dvh - 16px); display: flex; flex-direction: column; }
+  #interface .reward-panel .reward-heading, #interface .reward-panel .cultivation-track, #interface .reward-panel .reward-footer { flex: none; }
+  #interface .reward-panel .reward-choices { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; padding: 0 2px 3px; }
+  #interface .reward-panel .reward-pick { display: grid; grid-template-columns: 94px minmax(0,1fr); grid-template-rows: auto auto minmax(40px,1fr) auto auto; column-gap: 10px; padding: 6px 12px 3px; }
+  #interface .reward-panel .reward-card-heading { grid-column: 1/-1; grid-row: 1; }
+  #interface .reward-panel .reward-pick h3 { grid-column: 1/-1; grid-row: 2; }
+  #interface .reward-panel .reward-painting { grid-column: 1; grid-row: 3/5; width: 94px; height: 94px; margin: 0; align-self: center; }
+  #interface .reward-panel .reward-result { grid-column: 2; grid-row: 3; min-height: 0; padding: 0; border: 0; align-self: center; }
+  #interface .reward-panel .reward-condition { grid-column: 2; grid-row: 4; min-height: 0; align-self: start; margin: 0; }
+  #interface .reward-panel .reward-choose-label { grid-column: 1/-1; grid-row: 5; min-height: 25px; padding: 3px 5px; margin-top: 0; }
+  #interface .reward-panel .reward-card-heading .lane-mark > b { height: 24px; width: 23px; font-size: 20px!important; }
+  #interface .reward-panel .reward-details summary { min-height: 44px; }
+  #interface .reward-panel .reward-footer { margin-top: 6px; }
+  #interface .reward-panel .reward-footer button { min-height: 44px; }
+}
+@media (hover:none) {
+  #interface kbd { display: none; }
+  #interface button:hover:not(:active) { filter: none; }
+  #interface .element:hover:not(:disabled):not(.selected), #interface .primary:hover:not(:active), #interface .birth-enter:hover:not(:active) { transform: none; }
+  #interface .element.selected:hover { transform: translateY(-6px); }
+  #interface .birth-slot, #interface .tools button, #interface .birth-replay, #interface .dismiss-button { min-height: 44px; }
+  #interface .tools button, #interface .birth-replay { min-width: 44px; }
+  #interface .reward-details summary { min-height: 44px; }
+}
+@media (prefers-reduced-motion:reduce) {
+  #interface .modal *, #interface .topbar, #interface .bottom, #interface .build-strip, #game .loader, #game .loader * { animation: none!important; transition: none!important; }
+}

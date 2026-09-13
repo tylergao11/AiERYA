@@ -1,0 +1,64 @@
+/* Keep interactive controls inside the safe area and off the narrow battlefield. */
+html, body { touch-action: manipulation; overscroll-behavior: none; }
+@media (max-width: 700px), (max-height: 560px) and (orientation: landscape) {
+  #game { -webkit-user-select: none; user-select: none; }
+  .tools button { width:44px; height:44px; min-width:44px; }
+  .topbar { top:max(4px,env(safe-area-inset-top)); left:max(10px,env(safe-area-inset-left)); right:max(10px,env(safe-area-inset-right)); }
+  .bottom { bottom:max(10px,env(safe-area-inset-bottom)); left:max(10px,env(safe-area-inset-left)); right:max(10px,env(safe-area-inset-right)); }
+  .modal:not(.birth-modal) { padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(10px,env(safe-area-inset-bottom)); }
+  .modal .panel-card { max-width:100%; }
+}
+@media (max-width:700px) and (orientation:portrait) {
+  .identity .seal,.identity .eyebrow { display:none; }
+  .identity h1 { font-size:18px;letter-spacing:2px;line-height:44px; }
+  .topbar { gap:4px;align-items:center; }
+  .tools { gap:0; }
+  .status { top:56px;gap:8px;align-items:center; }
+  .spirit-status { min-width:99px;gap:5px;font-size:10px; }
+  .camp-status { grid-template-columns:58px 24px;gap:5px;font-size:10px; }
+  .wave { min-width:0;font-size:10px;letter-spacing:0;white-space:nowrap; }
+  .build-strip { top:calc(max(4px,env(safe-area-inset-top)) + 99px);left:10px;right:10px;gap:4px; }
+  .build-toggle,.array-status { font-size:10px;padding:6px 8px; }
+  .build-toggle { min-height:44px; }
+  .phase-mode { min-width:72px; }
+  .message { font-size:11px;max-width:100%; }
+  .elements { gap:2px; }
+  .element { min-height:56px; }
+  .footer { line-height:1.5;font-size:9px; }
+  .actions { gap:4px; }
+}
+@media (max-height:560px) and (orientation:landscape) {
+  .identity { display:none; }
+  .topbar { gap:8px; }
+  .status { margin-left:auto;gap:12px; }
+  .tools { gap:0;margin-left:8px; }
+  .wave { min-width:0;font-size:10px;letter-spacing:0; }
+  .bottom { top:0;max-width:none; }
+  .command-deck { display:contents; }
+  .elements { position:absolute;left:0;top:calc(max(4px,env(safe-area-inset-top)) + 50px);width:72px;display:grid;grid-template-columns:1fr;gap:3px; }
+  .element { min-width:0;width:72px;height:48px;padding:5px;gap:3px;background:#122329e8;border-color:#a9b9a333; }
+  .element-glyph { font-size:23px; }
+  .element-copy { min-width:0; }
+  .element-copy b { display:none; }
+  .element-copy small { margin:0;font-size:8px;line-height:1.3;white-space:normal; }
+  .modes { position:absolute;left:0;bottom:0;padding:0;border:0; }
+  .phase-mode { min-width:72px;padding:3px; }
+  .phase-mode b { font-size:15px; }
+  .phase-mode small { font-size:8px; }
+  .actions { position:absolute;right:0;bottom:40px;width:92px;display:flex;flex-direction:column;gap:6px; }
+  .actions button { width:92px;min-width:0;min-height:48px;padding:6px; }
+  .actions .primary { letter-spacing:0;font-size:11px; }
+  .primary span { margin-left:4px; }
+  .actions .ultimate-button b { font-size:17px; }
+  .message { position:absolute;bottom:1px;left:84px;right:100px;max-width:none;font-size:10px;line-height:1.4;margin:0;min-height:0; }
+  .footer { display:none; }
+  .build-strip { top:calc(max(4px,env(safe-area-inset-top)) + 50px);left:auto;right:max(10px,env(safe-area-inset-right));width:92px;gap:5px; }
+  .build-toggle,.array-status { width:92px;font-size:9px;line-height:1.5;padding:6px;white-space:normal; }
+  .build-toggle { min-height:44px; }
+}
+@media (max-height:360px) and (orientation:landscape) {
+  .elements { gap:2px; }
+  .element { height:44px;min-height:44px; }
+  .modes { display:none; }
+  .message { left:80px; }
+}

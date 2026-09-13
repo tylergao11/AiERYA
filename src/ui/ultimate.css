@@ -1,0 +1,18 @@
+.actions .ultimate-button {
+  min-width: 112px;
+  padding: 10px 15px;
+  border: 1px solid #d3bb80;
+  color: #f0dfb2;
+  background: linear-gradient(145deg, #2d4948, #12252b);
+  box-shadow: inset 0 0 20px #d6bb7714, 0 0 15px #9dcac518;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+}
+.ultimate-button b { font-size: 19px; letter-spacing: .16em; }
+.ultimate-button small { font-size: 11px; white-space: nowrap; }
+.actions .ultimate-button:disabled { opacity: .48; }
+.actions .ultimate-button.charging { opacity: 1; border-color: #f6e6b5; background: #38585b; }
+.actions .ultimate-button[hidden] { display: none; }
+@media (max-width: 1000px) { .actions .ultimate-button { min-width: 84px; padding: 8px 9px; } }

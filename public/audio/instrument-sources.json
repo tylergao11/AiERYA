@@ -1,0 +1,142 @@
+{
+  "project": "VS Chamber Orchestra: Community Edition",
+  "authors": "Sam Gossner & Simon Dalzell; sample cutting by Elan Hickler / Soundemote",
+  "license": "CC0-1.0",
+  "repository": "https://github.com/sgossner/VSCO-2-CE",
+  "revision": "440300901dfe9275fd84e0b7763af1f8443ae62e",
+  "usage": "Instrument notes resampled and arranged into the original Forest Ward score. No third-party composition is used.",
+  "entries": [
+    {
+      "name": "flute-c",
+      "midi": 72,
+      "estimatedMidi": 71.95,
+      "pitchError": 0,
+      "source": "Woodwinds/Flute/susNV/LDFlute_susNV_C4_v1_1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Woodwinds/Flute/susNV/LDFlute_susNV_C4_v1_1.wav",
+      "sha256": "105a6dbced98de7ae04a317bdd3ba1a5c6b90dc94034439b68cce6635e2781df",
+      "seconds": 10.284958333333334,
+      "peak": 0.07306313514709473
+    },
+    {
+      "name": "flute-e",
+      "midi": 76,
+      "estimatedMidi": 76.19,
+      "pitchError": 0.003,
+      "source": "Woodwinds/Flute/susNV/LDFlute_susNV_E4_v1_1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Woodwinds/Flute/susNV/LDFlute_susNV_E4_v1_1.wav",
+      "sha256": "b609d37fb577e2a0f64f20800fba4bed067151375349bf713c0d4e803f862580",
+      "seconds": 9.790625,
+      "peak": 0.0728558599948883
+    },
+    {
+      "name": "flute-a",
+      "midi": 69,
+      "estimatedMidi": 68.86,
+      "pitchError": 0.002,
+      "source": "Woodwinds/Flute/susNV/LDFlute_susNV_A3_v1_1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Woodwinds/Flute/susNV/LDFlute_susNV_A3_v1_1.wav",
+      "sha256": "6fc8d707afddfaaf3003551b95a83b52f514adbe488bfea1c8c5250080a07278",
+      "seconds": 10.225125,
+      "peak": 0.03553495183587074
+    },
+    {
+      "name": "cello-c",
+      "midi": 36,
+      "estimatedMidi": 36,
+      "pitchError": 0.031,
+      "source": "Strings/Cello Section/susvib/susvib_C1_v1_1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Cello%20Section/susvib/susvib_C1_v1_1.wav",
+      "sha256": "abdcea431f384e135c469b0f3e4ac2a437f282f521dc5bcbe22abc221536e8de",
+      "seconds": 8.87125,
+      "peak": 0.17524033784866333
+    },
+    {
+      "name": "cello-g",
+      "midi": 43,
+      "estimatedMidi": 42.92,
+      "pitchError": 0.005,
+      "source": "Strings/Cello Section/susvib/susvib_G1_v1_1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Cello%20Section/susvib/susvib_G1_v1_1.wav",
+      "sha256": "9e5d24e8e28d6c7f650f9bb2b33d43c13e341a8bd33124c64e23881378b181ba",
+      "seconds": 8.169541666666667,
+      "peak": 0.1474054753780365
+    },
+    {
+      "name": "cello-d",
+      "midi": 50,
+      "estimatedMidi": 50.05,
+      "pitchError": 0.007,
+      "source": "Strings/Cello Section/susvib/susvib_D2_v1_1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Cello%20Section/susvib/susvib_D2_v1_1.wav",
+      "sha256": "e8640dec9febc6e39fcf06b19d2c95a85d5ff8c38f13c9879e69f551eaf38ab8",
+      "seconds": 9.640625,
+      "peak": 0.1351795792579651
+    },
+    {
+      "name": "spic-c",
+      "midi": 60,
+      "estimatedMidi": 59.95,
+      "pitchError": 0.008,
+      "source": "Strings/Cello Section/spic/spic_C3_v1_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Cello%20Section/spic/spic_C3_v1_RR1.wav",
+      "sha256": "c8975c2759af1875a70cd645b3d455ff32b12683af3d6c4827439afb62960936",
+      "seconds": 1.5089583333333334,
+      "peak": 0.09033016860485077
+    },
+    {
+      "name": "spic-d",
+      "midi": 50,
+      "estimatedMidi": 49.94,
+      "pitchError": 0.006,
+      "source": "Strings/Cello Section/spic/spic_D2_v1_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Cello%20Section/spic/spic_D2_v1_RR1.wav",
+      "sha256": "6fe41bb3cf9212480ce2e856b5da3971267f75d64b629e90224cc9c6deeb1cb2",
+      "seconds": 1.4889583333333334,
+      "peak": 0.07370953261852264
+    },
+    {
+      "name": "spic-a",
+      "midi": 57,
+      "estimatedMidi": 57.01,
+      "pitchError": 0.002,
+      "source": "Strings/Cello Section/spic/spic_A2_v1_RR1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Cello%20Section/spic/spic_A2_v1_RR1.wav",
+      "sha256": "9d7cde1e9785f468091783946954c390556b72f1e80098f69b0cab38fd64ed08",
+      "seconds": 1.5925,
+      "peak": 0.07246014475822449
+    },
+    {
+      "name": "violin-a",
+      "midi": 69,
+      "estimatedMidi": 68.86,
+      "pitchError": 0.014,
+      "source": "Strings/Violin Section/Spic/VlnEns_Spic_A3_v1_rr1.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Strings/Violin%20Section/Spic/VlnEns_Spic_A3_v1_rr1.wav",
+      "sha256": "63ac2de6113b1f12822ea84a30a49c4a326e89027139b8a5e0369542ce6f74ad",
+      "seconds": 0.94975,
+      "peak": 0.061559729278087616
+    },
+    {
+      "name": "gong",
+      "midi": 48,
+      "estimatedMidi": 48.52,
+      "pitchError": 0.145,
+      "source": "Percussion/gongHit_p.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Percussion/gongHit_p.wav",
+      "sha256": "3d103e1a7af12eeb17e0c5488f11933ca92b9fbdefa39b8020b64238da2db0d0",
+      "seconds": 29.421875,
+      "peak": 0.06502445042133331
+    },
+    {
+      "name": "timpani",
+      "midi": 45,
+      "estimatedMidi": 44.47,
+      "pitchError": 0.431,
+      "source": "Percussion/Timpani/Timpani3_Hit_v3_rr1_Sum.wav",
+      "url": "https://raw.githubusercontent.com/sgossner/VSCO-2-CE/440300901dfe9275fd84e0b7763af1f8443ae62e/Percussion/Timpani/Timpani3_Hit_v3_rr1_Sum.wav",
+      "sha256": "46cd2ba3798f9e3a6be515b13dbc37d2ef65c82afb0d0e9e34121e4524bfcd3a",
+      "seconds": 9.1165,
+      "peak": 0.10349524021148682
+    }
+  ]
+}

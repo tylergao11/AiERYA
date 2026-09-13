@@ -1,0 +1,65 @@
+/* Painted mini-scenes share a clock: approach, release, contact, then recover. */
+.summon-example-art{--case-duration:4.8s}
+.summon-example-art text{font-family:KaiTi,serif}
+.summon-example-art [class^="sum-case-"]{animation-duration:var(--case-duration);animation-iteration-count:infinite;animation-timing-function:linear;transform-box:fill-box;transform-origin:center bottom}
+.sum-case-cast{animation-name:summon-case-cast}
+.sum-case-lunge{animation-name:summon-case-lunge}
+.sum-case-heavy{animation-name:summon-case-heavy}
+.sum-case-pursue{animation-name:summon-case-pursue}
+.sum-case-recoil{animation-name:summon-case-recoil}
+.sum-case-pincer-recoil{animation-name:summon-case-pincer-recoil}
+.sum-case-double-recoil{animation-name:summon-case-double-recoil}
+.sum-case-stagger{animation-name:summon-case-stagger}
+.sum-case-fall{animation-name:summon-case-fall}
+.sum-case-missile{animation-name:summon-case-missile;opacity:0}
+.sum-case-hit{animation-name:summon-case-hit;opacity:0}
+.sum-case-claw{animation-name:summon-case-claw;opacity:0}
+.sum-case-lock{animation-name:summon-case-lock;opacity:0}
+.sum-case-transfer{animation-name:summon-case-transfer;opacity:0}
+.sum-case-seal{animation-name:summon-case-seal;opacity:0}
+.sum-case-charge{animation-name:summon-case-charge;opacity:.2}
+.sum-case-missile.is-echo{filter:saturate(.65);--echo-opacity:.55}
+.sum-case-growth-recoil{animation-name:summon-growth-recoil}
+.sum-case-growth-arrival{animation-name:summon-growth-arrival;opacity:0}
+.sum-case-growth-arrival-light{animation-name:summon-growth-arrival-light;opacity:0}
+.sum-case-growth-evolve{animation-name:summon-growth-evolve}
+.summon-growth-art .sum-case-growth-evolve{transform-box:view-box;transform-origin:0 0}
+.sum-case-growth-infusion{animation-name:summon-growth-infusion;opacity:0}
+@keyframes summon-growth-recoil{0%,32%,82%,100%{transform:translateX(0)}35%{transform:translate(10px,-4px) rotate(9deg)}43%{transform:translate(8px,0) rotate(3deg)}58%{transform:translateX(0)}}
+@keyframes summon-growth-arrival{0%,19%,98%,100%{opacity:0;transform:translateY(9px) scale(.82)}31%{opacity:1;transform:translateY(-2px) scale(1.02)}38%,85%{opacity:1;transform:translateY(0) scale(1)}94%{opacity:0;transform:translateY(0) scale(1)}}
+@keyframes summon-growth-arrival-light{0%,16%,63%,100%{opacity:0;transform:scale(.55)}27%{opacity:.85;transform:scale(1)}48%{opacity:.2;transform:scale(1.1)}}
+@keyframes summon-growth-evolve{0%,15%,100%{transform:scale(1)}26%{transform:scale(.94,.97)}41%,81%{transform:scale(1.35)}95%{transform:scale(1)}}
+@keyframes summon-growth-infusion{0%,5%,35%,100%{opacity:0;stroke-dasharray:0 120}12%{opacity:.8;stroke-dasharray:50 120}21%{opacity:1;stroke-dasharray:120 120}31%{opacity:0;stroke-dasharray:120 120}}
+@keyframes summon-case-cast{0%,12%,60%,100%{transform:translate(0,0) rotate(0)}19%{transform:translate(-3px,2px) rotate(-3deg)}25%,33%{transform:translate(4px,-2px) rotate(2deg)}43%{transform:translate(0,0)}}
+@keyframes summon-case-lunge{0%,10%,88%,100%{transform:translateX(0)}21%{transform:translateX(36px)}26%{transform:translate(31px,2px) rotate(-3deg)}33%,42%{transform:translate(57px,-4px) rotate(3deg)}54%,67%{transform:translateX(49px)}}
+@keyframes summon-case-heavy{0%,16%,90%,100%{transform:translateX(0)}26%{transform:translateX(26px)}36%{transform:translate(20px,4px) rotate(-6deg)}44%,48%{transform:translate(59px,-8px) rotate(5deg)}53%,65%{transform:translateX(54px)}}
+@keyframes summon-case-pursue{0%,12%,92%,100%{transform:translateX(0)}19%{transform:translateX(-3px)}25%,35%{transform:translateX(4px)}46%{transform:translate(30px,-2px)}53%{transform:translate(25px,1px)}60%,74%{transform:translateX(32px)}}
+@keyframes summon-case-missile{0%,21%{opacity:0;transform:translate(0,0)}23%{opacity:var(--echo-opacity,1);transform:translate(0,0)}33%{opacity:var(--echo-opacity,1);transform:translate(var(--flight-x),var(--flight-y))}35%,100%{opacity:0;transform:translate(var(--flight-x),var(--flight-y))}}
+@keyframes summon-case-hit{0%,32%{opacity:0;transform:scale(.48)}34%{opacity:1;transform:scale(.94)}38%{opacity:.95;transform:scale(1.06)}48%,100%{opacity:0;transform:scale(1.15)}}
+@keyframes summon-case-claw{0%,32%{opacity:0;transform:scale(.5)}34%{opacity:1;transform:scale(1)}44%,100%{opacity:0;transform:scale(1.12)}}
+@keyframes summon-case-recoil{0%,32%,68%,100%{transform:translateX(0)}35%{transform:translate(5px,-2px) rotate(5deg)}43%{transform:translateX(4px)}50%{transform:translateX(0)}}
+@keyframes summon-case-pincer-recoil{0%,32%,39%,57%,100%{transform:translateX(0)}35%{transform:translate(5px,-2px) rotate(4deg)}43%,46%{transform:translate(8px,-3px) rotate(7deg)}}
+@keyframes summon-case-double-recoil{0%,32%,44%,61%,100%{transform:translateX(0)}35%{transform:translate(5px,-2px) rotate(4deg)}51%,54%{transform:translate(6px,-3px) rotate(5deg)}}
+@keyframes summon-case-stagger{0%,44%,90%,100%{transform:translateX(0)}48%{transform:translate(12px,-5px) rotate(12deg)}60%,75%{transform:translateX(10px)}}
+@keyframes summon-case-fall{0%,32%,98%,100%{opacity:1;transform:translate(0,0)}37%{opacity:.6;transform:translate(4px,3px) rotate(17deg)}45%,89%{opacity:.12;transform:translate(5px,6px) rotate(25deg)}}
+@keyframes summon-case-lock{0%,11%,75%,100%{opacity:0}14%,35%{opacity:1}45%{opacity:.45}}
+@keyframes summon-case-transfer{0%,36%,77%,100%{opacity:0;stroke-dashoffset:24}40%,62%{opacity:.8;stroke-dashoffset:0}}
+@keyframes summon-case-seal{0%,11%,48%,100%{opacity:0;transform:translateY(5px)}17%,33%{opacity:1;transform:translateY(0)}42%{opacity:.35;transform:translate(9px,8px)}}
+@keyframes summon-case-charge{0%,8%,46%,100%{opacity:.18;transform:scale(.8)}18%,38%{opacity:1;transform:scale(1)}41%{opacity:1;transform:scale(1.25)}}
+
+/* Tap-open demonstrations supplement the permanent skill painting. */
+#interface .reward-details .summon-card-scene { display: block; width: 100%; min-width: 0; }
+#interface .reward-details .summon-card-scene .reward-example { display: block; margin: 6px 0; padding: 0; }
+#interface .reward-details .summon-card-scene > .reward-example > svg { display: block; width: 100%; height: auto; max-height: 150px; }
+#interface .reward-details .summon-card-scene .example-caption { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; font-size: 12px; line-height: 1.5; white-space: normal; }
+#interface .reward-details .summon-card-scene .example-caption i { font-style: normal; opacity: .6; }
+@media(prefers-reduced-motion:reduce){
+  .summon-example-art [class^="sum-case-"]{animation:none!important}
+  .sum-case-hit,.sum-case-claw,.sum-case-seal,.sum-case-charge,.sum-case-lock,.sum-case-transfer{opacity:.7}
+  .sum-case-lunge,.sum-case-heavy{transform:translateX(48px)}
+  .sum-case-missile{opacity:.7;transform:translate(calc(var(--flight-x)*.5),calc(var(--flight-y)*.5))}
+  .sum-case-fall{opacity:.22;transform:rotate(17deg)}
+  .sum-case-growth-arrival{opacity:1;transform:none}
+  .sum-case-growth-arrival-light,.sum-case-growth-infusion{opacity:.45}
+  .sum-case-growth-evolve{transform:scale(1.35)}
+}

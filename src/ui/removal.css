@@ -1,0 +1,17 @@
+.actions .dismiss-button {
+  min-width: 80px;
+  min-height: 52px;
+  padding: 8px 10px;
+  border: 1px solid #b7ae8355;
+  border-radius: 3px;
+  color: #cec6ad;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+.dismiss-button b { font-size: 14px; font-weight: 400; white-space: nowrap; }
+.dismiss-button small { font-size: 10px; white-space: nowrap; }
+.actions .dismiss-button[aria-pressed="true"] { color: #ffe0a0; border-color: #e4bc73; background: #c3a36724; }
+.removing-ward .element.selected { border-color: transparent; background: none; }
+@media (max-width: 1000px) { .actions .dismiss-button { min-width: 70px; padding: 7px; } }

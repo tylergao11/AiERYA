@@ -1,0 +1,241 @@
+.slayer-hud { position:absolute;right:clamp(82px,8vw,150px);top:clamp(90px,15vh,150px);width:170px;pointer-events:none;text-align:right;color:#ded8b7;text-shadow:0 2px 5px #081814,0 0 14px #0c1917; }
+.slayer-hud[hidden] { display:none; }
+.slayer-rank { font-size:11px;letter-spacing:3px;color:#b4c2b4; }
+.slayer-set { font-size:10px;line-height:1.8;color:#d8c594; }
+.slayer-count { font:700 32px/1.2 "KaiTi","STKaiti",serif;transform-origin:right center; }
+.slayer-timer { height:2px;background:#d6d2a322;margin:6px 0 7px; }
+.slayer-timer i { display:block;height:100%;background:currentColor;transform-origin:left; }
+.slayer-bank { font-size:11px;line-height:1.5; }
+.slayer-bank[data-return="ready"] { color:#e3ecd0; }
+.slayer-bank[data-return="empty"],.slayer-bank[data-return="frozen"] { color:#bac4b3; }
+.slayer-bank[data-return="guarded"] { color:#edb894; }
+.slayer-hud.rush-ready .slayer-bank { color:#ffbd9b;text-shadow:0 0 9px #d3593866; }
+.slayer-hud.rush-ready .slayer-timer { color:#eaa17a; }
+.slayer-recovery { font-size:11px;line-height:1.6;color:#b5c7b3; }
+.slayer-recovery.active { color:#ffe2a2;text-shadow:0 0 8px #d6a44a80; }
+.slayer-impact { font:700 15px/1.6 "KaiTi","STKaiti",serif;color:#ffe6a3; }
+.slayer-hud[data-tier="1"] { color:#e6cf91; }
+.slayer-hud[data-tier="2"] { color:#ffc888; }
+.slayer-hud[data-tier="3"] { color:#ffbd94; }
+.slayer-callout { position:absolute;left:50%;top:23%;transform:translate(-50%,-50%) rotate(-4deg);width:300px;max-width:64%;padding:16px 24px;pointer-events:none;text-align:center;color:#ffe8b4;isolation:isolate; }
+.slayer-callout[hidden] { display:none; }
+.slayer-callout::before { content:"";position:absolute;inset:0 -12px;z-index:-1;background:linear-gradient(100deg,#081c1600,#10221ceb 19%,#17251be6 73%,#081c1600);clip-path:polygon(0 24%,14% 15%,7% 4%,85% 9%,100% 0,90% 29%,100% 69%,84% 77%,92% 93%,15% 96%,0 84%,12% 54%); }
+.slayer-callout::after { content:"";position:absolute;left:7%;right:7%;bottom:7px;height:2px;transform:rotate(-3deg);background:linear-gradient(90deg,transparent,#d9ab65,#fff1c8,transparent); }
+.slayer-callout strong { display:block;font:700 46px/1.2 "KaiTi","STKaiti",serif;letter-spacing:7px;text-shadow:2px 4px 0 #061611,0 0 12px #ad773b55; }
+.slayer-callout span { display:block;margin-top:5px;font:11px/1.5 "Microsoft YaHei UI",sans-serif;letter-spacing:3px;color:#d8c398; }
+.slayer-callout[data-kind="pure"] strong { color:#fff0c9; }
+@media(max-height:600px) { .slayer-callout { top:76px;bottom:auto;left:40%;transform:translateX(-50%) rotate(-4deg);translate:0!important;width:190px;max-width:36%;padding:8px 12px; }.slayer-callout strong { font-size:28px;letter-spacing:3px; }.slayer-callout span { font-size:10px;letter-spacing:1px; } }
+@media(orientation:portrait) { .slayer-callout { top:auto;bottom:220px;left:50%;transform:translateX(-50%) rotate(-4deg);max-width:78%; }.slayer-callout strong { font-size:36px;letter-spacing:4px; } }
+@media(max-height:600px) { .slayer-hud { top:112px;right:112px;width:120px; }.slayer-count { font-size:26px; }.slayer-bank { font-size:10px; }.slayer-impact { font-size:13px; } }
+@media(orientation:portrait) { .slayer-hud { top:198px;right:16px;width:140px; } }
+@media(orientation:portrait) and (max-height:650px) { .slayer-callout { top:190px;bottom:auto;left:12px;transform:rotate(-4deg);translate:0!important;width:132px;max-width:none;padding:9px 8px; }.slayer-callout strong { font-size:24px;letter-spacing:1px; }.slayer-callout span { font-size:9px;letter-spacing:0; } }
+.slayer-pure-trigger{font-size:10px;line-height:1.5;color:#b4b9aa;margin-bottom:5px}.slayer-hud.pure-ready .slayer-pure-trigger,.slayer-hud.pure-ready .slayer-set{color:#f0d394;text-shadow:0 0 10px #d4a75f70}
+.slayer-diagram-first { animation:slayer-diagram-lead 2.6s ease-out infinite; }
+.slayer-diagram-second { animation:slayer-diagram-follow 2.6s ease-out infinite; }
+.slayer-diagram-impact { animation:slayer-diagram-contact 2.6s ease-out infinite; }
+.slayer-diagram-flow { animation:slayer-diagram-stream 2.6s linear infinite; }
+@keyframes slayer-diagram-lead { 0%,12% { opacity:.5;translate:-8px 0; } 30%,72% { opacity:1;translate:0; } 100% { opacity:.5; } }
+@keyframes slayer-diagram-follow { 0%,36% { opacity:.45;translate:-9px 0; } 54%,80% { opacity:1;translate:0; } 100% { opacity:.45; } }
+@keyframes slayer-diagram-contact { 0%,42%,100% { opacity:.18; } 56%,72% { opacity:1; } }
+@keyframes slayer-diagram-stream { to { stroke-dashoffset:-24; } }
+@media(prefers-reduced-motion:reduce) { .slayer-diagram-first,.slayer-diagram-second,.slayer-diagram-impact,.slayer-diagram-flow { animation:none; } }
+/* These diagrams keep their ink palette on the shared parchment surfaces. */
+#interface :is(.folio-panel,.reward-panel) .reward-example.slayer-example[role="img"] { --slayer-diagram-follow:#a53d29;--slayer-diagram-reverse:#315e50;color:#583b25;background:radial-gradient(ellipse,#e8c79233,transparent 76%); }
+#interface :is(.folio-panel,.reward-panel) .slayer-example .example-caption { color:#583b25;font-size:11px; }
+#interface .learned-item .slayer-example { max-width:290px; }
+#interface .learned-item .slayer-example>svg { height:auto;min-height:100px;max-height:126px; }
+#interface aside.slayer-hud { width:190px; }
+#interface aside.slayer-hud .slayer-impact { letter-spacing:0; }
+@media(max-height:600px), (orientation:portrait) {
+ #interface aside.slayer-hud { width:156px;padding:6px 8px;font-family:"Microsoft YaHei UI",sans-serif; }
+ #interface aside.slayer-hud .slayer-rank { font-size:9px;line-height:1.4;letter-spacing:1px;white-space:nowrap; }
+ #interface aside.slayer-hud :is(.slayer-set,.slayer-pure-trigger) { font-size:9px;line-height:1.5;letter-spacing:0; }
+ #interface aside.slayer-hud .slayer-count { font-size:25px;line-height:1.15;white-space:nowrap;letter-spacing:0; }
+ #interface aside.slayer-hud :is(.slayer-bank,.slayer-recovery) { font-size:10px;line-height:1.5;letter-spacing:0; }
+ #interface aside.slayer-hud .slayer-impact { font-size:11px;line-height:1.5;letter-spacing:0; }
+ #interface aside.slayer-hud .slayer-timer { margin:4px 0; }
+}
+@media(max-height:600px) and (orientation:landscape) {
+ #interface aside.slayer-hud { top:74px;right:20px; }
+ #interface .learned-item .slayer-example>svg { min-height:88px;max-height:108px; }
+ #interface .learned-item .slayer-example .example-caption { display:none; }
+}
+@media(max-width:700px) and (max-height:600px) and (orientation:landscape) {
+ #interface aside.slayer-hud { top:116px;right:122px; }
+ #interface .slayer-callout { left:33%;width:170px; }
+ #interface .slayer-callout strong { font-size:26px; }
+ #interface .slayer-callout span { font-size:9px; }
+ #interface .build-strip:has(.faction-emblem[data-lane="slayer"]) { top:65px;left:auto;right:20px;width:92px; }
+ #interface .build-strip:has(.faction-emblem[data-lane="slayer"]) .build-toggle { min-height:44px;padding:0; }
+ #interface .build-toggle .faction-emblem[data-lane="slayer"] { width:88px;height:44px; }
+ #interface .build-toggle .faction-emblem[data-lane="slayer"]>b { font-size:26px; }
+ #interface .build-toggle .faction-emblem[data-lane="slayer"]>strong { font-size:14px; }
+}
+@media(orientation:portrait) {
+ #interface aside.slayer-hud { top:134px;right:16px; }
+}
+@media(orientation:portrait) and (max-height:650px) {
+ #interface .slayer-callout { top:auto;bottom:200px;left:50%;transform:translateX(-50%) rotate(-4deg);width:220px;max-width:78%; }
+}
+/* Mixed builds retain both gauges without drawing one over the other. */
+#interface aside.slayer-hud.mixed-summon { right:24px;top:108px; }
+#interface .slayer-hud.mixed-summon~.summon-hud { right:24px;left:auto;top:290px; }
+@media(max-height:600px), (orientation:portrait) {
+ #interface:has(.slayer-hud.mixed-summon) .build-toggle { display:flex;width:112px;min-width:112px;min-height:44px;padding:0;gap:2px; }
+ #interface:has(.slayer-hud.mixed-summon) .build-toggle .faction-emblem { flex:1;min-width:0;width:48px;height:44px; }
+ #interface:has(.slayer-hud.mixed-summon) .build-toggle .faction-emblem>b { font-size:25px; }
+ #interface:has(.slayer-hud.mixed-summon) .build-toggle .faction-emblem>strong { font-size:13px; }
+ #interface aside.slayer-hud.mixed-summon .slayer-count { font-size:22px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud { padding:6px 8px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-heading { gap:4px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-heading span { font-size:10px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-heading strong { font-size:12px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-pet { padding:2px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(2)) .summon-avatar { display:none; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) { display:grid;grid-auto-flow:column;grid-auto-columns:minmax(38px,1fr);gap:2px;overflow-x:auto;scrollbar-width:thin;pointer-events:auto;touch-action:pan-x; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) .summon-pet { min-width:0;max-width:none;padding:1px;gap:0; }
+}
+@media(max-height:600px) and (orientation:landscape) {
+ #interface aside.slayer-hud.mixed-summon { top:68px;right:20px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud { top:184px;right:20px;width:156px; }
+}
+@media(max-width:700px) and (max-height:600px) and (orientation:landscape) {
+ #interface aside.slayer-hud.mixed-summon { top:64px;right:136px;width:146px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud { top:174px;right:136px;width:146px; }
+ #interface:has(.slayer-hud.mixed-summon) .build-strip { width:112px;max-width:112px;right:16px; }
+ #interface:has(.slayer-hud.mixed-summon) .slayer-callout { top:auto;bottom:18px;left:33%;width:165px; }
+}
+@media(orientation:portrait) {
+ #interface aside.slayer-hud.mixed-summon { top:188px;right:16px;width:min(156px,calc(50% - 24px)); }
+ #interface .slayer-hud.mixed-summon~.summon-hud { top:188px;left:16px;right:auto;width:min(185px,calc(50% - 24px)); }
+ #interface:has(.slayer-hud.mixed-summon) .slayer-callout { top:112px;bottom:auto;left:auto;right:16px;width:140px;max-width:none;padding:6px 8px;transform:rotate(-4deg);translate:0!important; }
+ #interface:has(.slayer-hud.mixed-summon) .slayer-callout strong { font-size:27px;letter-spacing:2px; }
+ #interface:has(.slayer-hud.mixed-summon) .slayer-callout span { font-size:9px;letter-spacing:0; }
+}
+/* On a short portrait screen, the pure Slayer readout fits above the valley. */
+@media(orientation:portrait) and (max-height:650px) {
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .identity { display:none; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .status { gap:6px; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .status :is(.spirit-status,.camp-status) { min-width:80px;padding:4px 6px; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .wave { min-width:0;font-size:9px;white-space:nowrap; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .build-strip { top:12px;left:16px;right:auto;width:96px;max-width:96px; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .build-toggle { width:96px;min-width:96px;min-height:44px;padding:0; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .build-toggle .faction-emblem { width:88px;height:40px; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .build-toggle .faction-emblem>b { font-size:26px; }
+ #interface:has(.slayer-hud:not([hidden]):not(.mixed-summon)) .build-toggle .faction-emblem>strong { font-size:14px; }
+ #interface aside.slayer-hud:not([hidden]):not(.mixed-summon) { display:grid;grid-template-columns:1fr 1fr;gap:4px 8px;top:112px;left:16px;right:16px;width:auto;padding:4px 6px;align-items:center; }
+ #interface .slayer-hud:not(.mixed-summon) :is(.slayer-set,.slayer-rank) { display:none; }
+ #interface .slayer-hud:not(.mixed-summon) .slayer-count { grid-column:1;grid-row:1;font-size:24px;line-height:1;text-align:left; }
+ #interface .slayer-hud:not(.mixed-summon) .slayer-pure-trigger { grid-column:2;grid-row:1;font-size:9px;line-height:1.4;margin:0; }
+ #interface .slayer-hud:not(.mixed-summon) .slayer-bank { grid-column:1;grid-row:2;font-size:9px;line-height:1.4;text-align:left; }
+ #interface .slayer-hud:not(.mixed-summon) .slayer-recovery { grid-column:2;grid-row:2;font-size:9px;line-height:1.4; }
+ #interface .slayer-hud:not(.mixed-summon) .slayer-timer { grid-column:1;grid-row:3;margin:0;height:2px; }
+ #interface .slayer-hud:not(.mixed-summon) .slayer-impact { grid-column:2;grid-row:3;font-size:9px;line-height:1.4; }
+}
+/* Compact mixed gauges stay above the full valley on short portrait screens. */
+@media(orientation:portrait) and (max-height:650px) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .identity { display:none; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .status { top:50px;gap:6px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .status :is(.spirit-status,.camp-status) { min-width:80px;padding:2px 6px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .status :is(.spirit-status,.camp-status) strong { font-size:14px;line-height:1.2; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .wave { min-width:0;font-size:9px;white-space:nowrap; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .build-strip { top:12px;left:16px;right:auto;width:112px;max-width:112px; }
+ #interface aside.slayer-hud.mixed-summon:not([hidden]) { top:96px;left:auto;right:16px;width:calc(50% - 24px);display:grid;grid-template-columns:1fr;gap:2px;padding:4px 6px; }
+ #interface .slayer-hud.mixed-summon .slayer-rank { display:none; }
+ #interface .slayer-hud.mixed-summon .slayer-count { grid-row:1;font-size:22px;line-height:1; }
+ #interface .slayer-hud.mixed-summon .slayer-bank { grid-row:2;font-size:9px;line-height:11px;white-space:nowrap; }
+ #interface .slayer-hud.mixed-summon .slayer-recovery { grid-row:3;font-size:9px;line-height:11px; }
+ #interface .slayer-hud.mixed-summon .slayer-impact { grid-row:4;font-size:9px;line-height:11px; }
+ #interface .slayer-hud.mixed-summon .slayer-timer { grid-row:5;height:2px;margin:0; }
+ #interface .slayer-hud.mixed-summon~.summon-hud { top:96px;left:16px;right:auto;width:calc(50% - 24px);padding:4px 6px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-heading { gap:3px;line-height:14px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-heading span { font-size:9px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-heading strong { font-size:10px;line-height:14px;white-space:nowrap; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-meter { height:2px;margin-top:2px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster { display:grid;grid-auto-flow:column;grid-auto-columns:minmax(38px,1fr);gap:2px;margin-top:2px;overflow-x:auto;scrollbar-width:thin;pointer-events:auto;touch-action:pan-x; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-pet { min-width:0;max-width:none;padding:1px;gap:0; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-avatar { display:none; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-pet b { font-size:9.5px;line-height:12px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-pet small { font-size:9px;line-height:11px;gap:1px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-pet em { font-size:8px;line-height:9px;padding:0; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-stock { height:4px;margin-top:2px;gap:1px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud p { font-size:9px;line-height:11px;margin:2px 0 0;min-height:22px; }
+ #interface:has(.slayer-hud.mixed-summon) .slayer-callout { top:auto;bottom:200px;left:50%;right:auto;width:180px;transform:translateX(-50%) rotate(-4deg); }
+}
+/* Larger mixed parties keep their scroll row inside the same battle readout. */
+@media(max-height:600px), (orientation:portrait) {
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-stock { height:8px;margin-top:0; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) { margin-top:4px;scrollbar-color:#91774a #cbb78a50;overscroll-behavior-x:contain; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) b { font-size:9.5px;line-height:12px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) small { font-size:9px;line-height:11px;gap:1px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) em { font-size:8px;line-height:9px;padding:0; }
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) .summon-stock { gap:1px; }
+ /* An acquired array has a separate, compact row; each ward retains its own gauge. */
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud:not([hidden]) { display:flex;align-items:center;gap:6px;width:220px;max-width:none;height:48px;padding:0 6px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud .array-hud-title { flex:0 0 86px;min-width:0;min-height:44px;margin:0;font-size:11px;line-height:1.3;letter-spacing:0; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud .array-eyes { min-width:0;flex:1;flex-wrap:nowrap;gap:5px;overflow-x:auto;pointer-events:auto;touch-action:pan-x;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#91774a #cbb78a50; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud .array-eye { flex:0 0 24px;width:24px;gap:2px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud .array-eye b { font-size:13px;line-height:15px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud .array-eye i { width:22px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud .array-eye small { font-size:10px;line-height:12px; }
+}
+@media(max-height:600px) and (orientation:landscape) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud:not([hidden]) { left:20px;right:auto;top:120px; }
+}
+@media(max-width:700px) and (max-height:600px) and (orientation:landscape) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud:not([hidden]) { top:64px;left:100px;width:min(188px,calc(100vw - 398px)); }
+}
+@media(orientation:portrait) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud:not([hidden]) { top:134px;left:144px;right:16px;width:auto; }
+ #interface:has(.slayer-hud.mixed-summon):has(.array-hud:not([hidden])) .slayer-callout { top:auto;bottom:230px;left:50%;right:auto;width:180px;transform:translateX(-50%) rotate(-4deg); }
+}
+@media(orientation:portrait) and (max-height:650px) {
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster:has(.summon-pet:nth-child(3)) { margin-top:2px; }
+ #interface .slayer-hud.mixed-summon~.summon-hud p { min-height:11px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-hud:not([hidden]) { top:auto;bottom:136px;left:20px;right:20px;width:auto;height:44px; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])):has(.array-hud:not([hidden])) .elements .element { min-height:56px;height:56px;padding:2px 3px;gap:0; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])):has(.array-hud:not([hidden])) .element>.element-art { height:32px;max-width:40px;flex:none; }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])):has(.array-hud:not([hidden])) .element .element-copy b { font-size:13px;line-height:16px; }
+ #interface:has(.slayer-hud.mixed-summon):has(.array-hud:not([hidden])) .slayer-callout { bottom:200px; }
+}
+/* Mixed special moves share the free title area, with Slayer's current hit taking priority. */
+@media(orientation:portrait) and (min-height:651px) {
+ #interface .slayer-hud.mixed-summon~.summon-hud .summon-roster { margin-top:3px; }
+}
+#interface:has(.slayer-hud.mixed-summon:not([hidden])):has(.slayer-callout:not([hidden])) .array-flourish { visibility:hidden; }
+@media(max-height:600px) and (orientation:landscape) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-flourish { top:76px;bottom:auto;left:40%;right:auto;width:190px;padding:6px 8px;transform:translateX(-50%); }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-flourish strong { font-size:24px; }
+}
+@media(max-width:700px) and (max-height:600px) and (orientation:landscape) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-flourish { top:auto;bottom:18px;left:33%;width:165px; }
+}
+@media(orientation:portrait) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-flourish { top:auto;bottom:230px;left:50%;right:auto;width:200px;padding:6px 8px;transform:translateX(-50%); }
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-flourish strong { font-size:24px; }
+}
+@media(orientation:portrait) and (max-height:650px) {
+ #interface:has(.slayer-hud.mixed-summon:not([hidden])) .array-flourish { bottom:200px; }
+}
+#interface .tools .slayer-view-toggle { display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;padding:2px;font:9px/11px "Microsoft YaHei UI",sans-serif; }
+#interface .tools .slayer-view-toggle[hidden] { display:none; }
+#interface .slayer-view-toggle svg { width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.6; }
+#interface .slayer-view-toggle[aria-pressed="true"] { border-color:#e6c27e; }
+#interface .slayer-view-hint { position:absolute;left:50%;transform:translateX(-50%);font:10px/16px "Microsoft YaHei UI",sans-serif;white-space:nowrap;color:#eed9aa;text-shadow:0 1px 3px #152016;background:#16201bc4;padding:0 7px;border-radius:2px;pointer-events:none; }
+#interface .slayer-view-hint[hidden] { display:none; }
+#interface .slayer-minimap { position:absolute;right:8px;width:84px;height:54px;padding:2px;background:#14241feb;border:1px solid #bba372;border-radius:3px;pointer-events:auto;touch-action:none;cursor:move; }
+#interface .slayer-minimap[hidden] { display:none; }
+#interface .slayer-minimap:focus-visible { outline:2px solid #ead2a0;outline-offset:2px; }
+#interface .slayer-minimap svg { width:100%;height:100%;display:block;overflow:hidden; }
+#interface .slayer-minimap polygon { fill:#877a574d;stroke:#a89c75;stroke-width:12; }
+#interface .slayer-map-camp { fill:#bcd6af; }
+#interface .slayer-map-enemies { fill:#edb077; }
+#interface .slayer-map-window { fill:#ead6ab0c;stroke:#ffe2a4;stroke-width:18; }
+@media(orientation:portrait) {
+ #interface.slayer-near .slayer-hud { min-height:150px; }
+ #interface.slayer-near :is(.slayer-hud.mixed-summon,.summon-hud) { min-height:128px; }
+}
+@media(orientation:portrait) and (max-height:650px) {
+ #interface.slayer-near .slayer-hud { min-height:76px; }
+ #interface.slayer-near :is(.slayer-hud.mixed-summon,.summon-hud) { min-height:93px; }
+}

@@ -25,15 +25,15 @@ export function center(points: readonly Point[]): Point {
   return { x: points.reduce((s, p) => s + p.x, 0) / points.length, z: points.reduce((s, p) => s + p.z, 0) / points.length };
 }
 /** An interior anchor for concave player drawings; never turns the boundary into a circle. */
-export function interiorPoint(points: readonly Point[]): Point {
+export function interiorPoint(points: readonly Point[], allowed: (p: Point) => boolean = () => true): Point {
   const mean = center(points);
-  if (inside(mean, points)) return mean;
+  if (inside(mean, points) && allowed(mean)) return mean;
   const minX = Math.min(...points.map(p => p.x)), maxX = Math.max(...points.map(p => p.x));
   const minZ = Math.min(...points.map(p => p.z)), maxZ = Math.max(...points.map(p => p.z));
   let best = points[0]!, clearance = -1;
   for (let x = 0; x < 22; x++) for (let z = 0; z < 22; z++) {
     const candidate = { x: minX + (maxX - minX) * (x + 0.5) / 22, z: minZ + (maxZ - minZ) * (z + 0.5) / 22 };
-    if (!inside(candidate, points)) continue;
+    if (!inside(candidate, points) || !allowed(candidate)) continue;
     const d = Math.min(...points.map((a, i) => segmentDistance(candidate, a, points[(i + 1) % points.length]!)));
     if (d > clearance) { best = candidate; clearance = d; }
   }
@@ -51,11 +51,22 @@ export function resample(points: readonly Point[], spacing: number): Point[] {
   return result;
 }
 export function selfIntersects(points: readonly Point[]): boolean {
-  const cross = (a: Point, b: Point, c: Point) => (b.x - a.x) * (c.z - a.z) - (b.z - a.z) * (c.x - a.x);
   for (let i = 0; i < points.length; i++) for (let j = i + 2; j < points.length; j++) {
     if (i === 0 && j === points.length - 1) continue;
     const a = points[i]!, b = points[(i + 1) % points.length]!, c = points[j]!, d = points[(j + 1) % points.length]!;
-    if (cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0) return true;
+    if (segmentsIntersect(a, b, c, d)) return true;
   }
   return false;
+}
+
+export function segmentsIntersect(a: Point, b: Point, c: Point, d: Point): boolean {
+  const cross = (p: Point, q: Point, r: Point) => (q.x - p.x) * (r.z - p.z) - (q.z - p.z) * (r.x - p.x);
+  if (cross(a, b, c) * cross(a, b, d) < 0 && cross(c, d, a) * cross(c, d, b) < 0) return true;
+  return segmentDistance(a, c, d) < 1e-9 || segmentDistance(b, c, d) < 1e-9
+    || segmentDistance(c, a, b) < 1e-9 || segmentDistance(d, a, b) < 1e-9;
+}
+
+export function polygonsOverlap(a: readonly Point[], b: readonly Point[]): boolean {
+  return a.some(p => inside(p, b)) || b.some(p => inside(p, a))
+    || a.some((p, i) => b.some((q, j) => segmentsIntersect(p, a[(i + 1) % a.length]!, q, b[(j + 1) % b.length]!)));
 }

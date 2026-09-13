@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg">
+  <!-- Keep red/gold brush pigment while making the neutral generated matte invisible. -->
+  <filter id="cinnabar" color-interpolation-filters="sRGB" x="0" y="0" width="100%" height="100%">
+    <feColorMatrix type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  5 -5 0 0 -.12"/>
+  </filter>
+</svg>

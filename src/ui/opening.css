@@ -1,0 +1,54 @@
+.opening {
+  position: fixed; inset: 0; z-index: 1000; isolation: isolate;
+  display: grid; place-items: center; overflow: hidden;
+  color: #e3d7ba; background: #060e12; pointer-events: auto;
+}
+.opening-film { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: contain; }
+.opening-enter-cue { display: none; }
+.opening [hidden] { display: none !important; }
+.opening-entry { position: absolute; inset: 0; z-index: 2; text-align: center; }
+.opening-cover { display: block; width: 100%; height: 100%; object-fit: cover; }
+.opening-title { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.opening-controls {
+  position: absolute; right: max(24px, env(safe-area-inset-right));
+  bottom: max(24px, env(safe-area-inset-bottom)); display: flex; gap: 14px; z-index: 3;
+}
+.opening button {
+  min-height: 44px; padding: 10px 18px; border: 1px solid #c3b18a45; border-radius: 3px;
+  color: #d8caae; background: #0b141bdd; font: 13px/1.5 'STKaiti', 'KaiTi', serif;
+  letter-spacing: .12em; cursor: pointer; backdrop-filter: blur(8px);
+}
+.opening button:hover { color: #fff1cc; border-color: #e0c99b9c; background: #243033ee; }
+.opening button:focus-visible { outline: 2px solid #e0c99b; outline-offset: 4px; }
+.opening-skip span { margin-left: 12px; }
+.opening-play { position: absolute; }
+.opening-play[hidden] { display: none; }
+.opening-progress { position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: #d4c29316; }
+.opening-progress span { display: block; width: 100%; height: 100%; background: #c8ae77; transform: scaleX(0); transform-origin: left; transition: transform .2s linear; }
+#game .opening { background: #060e12 url('/video/opening-first-frame.jpg') center/contain no-repeat; }
+#game .opening-controls { right: max(30px,var(--game-safe-right)); bottom: max(30px,var(--game-safe-bottom)); align-items: center; gap: 24px; }
+#game .opening button { min-height: 52px; min-width: 120px; padding: 12px 24px; border: 0; border-radius: 0; font: 25px/1.2 var(--ui-serif); letter-spacing: .06em; backdrop-filter: none; touch-action: manipulation; }
+#game .opening .opening-skip, #game .opening .opening-play, #game .opening .opening-enter { position: relative; isolation: isolate; background: transparent; color: #f6e1ab; font-size: 29px; text-shadow: 0 2px 1px #4b2115; }
+#game .opening .opening-skip::before, #game .opening .opening-play::before, #game .opening .opening-enter::before { content: ''; position: absolute; inset: -6px -8px; z-index: -1; background: url('/art/ui/cinnabar.webp') center/100% 100%; filter: url('#cinnabar'); pointer-events: none; }
+#game .opening .opening-enter { position: absolute; left: 50%; top: calc(50% + min(26vh,14.625vw)); translate: -50% -50%; min-width: 190px; min-height: 62px; font-size: 34px; }
+.opening-enter span { margin-left: 20px; }
+.opening-loading { position:absolute; left:50%; top:calc(50% + min(26vh,14.625vw)); translate:-50% -50%; display:grid; justify-items:center; gap:14px; width:220px; color:#654b31; font:17px/1.5 var(--ui-serif); }
+.opening-load-line { width:140px; height:3px; background:#9b382a; transform-origin:left; animation:opening-load 1.3s ease-in-out infinite alternate; }
+#game .opening .opening-retry { color:#8d3324; background:#ead6ae; min-height:44px; font-size:24px; }
+@keyframes opening-load { from { transform:scaleX(.3); opacity:.45; } to { transform:scaleX(1); opacity:1; } }
+@media (prefers-reduced-motion:reduce) { .opening-load-line { animation:none; } }
+#game .opening .opening-play { position: absolute; z-index: 4; left: 50%; top: calc(50% + min(26vh,14.625vw)); translate: -50% -50%; }
+#game .opening button:hover { filter: brightness(1.06); }
+#game .opening button:active { transform: scale(.97); }
+#game .opening .opening-progress { height: 3px; background: #ac864630; }
+#game .opening .opening-progress span { background: linear-gradient(90deg,#943924,#d1a557); }
+@media (max-height:560px) and (orientation:landscape) {
+  #game .opening-controls { bottom: max(24px,var(--game-safe-bottom)); right: max(25px,var(--game-safe-right)); gap: 18px; }
+  #game .opening button { min-height: 44px; padding: 10px 20px; font-size: 22px; }
+  #game .opening .opening-skip, #game .opening .opening-play { font-size: 25px; }
+}
+@media (max-width: 600px) {
+  #game .opening .opening-enter { min-width: 132px; min-height: 44px; padding: 8px 18px; font-size: 25px; }
+  .opening-controls { left: max(18px, env(safe-area-inset-left)); right: max(18px, env(safe-area-inset-right)); bottom: max(22px, env(safe-area-inset-bottom)); justify-content: space-between; }
+  .opening button { padding: 10px 14px; }
+}

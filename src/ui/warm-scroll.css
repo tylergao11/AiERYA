@@ -1,0 +1,377 @@
+/* Approved illustrated scroll system. All dimensions below are CSS pixels,
+   with 956 × 440 as the primary landscape composition (iPhone Pro Max). */
+:root {
+  --scroll-surface: url('/art/ui/scroll-surface.webp');
+  --scroll-ink: #342a1c; --scroll-muted: #776046; --scroll-gold: #967037;
+  --game-safe-left: env(safe-area-inset-left, 0px);
+  --game-safe-right: env(safe-area-inset-right, 0px);
+  --game-safe-top: env(safe-area-inset-top, 0px);
+  --game-safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+html, body, #game { background-color: #191610; }
+#interface .modal[data-surface], #interface .modal[data-surface]:not([data-surface="birth"]):not([data-surface="reward"]) {
+  padding: max(12px,var(--game-safe-top)) max(12px,var(--game-safe-right)) max(12px,var(--game-safe-bottom)) max(12px,var(--game-safe-left));
+  background: radial-gradient(ellipse at 50% 45%,#2019109c,#0e0b08e8);
+  backdrop-filter: blur(4px) saturate(.65);
+}
+#interface .modal[data-surface] .panel-card.folio-panel,
+#interface .modal[data-surface] .panel-card.birth-screen,
+#interface .modal[data-surface] .panel-card.reward-panel {
+  color: var(--scroll-ink); background: var(--scroll-surface) center/100% 100% no-repeat;
+  border: 0; border-radius: 4px; box-shadow: 0 18px 60px #080604aa;
+  width: min(1420px,100%); max-width: 1420px; height: 100%; max-height: 850px;
+  padding: clamp(32px,7.5vh,72px) clamp(60px,7.5vw,115px) clamp(26px,4vh,40px);
+  overflow: hidden;
+}
+#interface .modal[data-surface] .folio-heading { background: none; padding: 0 58px 15px 0; min-height: 0; }
+#interface .folio-heading h2 { color: #302518; font-size: clamp(28px,3.2vw,44px); letter-spacing: .06em; padding-left: 10px; }
+#interface .folio-heading .eyebrow { color: #806440; font-size: 11px; margin: 0 0 5px; }
+#interface .folio-heading h2::after { content: '修'; display: inline-grid; place-items: center; margin-left: 12px; width: 20px; height: 26px; font: 17px var(--ui-serif); border: 1px solid #9c3928; outline: 1px solid #9c392866; outline-offset: 2px; color: #9c3928; vertical-align: middle; }
+#interface .folio-close, #interface .folio-heading .folio-close,
+#game .sound-settings .sound-close, #interface .birth-replay {
+  top: 0; right: 0; width: 44px; height: 44px; min-height: 44px;
+  border: 2px solid #9c7840; outline: 1px solid #54371c; outline-offset: 2px;
+  border-radius: 50%; background: radial-gradient(circle at 35% 25%,#685031,#322416 65%,#18120d);
+  box-shadow: inset 0 0 0 3px #251d12,inset 0 0 0 4px #b48d4755,0 3px 5px #3c281760;
+  color: #efd394; font: 30px/1 var(--ui-serif);
+}
+#interface .folio-scroll { padding: 10px 0; scrollbar-color: #8c693a88 transparent; color: var(--scroll-ink); }
+#interface .folio-footer { background: none; border-top: 1px solid #75512d50; min-height: 54px; padding: 8px 0 0; }
+#interface .folio-footer .quiet-button { border: 0; color: #f5e4b8; background: #9d3928; clip-path: var(--brush-shape); padding: 10px 26px; min-height: 44px; font-size: 24px; }
+#interface .folio-footer .text-button { color: #665038; }
+#interface .folio-panel :is(.folio-section-title,.fate-rule,.learned-item,.help-more,.array-guide,.summon-guide,.slayer-guide,.handbook-intro) { color: var(--scroll-ink); }
+#interface .folio-panel :is(.help-more,.array-guide,.summon-guide,.slayer-guide) { border-color: #85603755; background: none; }
+#interface .folio-panel :is(.help-more,.array-guide,.summon-guide,.slayer-guide) :is(summary,p,li,b,strong,small) { color: var(--scroll-ink); }
+#interface .folio-panel .help-more > summary, #interface .folio-panel .array-guide > summary { color: #66502e; font-size: 15px; }
+#interface .folio-panel .help-more p, #interface .folio-panel .array-guide :is(p,li) { color: #675438; }
+#interface .empty-inscription { color: #8a7252; }
+
+/* Build pages: a painted identity page and independently scrolling skill leaves. */
+#interface .folio-panel .build-book { display: grid; grid-template-columns: minmax(150px,26%) minmax(0,1fr); gap: 24px; overflow: hidden; padding: 0; }
+#interface .build-identity { min-height: 0; display: flex; flex-direction: column; border-right: 1px solid #8c683d66; padding-right: 20px; }
+#interface .build-emblems { min-height: 80px; flex: 1; display: flex; gap: 5px; }
+#interface .faction-emblem { display: flex; position: relative; flex: 1; flex-direction: column; align-items: center; justify-content: space-between; min-width: 0; isolation: isolate; }
+#interface .faction-painting { position: absolute; inset: 0; z-index: -1; background: url('/art/ui/faction-paintings.webp') var(--faction-x) center/300% 100% no-repeat; mix-blend-mode: multiply; pointer-events: none; mask-image: linear-gradient(transparent,#000 15%,#000 82%,transparent); }
+#interface .faction-emblem > b { color: var(--lane-pigment); font: clamp(75px,11vw,145px)/1 var(--ui-serif); text-shadow: 1px 2px 0 #efd8a5; margin-top: 4%; }
+#interface .faction-emblem > strong { font: clamp(25px,3vw,43px)/1.2 var(--ui-serif); padding: 0 10px; background: radial-gradient(ellipse,#ecdbb9dd,transparent 75%); color: #342718; }
+#interface .build-emblems[data-count="2"] .faction-emblem > b { font-size: clamp(48px,6.7vw,92px); }
+#interface .build-emblems[data-count="2"] .faction-emblem > strong { font-size: 26px; padding: 0 4px; }
+#interface .build-identity .fate-rule { text-align: center; border: 0; font-size: 12px; padding: 0; margin: 12px 0; }
+#interface .build-identity .root-row { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin: 0; }
+#interface .root-medallion { display: grid; justify-items: center; gap: 4px; color: #584329; font-size: 13px; }
+#interface .root-medallion > b { display: grid; place-items: center; width: 42px; height: 42px; border: 2px solid #ac874b; outline: 1px solid #92642e; outline-offset: 2px; border-radius: 50%; background: #6a5935; color: #f1d798; font: 29px var(--ui-serif); box-shadow: inset 0 0 0 2px #34241555; }
+#interface .root-medallion.root-fire > b { background: #a13f29; }
+#interface .root-medallion.root-wood > b { background: #456547; }
+#interface .root-medallion.root-water > b { background: #4c6d71; }
+#interface .root-medallion.root-metal > b { background: #988038; }
+#interface .build-content { overflow-y: auto; min-height: 0; padding: 2px 4px 8px; overscroll-behavior: contain; scrollbar-width: thin; scrollbar-color: #98713c77 transparent; }
+#interface .folio-panel .build-content .boon-grid { gap: 16px; margin: 0 0 16px; }
+#interface .folio-panel .build-content .boon { position: relative; padding: 8px; background: #f7ebcb38; border: 2px solid #977347; outline: 1px solid #bd976361; outline-offset: -5px; box-shadow: 2px 4px 5px #51371c26,inset 0 0 14px #b7905940; }
+#interface .folio-panel .build-content .boon::after { content: ''; position: absolute; inset: 3px; border: 1px solid #97734760; pointer-events: none; }
+#interface .folio-panel .build-content .boon summary { display: flex; flex-direction: column; align-items: center; padding: 0 0 5px; gap: 3px; min-height: 0; position: relative; }
+#interface .folio-panel .build-content .boon summary > .painted-art { position: static; width: min(100%,clamp(112px,28vh,254px)); height: auto; aspect-ratio: 1; margin: 0; transform: none; mask-image: radial-gradient(ellipse,#000 55%,#000d 68%,transparent 78%); }
+#interface .folio-panel .build-content .boon summary > .boon-illustration { --leaf-art: clamp(115px,28vh,275px); display: block; position: relative; height: var(--leaf-art); width: 100%; overflow: hidden; padding: 0; }
+#interface .folio-panel .build-content .boon .boon-illustration .painted-art { position: absolute; width: min(100%,calc(var(--leaf-art) * 1.08)); height: auto; aspect-ratio: 1; max-width: none; left: 50%; top: 50%; transform: translate(-50%,-50%); mask-image: radial-gradient(ellipse,#000 58%,#000e 69%,transparent 79%); }
+#interface .folio-panel .build-content .boon summary > .lane-mark { position: absolute; top: 7px; left: 7px; gap: 0; }
+#interface .folio-panel .build-content .boon summary > .lane-mark > span { display: none; }
+#interface .folio-panel .build-content .boon summary > b { font: clamp(23px,2.8vw,38px)/1.2 var(--ui-serif); color: #2a2219; margin: 0; }
+#interface .folio-panel .build-content .boon summary > span:not(.painted-art):not(.lane-mark) { color: #6c5233; font-size: 12px; line-height: 1.5; text-align: center; padding: 0 18px; }
+#interface .folio-panel .build-content .boon summary > i { position: absolute; bottom: 5px; right: 3px; top: auto; color: #805c2d; font-size: 23px; }
+#interface .folio-panel .build-content .boon-more { color: #59442e; font-size: 13px; line-height: 1.65; }
+#interface .folio-panel .build-content .boon-more p { color: #59442e; }
+#interface .build-learned { border-color: #8b673958; margin: 0; padding: 0; }
+#interface .build-learned .learned-item { border: 1px solid #9b79484d; padding: 5px 12px; margin-bottom: 8px; background: #faf0d436; }
+#interface .build-learned .learned-item summary { display: grid; grid-template-columns: 62px minmax(0,1fr); color: #5d482f; gap: 2px 10px; }
+#interface .build-learned .learned-painting { grid-column: 1; grid-row: 1 / 3; width: 62px; height: 62px; }
+#interface .build-learned .learned-painting .painted-art { width: 100%; height: 100%; }
+#interface .build-learned .learned-item summary > :not(.learned-painting) { grid-column: 2; }
+#interface .build-learned .learned-item summary > b { color: #32271a; font: 22px var(--ui-serif); }
+#interface .build-learned .learned-item summary :is(span,small) { color: #785f40; font-size: 12px; }
+#interface .build-learned .learned-item p { color: #6d5639; }
+#interface .folio-panel .summon-build :is(article,.summon-contract) { color: #4c3c28; border-color: #8b683b66; background: #dcc59830; }
+#interface .folio-panel .summon-build :is(h4,p,small,strong,span) { color: #665033; }
+#interface .folio-panel .summon-build button { background: #b1976640; color: #493620; border-color: #8b683b66; min-height: 44px; }
+
+/* Hand-painted tutorial studies live on the same page, with touch chapter tabs. */
+#interface .handbook-tabs { display: flex; gap: 8px; flex: none; justify-content: flex-end; margin-top: -58px; margin-right: 70px; margin-bottom: 12px; }
+#interface .handbook-tabs button { min-width: 80px; min-height: 44px; padding: 8px 22px; color: #5d4429; font: 25px var(--ui-serif); background: #ae895540; border: 1px solid #a37b4255; border-bottom: 3px solid transparent; clip-path: var(--paper-shape); }
+#interface .handbook-tabs button[aria-pressed="true"] { background: #f6e8c79c; border-bottom-color: #a7432a; color: #37291b; }
+#interface .folio-panel .help-tiles { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 0; margin: 0 0 10px; }
+#interface .folio-panel .help-tiles > article { padding: 0 14px; min-height: 0; background: none; text-align: center; }
+#interface .folio-panel .help-tiles > article + article { border-left: 1px solid #9f794447; }
+#interface .folio-panel .help-tiles b { display: flex; align-items: center; justify-content: center; gap: 10px; color: #38281b; font: clamp(22px,2.7vw,35px) var(--ui-serif); }
+#interface .help-tiles b em { display: grid; place-items: center; width: 29px; height: 30px; font: 24px var(--ui-serif); color: #9b3928; border: 1px solid #9b3928; border-radius: 50%; }
+#interface .handbook-painting { display: block; width: min(100%,34vh); aspect-ratio: 1; margin: 4px auto; background: url('/art/ui/handbook-paintings.webp') var(--scene-x) center/300% 100%; mix-blend-mode: multiply; mask-image: radial-gradient(ellipse,#000 52%,#000d 65%,transparent 78%); }
+#interface .folio-panel .help-tiles p { color: #654b2f; font-size: 15px; margin: 4px 0 10px; }
+#interface .handbook-page .reaction-guide { margin: 0; }
+#interface .handbook-page .reaction-guide > div { border: 1px solid #ad895452; background: #f8eac442; padding: 12px; }
+#interface .handbook-page .reaction-guide b { color: #754a29; font-size: 16px; }
+#interface .handbook-page .reaction-guide p { color: #645039; }
+#interface .handbook-page:not([data-chapter="basics"]) > details > summary { font: 25px var(--ui-serif); }
+
+/* Live demonstrations are an inset painting inside the folio. */
+#interface .modal[data-surface] .birth-screen .birth-heading { padding-bottom: 12px; justify-content: flex-start; }
+#interface .birth-screen .birth-heading h2 { color: #382719; font-size: clamp(28px,3.5vw,46px); padding-left: 10px; }
+#interface .birth-screen .birth-heading h2::before, #interface .birth-screen .birth-heading h2::after { display: none; }
+#interface .birth-screen .birth-body { gap: 24px; padding: 4px 2px; }
+#interface .birth-screen .birth-detail { display: grid; grid-template-rows: minmax(100px,1fr) auto; border: 1px solid #8e643954; padding: 7px; background: #ead5ac3a; box-shadow: inset 0 0 0 3px #b9976124; }
+#interface .birth-screen .birth-detail .birth-demo { height: 100%; min-height: 0; max-height: none; }
+#interface .birth-screen .birth-detail .birth-explanation { height: auto; flex: none; grid-template-rows: auto 52px; padding-top: 12px; }
+#interface .birth-screen .birth-copy { overflow: visible; padding-bottom: 5px; }
+#interface .birth-screen .birth-demo { background: #342c1d; border: 1px solid #a7834c; clip-path: var(--paper-shape); }
+#interface .birth-screen .birth-demo::after { background: none; box-shadow: inset 0 0 16px 3px #d3b47a60; }
+#interface .birth-screen .birth-replay { top: 8px; right: 8px; }
+#interface .birth-screen .birth-detail-title h3 { color: #322619; font-size: clamp(26px,3vw,38px); }
+#interface .birth-screen .birth-detail-title > small { color: #85642e; }
+#interface .birth-screen .birth-detail-meta :is(.birth-tier-label,b) { color: #7b5d38; border-color: #8c673947; }
+#interface .birth-screen .birth-detail-meta .lane-mark > span { color: var(--lane-pigment); }
+#interface .birth-screen .birth-description p, #interface .birth-screen .birth-description p small { color: #51412c; }
+#interface .birth-screen .birth-rules { color: #745c3c; }
+#interface .birth-screen .birth-rule-copy { background: var(--paper-image) center/cover; border-color: #906d4380; color: #59412a; }
+#interface .birth-screen .birth-confirm:disabled { background: #a68a5850; color: #705b3e; border-color: #906d4360; }
+#interface .birth-screen .birth-talent { box-shadow: 2px 3px 5px #67451c30; border-radius: 1px; }
+#interface .birth-screen .birth-footer { border-color: #8e6d4240; background: none; padding-top: 12px; }
+#interface .birth-screen .birth-reroll { color: #75542e; background: #c3a47440; border-color: #97734488; min-height: 44px; }
+#interface .birth-screen .birth-slots .birth-slot { color: #5a4027; box-shadow: 0 1px 3px #5b3b1730; }
+#interface .birth-screen .birth-selected-count { color: #795c39; }
+#interface .birth-screen .birth-slot.empty { background: #b5965613; border: 1px dashed #9e7a4457; box-shadow: inset 0 0 9px #8563320a; }
+#interface .birth-screen .birth-slot.empty > span { color: #9b7a45; opacity: .6; }
+#interface .birth-screen .birth-count { color: #735635; }
+#interface .birth-screen .birth-confirm.quiet-button { background: #baa07140; color: #735330; border-color: #9f78488a; }
+
+#interface .modal[data-surface] .reward-panel { display: flex; flex-direction: column; }
+#interface .reward-panel .reward-heading { flex: none; }
+#interface .reward-panel .reward-heading h2 { color: #362719; font-size: clamp(30px,4vw,48px); margin: 0; }
+#interface .reward-panel .reward-heading .eyebrow { color: #8c6b3f; }
+#interface .reward-panel .cultivation-track { color: #82623d; margin: 8px auto 14px; flex: none; }
+#interface .reward-panel .cultivation-track > i { background: #805c3022; }
+#interface .reward-panel .reward-choices { flex: 1; min-height: 0; overflow-y: auto; scrollbar-width: thin; padding: 3px; gap: 20px; }
+#interface .reward-panel .reward-choice { box-shadow: 1px 3px 5px #53321535; background: #f8eac3aa; border-right: 1px solid #977347; border-left: 1px solid #977347; border-bottom: 1px solid #977347; }
+#interface .reward-panel .reward-painting { flex-shrink: 0; }
+#interface .reward-panel .reward-choose-label { width: calc(100% - 52px); margin-right: 52px; min-height: 44px; padding: 8px 14px; }
+#interface .reward-panel .reward-choose-label::before { bottom: 0; }
+#interface .reward-panel .reward-details:not([open]) { margin: 0; }
+#interface .reward-panel .reward-details:not([open]) > summary { position: absolute; bottom: 5px; right: 8px; width: 44px; height: 44px; min-height: 44px; padding: 0; margin: 0; justify-content: center; }
+#interface .reward-painting .progress-art { display: block; position: relative; height: 100%; aspect-ratio: 1; }
+#interface .reward-painting .progress-art .painted-art { position: absolute; width: 72%; height: auto; }
+#interface .progress-art .painted-art:first-child { left: 0; top: 0; }
+#interface .progress-art .painted-art:last-child { right: 0; bottom: 0; }
+#interface .progress-art[data-count="3"] .painted-art { width: 65%; }
+#interface .progress-art[data-count="3"] .painted-art:nth-child(2) { right: 0; top: 0; }
+#interface .progress-art[data-count="3"] .painted-art:last-child { right: 17.5%; bottom: 0; }
+#interface .reward-panel .reward-footer { flex: none; margin-top: 12px; gap: 20px; }
+#interface .reward-panel .reward-footer button { color: #684c29; background: #b9975d38; border-color: #97734477; min-height: 44px; }
+#interface .reward-panel .reward-footer span { color: #856637; }
+
+/* Small sheets use the same illustrated outer scroll instead of empty blue boxes. */
+#interface .modal[data-surface] :is(.pause-panel,.confirm-panel,.result-panel), #game .sound-settings {
+  background: var(--scroll-surface) center/100% 100% no-repeat; border: 0; border-radius: 3px; color: #3b2d1d;
+}
+#interface .modal[data-surface] .pause-panel { padding: 40px 52px 26px; }
+#interface .modal[data-surface] .confirm-panel { padding: 36px 48px; }
+#interface .modal[data-surface] .result-panel { padding: 30px 42px; }
+#interface .result-panel .result-illustration { border-right-color: #89613955; }
+#interface .result-panel .result-story { padding: 24px; }
+#interface .result-panel .result-actions .quiet-button, #interface .confirm-panel .quiet-button { background: #b99a6433; color: #75522e; border-color: #94704280; }
+#game .sound-settings { padding: 32px 42px; }
+#game .sound-settings::backdrop { background: #100d09bd; backdrop-filter: blur(4px); }
+#game .sound-settings-heading { padding-right: 3px; }
+#game .sound-settings :is(h2,p,span,output,label) { color: #644c2e; }
+#game .sound-settings .sound-close { position: static; }
+#game .sound-settings button, #game .sound-settings-footer label { min-height: 44px; }
+#game .sound-settings-footer label { display: flex; align-items: center; gap: 5px; }
+#game .sound-volume input { height: 44px; }
+#game .loader { background: radial-gradient(ellipse at 50% 44%,#2b2015bb,#15100bfa),url('/art/ui/scroll-surface.webp') center/cover; }
+#game .loader > .seal { background: #392717; border-color: #ae8342; color: #e8c887; outline: 1px solid #ae834255; outline-offset: 4px; }
+
+/* HUD: compact bronze gauges, painted class pennants, fixed card baselines. */
+#interface .topbar { left: max(18px,var(--game-safe-left)); right: max(18px,var(--game-safe-right)); top: max(12px,var(--game-safe-top)); }
+#interface .shade { background: linear-gradient(#110d0960,transparent 15%,transparent 78%,#140f0988); box-shadow: inset 24px 0 45px #20191155,inset -24px 0 45px #20191155; }
+#interface .identity { padding: 6px 16px 6px 4px; background: linear-gradient(95deg,#281a10f5,#281a10bf 68%,transparent); clip-path: var(--brush-shape); }
+#interface .identity > .seal { display: none; }
+#interface .identity h1 { font-size: clamp(23px,3vw,40px); color: #f0dab0; }
+#interface .tools { position: relative; }
+#interface .tools button:not(.help-nudge) { width: 44px; height: 44px; min-height: 44px; border: 2px solid #a27d4280; border-radius: 50%; background: radial-gradient(circle at 35% 25%,#604729,#2a2016 67%); box-shadow: inset 0 0 0 2px #21170d,0 2px 3px #0005; color: #e9cb91; }
+#interface .tools .sound-settings-toggle, #interface .tools [data-action="sound"] { display: none; }
+#interface .status :is(.spirit-status,.camp-status) { background: linear-gradient(110deg,#352616ed,#241c13eb); border: 1px solid #9b783f88; outline: 1px solid #543b20; outline-offset: 2px; padding: 5px 10px; min-width: 105px; color: #e2c18b; }
+#interface .status .health-track { background: #b5914433; }
+#interface .status .health-track i { background: linear-gradient(90deg,#876427,#e6c784); }
+#interface .build-strip { top: 90px; left: max(20px,var(--game-safe-left)); }
+#interface .build-strip .build-toggle { padding: 5px; gap: 3px; background: #312214e6; border: 2px solid #9d794777; border-radius: 14px 14px 1px 1px; box-shadow: inset 0 0 0 2px #48321c,0 4px 5px #0005; width: auto; min-width: 94px; }
+#interface .build-toggle .faction-emblem { width: 82px; height: 115px; }
+#interface .build-toggle .faction-painting { opacity: .45; mix-blend-mode: luminosity; }
+#interface .build-toggle .faction-emblem > b { font-size: 61px; margin-top: 3px; color: #e8c987; text-shadow: 0 2px 3px #26150d; }
+#interface .build-toggle .faction-emblem > strong { font-size: 24px; background: none; color: #f0d69d; padding: 0 0 5px; }
+#interface .build-toggle .build-progress, #interface .array-status { display: none; }
+#interface .array-hud { top: 222px; left: max(20px,var(--game-safe-left)); max-width: 192px; padding: 5px; background: linear-gradient(100deg,#2b1e11c7,transparent); }
+#interface .array-hud .array-hud-title { font-size: 13px; min-height: 30px; margin-bottom: 2px; }
+#interface .array-hud .array-hud-message { display: none; }
+#interface .array-hud[data-mixed="true"] { max-width: 192px; }
+#interface .array-hud[data-summon="true"] { top: 230px; }
+#interface .array-flourish { background: linear-gradient(90deg,transparent,#362618e6 22%,#362618e6 78%,transparent); }
+#interface .summon-hud, #interface .summon-hud.ready { background: var(--paper-image) center/cover; border: 1px solid #9d7b4888; border-left: 4px solid #536c4d; border-radius: 1px; box-shadow: 0 3px 8px #21140d55; color: #4a432f; }
+#interface .summon-hud :is(.summon-heading span,.summon-heading strong,p) { color: #56472e; }
+#interface .summon-hud .summon-pet { background: #aa8e5640; border-color: #8c6f4155; }
+#interface .summon-hud .summon-pet :is(b,small,em) { color: #4c432e; }
+#interface .summon-hud .summon-pet em { border-color: #80633f66; }
+#interface .summon-hud .summon-meter { background: #79582d22; }
+#interface .summon-hud .summon-meter i { background: linear-gradient(90deg,#4b6d4c,#af9856); }
+#interface .summon-hud .summon-growth { --growth-ink:#77552e; }
+#interface .summon-hud .summon-pet[data-element=metal] { --pet:#786329; }
+#interface .summon-hud .summon-pet[data-element=wood] { --pet:#4a673d; }
+#interface .summon-hud .summon-pet[data-element=water] { --pet:#416c77; }
+#interface .summon-hud .summon-pet[data-element=fire] { --pet:#974c34; }
+#interface .summon-hud .summon-pet[data-element=earth] { --pet:#80623b; }
+#interface .summon-hud .summon-stock>i { background:#71563235; }
+#interface .summon-hud .summon-stock s { background:repeating-linear-gradient(90deg,#a06542 0 2px,#e5d5b5 2px 4px); }
+#interface .summon-hud .summon-heading { gap:4px; min-height:30px; }
+#interface .summon-hud .summon-heading strong { margin-left:auto; white-space:nowrap; }
+#interface .summon-hud .summon-fold { flex:none; display:grid; place-items:center; width:44px; height:44px; min-width:44px; min-height:44px; padding:8px; margin:-7px -7px -7px 0; border:0; border-radius:0; color:#eed8a4; background:transparent; pointer-events:auto; touch-action:manipulation; }
+#interface .summon-fold svg { box-sizing:border-box; width:27px; height:27px; padding:3px; border:1px solid #ae8949; border-radius:50%; background:linear-gradient(#655031,#302419); box-shadow:0 1px 2px #30201460; fill:none; stroke:currentColor; stroke-width:2; }
+#interface .summon-fold .fold-vertical { display:none; }
+#interface .summon-fold:focus-visible { outline:2px solid #913828; outline-offset:-3px; }
+#interface .summon-hud.is-collapsed { min-height:0!important; }
+#interface .summon-hud.is-collapsed > :is(.summon-roster,p) { display:none!important; }
+#interface .summon-hud.is-collapsed .fold-vertical { display:block; }
+#interface .slayer-hud { padding: 9px 13px; background: linear-gradient(105deg,transparent,#2e1b12d6 25%,#2e1b12c9 85%,transparent); text-shadow: 0 2px 4px #25150c; }
+#interface .slayer-hud .slayer-count { font-family: var(--ui-serif); color: #f4d29d; }
+#interface .slayer-hud :is(.slayer-rank,.slayer-pure-trigger,.slayer-recovery) { color: #ccb78c; }
+#interface .slayer-callout::before, #interface .battle-banner { background: linear-gradient(90deg,transparent,#362215ed 22%,#362215ed 78%,transparent); }
+#interface .battle-banner strong, #interface .slayer-callout strong { font-family: var(--ui-serif); }
+#interface .wave-boss { background: linear-gradient(105deg,#382518ed,#21190fee); border-color: #a2794388; box-shadow: inset 0 0 0 2px #5c412344; color: #e8c394; }
+#interface .wave-boss > div { background: #a879452d; }
+#interface .wave-boss i { background: linear-gradient(90deg,#8f3925,#d69454); }
+#interface .folio-panel .reward-example, #interface .reward-panel .reward-example { background: radial-gradient(ellipse,#ad936825,transparent 76%); color: #765a38; }
+#interface .folio-panel .example-caption, #interface .reward-panel .example-caption { color: #6e5437; }
+#interface .reward-details .reward-detail-title, #interface .reward-details .detail-close-label { display: none; }
+/* Details turn over one leaf; neighboring illustrations and actions keep their baseline. */
+#interface .reward-panel .reward-details[open] { position: absolute; inset: 0; z-index: 3; margin: 0; padding: 0 12px 10px; overflow-y: auto; overscroll-behavior: contain; background: var(--paper-image) center/cover; border-radius: inherit; }
+#interface .reward-panel .reward-details[open] > summary { position: sticky; top: 0; z-index: 1; display: flex; width: 100%; min-height: 44px; margin: 0; padding: 5px 0; gap: 8px; background: var(--paper-image) center/cover; }
+#interface .reward-details[open] > summary::before, #interface .reward-details[open] .detail-open-label { display: none; }
+#interface .reward-details[open] .reward-detail-title { display: block; flex: 1; font: 22px var(--ui-serif); color: #392b1b; }
+#interface .reward-details[open] .detail-close-label { display: block; color: #91402b; font-size: 12px; }
+#interface .reward-panel .reward-details p { color: #6b5236; }
+#interface .bottom { left: max(20px,var(--game-safe-left)); right: max(20px,var(--game-safe-right)); bottom: max(12px,var(--game-safe-bottom)); }
+#interface .elements .element, #interface .elements .element.selected, #interface .elements .element.selected:hover { transform: none; }
+#interface .elements .element.selected { outline: 2px solid #d3a04b; outline-offset: 1px; box-shadow: 0 0 0 1px #edc77c,inset 0 0 9px #a76a2488; }
+#interface .elements kbd { display: none; }
+#interface .reward-choice:hover, #interface .reward-choice:focus-within { transform: none; }
+#interface .help-nudge[hidden] { display: none; }
+#interface .actions :is(.dismiss-button,.ultimate-button,.repair-button) { background: linear-gradient(135deg,#5b4227,#2b2015 60%); border: 1px solid #b48a4a; outline: 1px solid #3b2916; outline-offset: 2px; box-shadow: inset 0 0 0 3px #211910; color: #ecd39f; min-height: 52px; }
+#interface .actions :is(.dismiss-button,.ultimate-button) small { display: none; }
+#interface .actions .primary { min-height: 54px; }
+#interface .help-nudge { position: absolute; top: 46px; right: 45px; width: 62px; min-height: 62px; border: 0; background: none; display: flex; flex-direction: column; align-items: center; gap: 2px; color: #f3dbab; padding: 0; animation: guide-invite 1.5s ease-in-out 3; }
+#interface .help-nudge svg { width: 36px; height: 40px; fill: #eed8a7; stroke: #795630; stroke-width: 1.8px; filter: drop-shadow(0 2px 3px #0008); }
+#interface .help-nudge span { font: 15px var(--ui-serif); background: #372719d9; padding: 2px 9px; clip-path: var(--brush-shape); }
+@keyframes guide-invite { 50% { transform: translateY(6px); } }
+
+@media (min-height:561px) and (min-width:701px) {
+  #interface .reward-panel .reward-choices { grid-auto-rows: minmax(0,1fr); }
+  #interface .reward-panel .reward-choice { min-height: 0; }
+  #interface .reward-panel .reward-painting { flex: 1 1 210px; min-height: 100px; max-height: 260px; }
+  #interface .reward-panel .reward-card-heading { margin-bottom: 6px; }
+  #interface .reward-panel .reward-result { min-height: 40px; margin-top: 0; }
+  #interface .reward-panel .reward-pick { padding-bottom: 8px; }
+}
+
+@media (max-height:560px) and (orientation:landscape) {
+  #interface .modal[data-surface] .panel-card.folio-panel, #interface .modal[data-surface] .panel-card.birth-screen, #interface .modal[data-surface] .panel-card.reward-panel { padding: 29px 70px 25px; height: 100%; max-height: 100%; }
+  #interface .modal[data-surface] .folio-heading { padding-bottom: 9px; }
+  #interface .folio-heading h2 { font-size: 28px; }
+  #interface .folio-heading .eyebrow { display: none; }
+  #interface .folio-heading .folio-close { width: 44px; height: 44px; top: -7px; }
+  #interface .folio-footer { min-height: 49px; padding-top: 4px; }
+  #interface .folio-footer .quiet-button { font-size: 22px; padding: 8px 23px; }
+  #interface .folio-panel .build-book { gap: 16px; grid-template-columns: minmax(145px,25%) minmax(0,1fr); }
+  #interface .build-identity { padding-right: 12px; }
+  #interface .faction-emblem > b { font-size: 87px; }
+  #interface .faction-emblem > strong { font-size: 29px; }
+  #interface .build-emblems[data-count="2"] .faction-emblem > b { font-size: 53px; }
+  #interface .build-emblems[data-count="2"] .faction-emblem > strong { font-size: 23px; }
+  #interface .build-identity .fate-rule { margin: 6px 0; font-size: 11px; }
+  #interface .root-medallion > b { width: 30px; height: 30px; font-size: 23px; }
+  #interface .root-medallion { font-size: 11px; gap: 2px; }
+  #interface .build-identity .root-row { gap: 9px; }
+  #interface .folio-panel .build-content .boon { padding: 5px; }
+  #interface .folio-panel .build-content .boon-grid { gap: 12px; margin-bottom: 10px; }
+  #interface .folio-panel .build-content .boon summary > .painted-art { width: min(100%,27vh); }
+  #interface .folio-panel .build-content .boon summary > b { font-size: 25px; }
+  #interface .folio-panel .build-content .boon summary > span:not(.painted-art):not(.lane-mark) { font-size: 11px; padding: 0 14px; }
+  #interface .folio-panel .build-content .boon summary > .lane-mark { top: 5px; left: 5px; }
+  #interface .build-learned .learned-item summary > b { font-size: 19px; }
+  #interface .handbook-tabs { margin-top: -43px; margin-right: 60px; margin-bottom: 6px; }
+  #interface .handbook-tabs button { min-width: 65px; padding: 5px 15px; font-size: 23px; }
+  #interface .folio-panel .help-tiles b { font-size: 24px; gap: 6px; }
+  #interface .handbook-painting { width: min(100%,31vh); }
+  #interface .folio-panel .help-tiles p { font-size: 13px; }
+  #interface .birth-screen .birth-heading h2 { font-size: 29px; }
+  #interface .modal[data-surface] .birth-screen .birth-heading { padding-bottom: 4px; }
+  #interface .birth-screen .birth-body { gap: 16px; }
+  #interface .birth-screen .birth-detail { padding: 4px; }
+  #interface .birth-screen .birth-explanation { padding: 8px 3px 0; }
+  #interface .birth-screen .birth-detail .birth-demo { height: 100%; min-height: 0; flex: none; }
+  #interface .birth-screen .birth-detail .birth-explanation { height: auto; flex: none; grid-template-rows: auto 44px; padding-top: 7px; }
+  #interface .birth-screen .birth-detail-meta { display: none; }
+  #interface .birth-screen .birth-rule-copy { bottom: 44px; }
+  #interface .birth-screen .birth-description p { font-size: 13px; }
+  #interface .birth-screen .birth-confirm.quiet-button { background: #baa07140; color: #735330; border-color: #9f78488a; }
+  #interface .birth-screen .birth-slot.empty { background: #aa89551c; border: 1px dashed #9e7a4447; }
+  #interface .birth-screen .birth-detail-title h3 { font-size: 25px; }
+  #interface .birth-screen .birth-detail-title > small { font-size: 11px; }
+  #interface .birth-screen .birth-detail-meta { margin-top: 4px; }
+  #interface .birth-screen .birth-description { margin-top: 5px; }
+  #interface .birth-screen .birth-footer { padding-top: 5px; }
+  #interface .birth-screen .birth-list { grid-template-rows: repeat(5,minmax(0,1fr)); }
+  #interface .birth-screen .birth-talent { min-height: 0; }
+  #interface .birth-screen .birth-talent .destiny-art { width: 58px; }
+  #interface .reward-panel .reward-heading h2 { font-size: 30px; }
+  #interface .reward-panel .reward-pick { grid-template-columns: minmax(90px,1.3fr) minmax(0,1fr); grid-template-rows: auto auto minmax(105px,1fr) auto 44px; column-gap: 8px; }
+  #interface .reward-panel .reward-painting { width: 100%; height: auto; aspect-ratio: 1; max-height: 138px; }
+  #interface .reward-panel .reward-result { font-size: 12px; line-height: 1.5; }
+  #interface .reward-panel .reward-choose-label { width: calc(100% - 48px); min-height: 44px; margin-right: 48px; }
+  #interface .reward-panel .reward-details:not([open]) { margin: 0; }
+  #interface .reward-panel .reward-details:not([open]) > summary { position: absolute; bottom: 4px; right: 4px; width: 44px; height: 44px; min-height: 44px; padding: 0; margin: 0; justify-content: center; }
+  #interface .reward-panel .reward-details[open] { margin: 0; }
+  #interface .reward-panel .reward-heading .eyebrow { display: none; }
+  #interface .reward-panel .cultivation-track { margin: 4px auto 6px; }
+  #interface .reward-panel .reward-footer { margin-top: 6px; }
+  #interface .modal[data-surface] .pause-panel { padding: 25px 47px 20px; }
+  #interface .modal[data-surface] .confirm-panel { padding: 30px 45px; }
+  #interface .modal[data-surface] .result-panel { padding: 20px 35px; }
+  #interface .result-panel .result-story { padding: 10px 22px; }
+  #game .sound-settings { padding: 26px 38px; }
+  #interface .build-strip { top: 65px; }
+  #interface .build-strip .build-toggle { min-width: 69px; }
+  #interface .build-toggle .faction-emblem { width: 61px; height: 85px; }
+  #interface .build-toggle .faction-emblem > b { font-size: 43px; }
+  #interface .build-toggle .faction-emblem > strong { font-size: 21px; }
+  #interface .array-hud { top: 160px; max-width: 177px; }
+  #interface .array-hud[data-summon="true"] { top: 205px; }
+  #interface .status { gap: 12px; }
+  #interface .status :is(.spirit-status,.camp-status) { min-width: 85px; padding: 4px 8px; font-size: 11px; }
+  #interface .actions :is(.dismiss-button,.ultimate-button,.repair-button) { min-height: 46px; }
+}
+@media (orientation:portrait) {
+  #interface .modal[data-surface] .panel-card.folio-panel, #interface .modal[data-surface] .panel-card.birth-screen, #interface .modal[data-surface] .panel-card.reward-panel { padding: 60px 32px 35px; }
+  #interface .folio-panel .build-book { display: block; overflow-y: auto; }
+  #interface .build-identity { height: 225px; border-right: 0; border-bottom: 1px solid #8c683d66; padding: 0 0 12px; margin-bottom: 12px; }
+  #interface .build-content { overflow: visible; }
+  #interface .build-emblems { min-height: 110px; }
+  #interface .faction-emblem > b { font-size: 68px; }
+  #interface .faction-emblem > strong { font-size: 25px; }
+  #interface .folio-panel .build-content .boon-grid { grid-template-columns: 1fr; }
+  #interface .folio-panel .build-content .boon summary > .painted-art { width: 160px; }
+  #interface .handbook-tabs { margin: 0 0 10px; gap: 5px; justify-content: stretch; }
+  #interface .handbook-tabs button { flex: 1; min-width: 0; font-size: 22px; padding: 5px; }
+  #interface .folio-panel .help-tiles { grid-template-columns: 1fr; }
+  #interface .folio-panel .help-tiles > article { padding: 12px 0; }
+  #interface .folio-panel .help-tiles > article + article { border-left: 0; border-top: 1px solid #9f794447; }
+  #interface .handbook-painting { width: 200px; }
+  #interface .folio-heading h2 { font-size: 30px; }
+  #interface .birth-screen .birth-body { gap: 16px; }
+  #interface .build-strip { top: 134px; }
+  #interface .array-hud { top: 267px; }
+  #interface .modal[data-surface] .result-panel { padding: 26px; }
+  #interface .result-panel .result-story { padding: 10px; }
+}
+@media (prefers-reduced-motion:reduce) { #interface .help-nudge { animation: none; } }

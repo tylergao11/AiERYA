@@ -1,0 +1,27 @@
+#interface .tools .summon-view-toggle{display:flex;flex-direction:column;align-items:center;justify-content:center;min-width:44px;min-height:44px;padding:3px;gap:1px;font:10px/12px 'Microsoft YaHei',sans-serif}
+#interface .tools .summon-view-toggle[hidden],#interface .summon-minimap[hidden]{display:none}
+#interface .summon-view-toggle svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.4}
+#interface .summon-view-toggle[aria-pressed=true]{border-color:#cfb67f}
+#interface .summon-minimap{position:absolute;right:10px;width:96px;padding:3px 3px 1px;background:#182824e8;border:1px solid #94856b;border-radius:3px;pointer-events:auto;touch-action:none;cursor:move;color:#c9c3ad;box-shadow:0 3px 12px #1119}
+#interface .summon-minimap svg{display:block;width:100%;height:60px;overflow:hidden}
+#interface .summon-minimap polygon{fill:#304237;stroke:#86927a;stroke-width:10}
+#interface .summon-minimap rect{fill:#bfc8a714;stroke:#e1ce9e;stroke-width:14}
+#interface .summon-map-camp{fill:#d3b77d}
+#interface .summon-minimap .enemy{fill:#bb7460}
+#interface .summon-minimap .spirit{fill:#bad7b4;stroke:#273e34;stroke-width:5}
+#interface .summon-minimap>span{display:block;text-align:center;font:10px/17px 'Microsoft YaHei',sans-serif;letter-spacing:0}
+#interface.summon-mobile-view .build-strip{top:116px;left:12px;right:auto}
+#interface.summon-mobile-view .build-strip .build-toggle{min-width:120px;min-height:44px;max-height:44px;padding:4px 10px;gap:10px;border-radius:3px}
+#interface.summon-mobile-view .build-toggle::before{display:none}
+#interface.summon-mobile-view .build-toggle .faction-emblem{display:flex;align-items:center;justify-content:center;gap:5px;width:64px;height:32px}
+#interface.summon-mobile-view .build-toggle .faction-emblem>b{font-size:24px;line-height:30px;margin:0}
+#interface.summon-mobile-view .build-toggle .faction-emblem>strong{font-size:13px;padding:0}
+#interface.summon-mobile-view .build-toggle .build-progress{display:block;font-size:11px;white-space:nowrap;color:inherit}
+#interface.summon-mobile-view .summon-hud{top:170px;left:12px;right:12px;width:auto;padding:8px 10px}
+#interface.summon-mobile-view .summon-roster{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:4px}
+#interface.summon-mobile-view .summon-roster:not(:has(.summon-pet:nth-child(3))){grid-template-columns:repeat(2,minmax(0,1fr))}
+#interface.summon-mobile-view .summon-pet{max-width:none;min-width:0;width:auto;flex:none}
+#interface.summon-mobile-view .summon-pet:only-child{grid-column:1/-1}
+#interface.summon-mobile-view .summon-pet b{font-size:11px}
+#interface.summon-mobile-view .summon-pet small{font-size:10.5px}
+@media(max-height:680px){#interface.summon-mobile-view .build-strip{top:98px}#interface.summon-mobile-view .summon-hud{top:150px}}

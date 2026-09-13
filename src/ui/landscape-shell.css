@@ -1,0 +1,8 @@
+html, body { margin: 0; width: 100%; height: 100%; overflow: hidden; background: #191610; }
+body { overscroll-behavior: none; touch-action: manipulation; }
+#landscape-host {
+  position: fixed; inset: 0; overflow: hidden; box-sizing: border-box;
+  padding: env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+  background: #191610 url('/art/ui/cinnabar-boundary.webp') center/cover;
+}
+#landscape-host iframe { position: absolute; display: block; border: 0; transform-origin: 0 0; background: #191610; }

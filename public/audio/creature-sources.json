@@ -1,0 +1,44 @@
+{
+  "license": "CC0-1.0",
+  "sources": [
+    {
+      "author": "qubodup",
+      "title": "Dog Snarl Grunt Grumble",
+      "page": "https://opengameart.org/node/5407",
+      "download": "https://opengameart.org/sites/default/files/dog_0.7z"
+    },
+    {
+      "author": "CaveboyTup",
+      "title": "Wolf Monster Sound",
+      "page": "https://opengameart.org/content/wolf-monster-sound",
+      "download": "https://opengameart.org/sites/default/files/wolf_monster_6.mp3"
+    }
+  ],
+  "usage": "Recorded dog vocalizations and a designed horse-based monster call, edited and layered for fantasy wolves.",
+  "samples": [
+    {
+      "name": "dog-growl",
+      "seconds": 0.5804583333333333,
+      "peak": 1.1378612518310547,
+      "sha256": "84a4ecc14152ad1523e62800223def75b92fe7b16c6b78943b8bd236ab82cd29"
+    },
+    {
+      "name": "dog-grumble",
+      "seconds": 0.6,
+      "peak": 1.290123701095581,
+      "sha256": "932580aca34cae6c9e8e54736a765e2688e15e4a949d1b039ff59f0465dcaed8"
+    },
+    {
+      "name": "dog-snarl",
+      "seconds": 0.7001666666666667,
+      "peak": 1.290271282196045,
+      "sha256": "086614716a3d402c906079ea3ff1820a993a3fb7f6913653f50f1665eb444cab"
+    },
+    {
+      "name": "wolf-monster",
+      "seconds": 1.547625,
+      "peak": 1.2628076076507568,
+      "sha256": "ae5fe120c3e6e39f77af6f340e0ca2a93b27eb62884959e47eae9357c3556252"
+    }
+  ]
+}
