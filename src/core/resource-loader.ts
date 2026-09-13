@@ -10,17 +10,36 @@ async function slot<T>(work: () => Promise<T>): Promise<T> {
   finally { const next = pending.shift(); if (next) next(); else active--; }
 }
 
-/** Retry transient mobile-network failures, with a finite wait for every attempt. */
+/** Retry stalled connections, never interrupt a download that is making progress. */
 export async function fetchBytes(url: string, signal?: AbortSignal): Promise<ArrayBuffer> {
   for (let attempt = 0; ; attempt++) {
     const controller = new AbortController(), abort = () => controller.abort();
     if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
     signal?.addEventListener('abort', abort, { once: true });
-    const timer = setTimeout(abort, 25000);
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const progress = () => { clearTimeout(timer); timer = setTimeout(abort, 30000); };
+    progress();
     try {
-      const response = await fetch(url, { signal: controller.signal, cache: attempt ? 'reload' : 'default' });
+      const response = await fetch(url, { signal: controller.signal, cache: 'default' });
       if (!response.ok) throw new Error(`Resource ${response.status}: ${url}`);
-      return await response.arrayBuffer();
+      // Older browsers without a readable body cannot report progress. Let their
+      // native network stack handle failure instead of imposing a total deadline.
+      if (!response.body) { clearTimeout(timer); return await response.arrayBuffer(); }
+      progress();
+      const reader = response.body.getReader(), chunks: Uint8Array[] = [];
+      let length = 0;
+      try {
+        for (;;) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          if (value.length) { progress(); chunks.push(value); length += value.length; }
+        }
+      } finally { reader.releaseLock(); }
+      clearTimeout(timer);
+      const bytes = new Uint8Array(length);
+      let offset = 0;
+      for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.length; }
+      return bytes.buffer;
     } catch (error) {
       if (signal?.aborted || attempt >= 2) throw error;
     } finally { clearTimeout(timer); signal?.removeEventListener('abort', abort); }
@@ -35,15 +54,13 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
     ready = slot(async () => {
       for (let attempt = 0; ; attempt++) {
         const image = new Image(); image.decoding = 'async';
-        let timer = 0;
         try {
           image.src = key;
-          await Promise.race([image.decode(), new Promise<never>((_, reject) => {
-            timer = window.setTimeout(() => reject(new Error(`Image timed out: ${url}`)), 20000);
-          })]);
+          // decode includes network transfer; a fixed deadline can cancel an
+          // otherwise healthy download on a slow mobile connection.
+          await image.decode();
           return image;
         } catch (error) { image.removeAttribute('src'); if (attempt >= 2) throw error; }
-        finally { clearTimeout(timer); }
       }
     }).catch(error => { images.delete(key); throw error; });
     images.set(key, ready);
