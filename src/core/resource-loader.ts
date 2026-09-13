@@ -1,19 +1,7 @@
-import assetOrigin from './asset-origin.json';
-const mirrored = new Set(assetOrigin.paths);
 const images = new Map<string, Promise<HTMLImageElement>>();
 let active = 0;
 const pending: (() => void)[] = [];
-export const assetUrl = (path: string): string => {
-  const url = new URL(path, document.baseURI);
-  const base = new URL(import.meta.env.BASE_URL, document.baseURI);
-  const relative = url.pathname.slice(base.pathname.length);
-  // Only byte-verified, unchanged assets use the working immutable deployment.
-  // New code and any new assets remain on this release's own origin.
-  if (import.meta.env.PROD && url.origin === base.origin && url.pathname.startsWith(base.pathname) && mirrored.has(relative)) {
-    return new URL(relative + url.search, `${assetOrigin.origin}/`).href;
-  }
-  return url.href;
-};
+export const assetUrl = (path: string): string => new URL(path, document.baseURI).href;
 
 async function slot<T>(work: () => Promise<T>): Promise<T> {
   if (active >= 3) await new Promise<void>(resolve => pending.push(resolve));
@@ -24,12 +12,11 @@ async function slot<T>(work: () => Promise<T>): Promise<T> {
 
 /** Retry transient mobile-network failures, with a finite wait for every attempt. */
 export async function fetchBytes(url: string, signal?: AbortSignal): Promise<ArrayBuffer> {
-  url = assetUrl(url);
   for (let attempt = 0; ; attempt++) {
     const controller = new AbortController(), abort = () => controller.abort();
     if (signal?.aborted) throw new DOMException('Aborted', 'AbortError');
     signal?.addEventListener('abort', abort, { once: true });
-    const timer = setTimeout(abort, 20000);
+    const timer = setTimeout(abort, 25000);
     try {
       const response = await fetch(url, { signal: controller.signal, cache: attempt ? 'reload' : 'default' });
       if (!response.ok) throw new Error(`Resource ${response.status}: ${url}`);
@@ -47,10 +34,10 @@ export function loadImage(url: string): Promise<HTMLImageElement> {
   if (!ready) {
     ready = slot(async () => {
       for (let attempt = 0; ; attempt++) {
-        const image = new Image(); image.decoding = 'async'; image.crossOrigin = 'anonymous';
+        const image = new Image(); image.decoding = 'async';
         let timer = 0;
         try {
-          image.src = attempt ? `${key}${key.includes('?') ? '&' : '?'}retry=${attempt}` : key;
+          image.src = key;
           await Promise.race([image.decode(), new Promise<never>((_, reject) => {
             timer = window.setTimeout(() => reject(new Error(`Image timed out: ${url}`)), 20000);
           })]);

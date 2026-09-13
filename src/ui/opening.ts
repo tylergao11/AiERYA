@@ -1,5 +1,5 @@
 import { DEFAULT_AUDIO, readAudioPreferences, saveAudioPreferences } from '../audio/preferences';
-import { assetUrl, fetchBytes, loadImage } from '../core/resource-loader';
+import { fetchBytes, loadImage } from '../core/resource-loader';
 /** The entry gesture starts both sounds before yielding to asynchronous work.
  * Game UI/input are created only after `finished`.
  */
@@ -11,16 +11,14 @@ export function playOpening(parent: HTMLElement, options: OpeningOptions = {}): 
   const overlay = document.createElement('section');
   overlay.className = 'opening'; overlay.dataset.stage = 'entry'; overlay.setAttribute('role', 'dialog');
   overlay.setAttribute('aria-modal', 'true'); overlay.setAttribute('aria-label', '山野阵火起始页');
-  overlay.innerHTML = `<div class="opening-entry"><img class="opening-cover" hidden crossorigin="anonymous" alt="宣纸水墨题画，山野阵火" fetchpriority="high"><h1 class="opening-title">山野阵火</h1><div class="opening-loading" role="status"><span class="opening-load-line"></span><span class="opening-load-status">载入画卷…</span><button type="button" class="opening-retry" hidden>重试</button></div><button type="button" class="opening-enter" hidden disabled>入山 <span aria-hidden="true">→</span></button></div>
-    <video class="opening-film" hidden playsinline preload="auto" aria-label="落笔成阵，五行爆发，山野阵火"></video>
+  overlay.innerHTML = `<div class="opening-entry"><img class="opening-cover" hidden src="./video/opening-entry-ink.webp" alt="宣纸水墨题画，山野阵火" fetchpriority="high"><h1 class="opening-title">山野阵火</h1><div class="opening-loading" role="status"><span class="opening-load-line"></span><span class="opening-load-status">载入画卷…</span><button type="button" class="opening-retry" hidden>重试</button></div><button type="button" class="opening-enter" hidden disabled>入山 <span aria-hidden="true">→</span></button></div>
+    <video class="opening-film" hidden playsinline preload="auto" poster="./video/opening-first-frame.jpg" aria-label="落笔成阵，五行爆发，山野阵火"></video>
     <audio class="opening-enter-cue" preload="auto"></audio>
     <div class="opening-controls" hidden><button type="button" class="opening-skip">跳过开场 <span aria-hidden="true">→</span></button></div>
     <button type="button" class="opening-play" hidden>继续播放</button>
     <div class="opening-progress" hidden aria-hidden="true"><span></span></div>`;
   const video = overlay.querySelector('video')!;
   const cue = overlay.querySelector('audio')!;
-  overlay.querySelector<HTMLImageElement>('.opening-cover')!.src = assetUrl('./video/opening-entry-ink.webp');
-  video.poster = assetUrl('./video/opening-first-frame.jpg');
   const entry = overlay.querySelector<HTMLElement>('.opening-entry')!;
   const enter = overlay.querySelector<HTMLButtonElement>('.opening-enter')!;
   const loading = overlay.querySelector<HTMLElement>('.opening-loading')!;
@@ -131,14 +129,12 @@ export function playOpening(parent: HTMLElement, options: OpeningOptions = {}): 
     if(settled)return;
     const url=URL.createObjectURL(new Blob([bytes],{type}));blobs.push(url);target.src=url;target.load();
   };
-  // The film can begin while the scene preloads. main.ts still awaits scene
-  // readiness before creating controls, so this never admits an incomplete game.
-  void options.ready?.catch(error => { if (!settled) { console.error('Game resources failed', error); fail(); } });
   void Promise.all([
+    options.ready,
     loadImage('./video/opening-entry-ink.webp').then(() => { if(!settled)overlay.querySelector<HTMLImageElement>('.opening-cover')!.hidden=false; }),
     loadImage('./art/ui/cinnabar.webp'),
     media(video, './video/opening-ink-mobile.mp4', 'video/mp4'),
-    media(cue, './audio/opening-enter.wav', 'audio/wav').catch(error => console.warn('Entry sound unavailable', error)),
+    media(cue, './audio/opening-enter.wav', 'audio/wav'),
   ]).then(() => {
     if(settled||unavailable)return;
     loading.hidden=true;enter.hidden=false;enter.disabled=false;enter.focus({preventScroll:true});
