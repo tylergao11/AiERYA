@@ -35,7 +35,7 @@ export class PanelSurface {
       this.background.forEach(({ node }) => { node.inert = true; });
     }
     const previousChapter = this.panel.querySelector<HTMLElement>('.handbook-page')?.dataset.chapter;
-    const scrollPositions = ['.folio-scroll', '.build-content', '.birth-options', '.birth-detail', '.reward-choices'].map(selector => ({ selector, top: this.panel.querySelector(selector)?.scrollTop ?? 0 }));
+    const scrollPositions = ['.folio-scroll', '.build-content', '.birth-options', '.birth-copy', '.reward-choices'].map(selector => ({ selector, top: this.panel.querySelector(selector)?.scrollTop ?? 0 }));
     const focused = document.activeElement instanceof HTMLElement && this.panel.contains(document.activeElement) ? document.activeElement : null;
     const action = focused?.dataset.action, chapter = focused?.dataset.chapter, talent = focused?.dataset.talent, spirit = focused?.dataset.spirit;
     const opened = [...this.panel.querySelectorAll<HTMLDetailsElement>('details[open]')].map(e => e.querySelector('summary')?.textContent);

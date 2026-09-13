@@ -243,7 +243,6 @@ export class GameInterface {
     const detail = this.panel.querySelector<HTMLElement>('.birth-detail');
     if (detail) detail.outerHTML = birthDetail(draft.detail, draft.selected.has(id), draft.choices.length >= 2);
     this.birthPreview?.mount(this.panel.querySelector<HTMLElement>('.birth-demo')!, draft.detail);
-    if (matchMedia('(max-width: 700px) and (orientation: portrait)').matches) this.panel.querySelector('.birth-body')?.scrollTo({ top: 0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' });
   }
 
   private readonly click = (event: MouseEvent): void => {
@@ -294,12 +293,10 @@ export class GameInterface {
     this.host.classList.toggle('choosing-birth', phase === 'destiny');
     this.surface.show(kind, () => {
       if (kind === 'birth') {
-        const scroll = this.panel.querySelector('.birth-body')?.scrollTop ?? 0;
         this.panel.innerHTML = openingPanel(this.world);
         this.birthPreview ??= new BirthPreview();
         this.birthPreview.mount(this.panel.querySelector<HTMLElement>('.birth-demo')!, this.world.birthDraft.detail);
         if (this.birthFocus) { this.panel.querySelector<HTMLButtonElement>(this.birthFocus)?.focus({ preventScroll: true }); this.birthFocus = null; }
-        this.panel.querySelector('.birth-body')!.scrollTop = scroll;
       } else if (kind === 'build') this.panel.innerHTML = '<section class="panel-card folio-panel build-panel" role="dialog" aria-modal="true" aria-label="当前构筑">' + buildPanel(this.world) + '</section>';
       else if (kind === 'help') this.panel.innerHTML = '<section class="panel-card folio-panel help-panel" role="dialog" aria-modal="true" aria-label="操作手记">' + helpPanel(this.helpChapter, this.world, this.introductoryHandbook) + '</section>';
       else if (kind === 'pause') this.panel.innerHTML = pausePanel(this.world);

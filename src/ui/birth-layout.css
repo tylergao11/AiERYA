@@ -1,7 +1,7 @@
-/* The frame already has a landscape viewport, including on upright phones.
-   Reserve the footer in normal flow; each leaf owns its own vertical scroll. */
+/* Reserve separate rows for the heading, selection and always-visible footer.
+   Only the candidate list and optional copy scroll; actions never move away. */
 #interface .modal[data-surface="birth"] { padding: 8px; }
-#interface .modal[data-surface="birth"] .birth-screen {
+#interface .modal[data-surface="birth"] .panel-card.birth-screen {
   box-sizing: border-box; min-height: 0; height: 100%; max-height: 850px;
   padding: clamp(26px,7vh,58px) clamp(30px,6vw,90px) clamp(22px,5vh,38px);
   display: grid; grid-template-rows: auto minmax(0,1fr) auto; overflow: hidden;
@@ -9,23 +9,28 @@
 #interface .modal[data-surface="birth"] .birth-heading { padding: 0 0 8px; }
 #interface .modal[data-surface="birth"] .birth-body {
   display: grid; grid-template-columns: minmax(0,1.08fr) minmax(0,1fr);
-  min-height: 0; overflow: hidden; gap: 14px; padding: 2px;
+  height: 100%; min-height: 0; overflow: hidden; align-items: stretch; gap: 14px; padding: 2px;
 }
 #interface .modal[data-surface="birth"] :is(.birth-detail,.birth-options) {
-  display: block; min-width: 0; min-height: 0; height: 100%; box-sizing: border-box;
-  overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain;
-  touch-action: pan-y; scrollbar-width: thin; scrollbar-color: #98713c88 transparent;
-  -webkit-overflow-scrolling: touch; scroll-padding: 8px;
+  min-width: 0; min-height: 0; height: 100%; box-sizing: border-box;
+}
+#interface .modal[data-surface="birth"] .birth-detail {
+  display: grid; grid-template-rows: minmax(0,1fr) auto; overflow: hidden;
+}
+#interface .modal[data-surface="birth"] .birth-options {
+  display: block; overflow-x: hidden; overflow-y: auto; touch-action: pan-y;
+  overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin; scrollbar-color: #98713c88 transparent; scroll-padding: 4px;
 }
 #interface .modal[data-surface="birth"] .birth-detail .birth-demo {
-  height: clamp(115px,29vh,310px); min-height: 0; max-height: none; width: 100%;
+  height: 100%; min-height: 0; max-height: none; width: 100%;
 }
-#interface .modal[data-surface="birth"] .birth-detail .birth-explanation { display: block; height: auto; padding: 8px 3px 4px; }
-#interface .modal[data-surface="birth"] .birth-copy { overflow: visible; scrollbar-gutter: auto; }
+#interface .modal[data-surface="birth"] .birth-detail .birth-explanation { display: grid; grid-template-rows: minmax(0,1fr) auto; min-height: 0; height: auto; padding: 8px 3px 4px; }
+#interface .modal[data-surface="birth"] .birth-copy { max-height: 120px; overflow-y: auto; touch-action: pan-y; scrollbar-gutter: auto; }
 #interface .modal[data-surface="birth"] .birth-detail-title { flex-wrap: wrap; gap: 3px 10px; }
 #interface .modal[data-surface="birth"] .birth-detail-title > small { margin-left: 0; }
-#interface .modal[data-surface="birth"] .birth-decision { display: block; }
-#interface .modal[data-surface="birth"] .birth-rule-copy { position: static; padding: 8px; overflow: visible; }
+#interface .modal[data-surface="birth"] .birth-decision { display: flex; align-items: flex-end; }
+#interface .modal[data-surface="birth"] .birth-rule-copy { position: static; max-height: 90px; padding: 8px; overflow-y: auto; touch-action: pan-y; }
 #interface .modal[data-surface="birth"] .birth-confirm { display: block; margin: 4px 0 0 auto; min-height: 44px; }
 #interface .modal[data-surface="birth"] .birth-list { flex: none; grid-template-rows: none; grid-auto-rows: minmax(70px,auto); gap: 7px; padding: 2px 3px 5px; }
 #interface .modal[data-surface="birth"] .birth-talent { height: auto; min-height: 70px; gap: 5px; padding: 3px 7px 3px 2px; }
@@ -33,7 +38,7 @@
 #interface .modal[data-surface="birth"] .birth-talent-copy small { flex-wrap: wrap; gap: 3px 6px; }
 #interface .modal[data-surface="birth"] .birth-footer {
   position: static; grid-template-columns: auto minmax(0,1fr) auto; grid-template-rows: auto;
-  min-height: 0; padding: 8px 0 0; gap: 8px; background: none; box-shadow: none;
+  min-height: 60px; margin: 0; padding: 8px 0 0; gap: 8px; background: none; box-shadow: none;
 }
 #interface .modal[data-surface="birth"] .birth-actions { grid-column: auto; display: flex; gap: 6px; }
 #interface .modal[data-surface="birth"] .birth-slots { min-width: 0; gap: 5px; }
@@ -43,6 +48,10 @@
 #interface .modal[data-surface="birth"] .birth-enter > span { margin-left: 8px; }
 #interface .modal[data-surface="birth"] .birth-reroll { min-height: 44px; padding: 7px 10px; font-size: 20px; }
 @media (max-height: 560px), (max-width: 800px) {
+  #interface .modal[data-surface="birth"] .birth-detail :is(.birth-description,.birth-rules,.birth-detail-meta) { display: none; }
+  #interface .modal[data-surface="birth"] .birth-copy { max-height: 56px; }
+  #interface .modal[data-surface="birth"] .birth-detail .birth-explanation { padding-top: 4px; }
+  #interface .modal[data-surface="birth"] .birth-confirm { width: 100%; margin-top: 4px; }
   #interface .modal[data-surface="birth"] .birth-heading h2 { font-size: 26px; }
   #interface .modal[data-surface="birth"] .birth-detail-title h3 { font-size: 24px; }
   #interface .modal[data-surface="birth"] .birth-talent-copy b { font-size: 21px; }
@@ -55,9 +64,6 @@
   #interface .modal[data-surface="birth"] .birth-slot b { font-size: 16px; }
 }
 @media (orientation: portrait) {
-  #interface .modal[data-surface="birth"] .birth-body { display: block; overflow-y: auto; }
-  #interface .modal[data-surface="birth"] :is(.birth-detail,.birth-options) { height: auto; overflow: visible; }
-  #interface .modal[data-surface="birth"] .birth-options { margin-top: 12px; }
   #interface .modal[data-surface="birth"] .birth-footer { grid-template-columns: auto minmax(0,1fr); }
   #interface .modal[data-surface="birth"] .birth-actions { grid-column: 1/-1; justify-content: flex-end; }
 }
