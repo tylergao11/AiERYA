@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/cloudflare/workers-sdk/main/packages/wrangler/config-schema.json",
+  "name": "aierya",
+  "compatibility_date": "2026-09-12",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./web-release"
+  }
+}
